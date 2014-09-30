@@ -1,0 +1,4187 @@
+<?xml version="1.0"?>
+<Devices>
+	<!-- Pioneer Receiver VSX-1021-K -->
+	<Device type="custom" id="vsx1021k">
+		<Name>VSX-1021-K</Name>
+		<ConfigUI>
+			<Field id="address" type="textfield">
+				<Label>Receiver IP Address:</Label>
+				<Description>Receiver IP address</Description>
+			</Field>
+			<Field id="separator0" type="separator"/>
+			<Field id="mcaccMemory1label" type="textfield">
+				<Label>MCACC Memory 1 Label:</Label>
+				<Description>MCACC Memory 1 Label</Description>
+			</Field>
+			<Field id="mcaccMemory2label" type="textfield">
+				<Label>MCACC Memory 2 Label:</Label>
+				<Description>MCACC Memory 2 Label</Description>
+			</Field>
+			<Field id="mcaccMemory3label" type="textfield">
+				<Label>MCACC Memory 3 Label:</Label>
+				<Description>MCACC Memory 3 Label</Description>
+			</Field>
+			<Field id="mcaccMemory4label" type="textfield">
+				<Label>MCACC Memory 4 Label:</Label>
+				<Description>MCACC Memory 4 Label</Description>
+			</Field>
+			<Field id="mcaccMemory5label" type="textfield">
+				<Label>MCACC Memory 5 Label:</Label>
+				<Description>MCACC Memory 5 Label</Description>
+			</Field>
+			<Field id="mcaccMemory6label" type="textfield">
+				<Label>MCACC Memory 6 Label:</Label>
+				<Description>MCACC Memory 6 Label</Description>
+			</Field>
+			<Field id="sep0" type="separator"/>
+			<Field id="instruction0" type="label" fontColor="darkgray" fontSize="small">
+				<Label>INSTRUCTIONS: For the Receiver IP Address, make sure that you're receiver has the "Network Standby" mode turned on in the "Network Setup" menu. Once that's turned on, find the receiver's IP address. Using the receiver's included IR remote control, press the "RECEIVER" power button (top left of remote) to turn on the receiver if it isn't already on.  Press the "RECEIVER" function button (middle right of remote) to ensure the next button presses are sent to the receiver and not another source device. Press the "HOME MENU" button. Use the up and down directional buttons to navigate to menu item 5 "Network Information." The first item on the Network Information screen will be the IP Address. Enter that address in the field above.
+				</Label>
+			</Field>
+			<Field id="instruction1" type="label" fontColor="darkgray" fontSize="small">
+				<Label>MCACC Memory Labels are optional and only used for display purposes (on control pages, etc). The lablels you enter here do not have to match the memory labels stored in the receiver's internal settings.
+				</Label>
+			</Field>
+			<Field id="instruction2" type="label" fontColor="darkgray" fontSize="small">
+				<Label>Note that, while other receiver models may not be listed, selecting one of the supported VSX models will likely work with most other networked Pioneer receivers.
+				</Label>
+			</Field>
+			<Field id="tryingToConnect" type="checkbox" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="source01label" type="textfield" hidden="true">
+				<!-- CD -->
+				<Label/>
+			</Field>
+			<Field id="source02label" type="textfield" hidden="true">
+				<!-- TUNER -->
+				<Label/>
+			</Field>
+			<Field id="source03label" type="textfield" hidden="true">
+				<!-- CD-R/TAPE -->
+				<Label/>
+			</Field>
+			<Field id="source04label" type="textfield" hidden="true">
+				<!-- DVD -->
+				<Label/>
+			</Field>
+			<Field id="source05label" type="textfield" hidden="true">
+				<!-- TV/SAT -->
+				<Label/>
+			</Field>
+			<Field id="source10label" type="textfield" hidden="true">
+				<!-- VIDEO 1 -->
+				<Label/>
+			</Field>
+			<Field id="source14label" type="textfield" hidden="true">
+				<!-- VIDEO 2 -->
+				<Label/>
+			</Field>
+			<Field id="source15label" type="textfield" hidden="true">
+				<!-- DVR/BDR -->
+				<Label/>
+			</Field>
+			<Field id="source17label" type="textfield" hidden="true">
+				<!-- iPod/USB -->
+				<Label/>
+			</Field>
+			<Field id="source19label" type="textfield" hidden="true">
+				<!-- HDMI 1 -->
+				<Label/>
+			</Field>
+			<Field id="source25label" type="textfield" hidden="true">
+				<!-- BD -->
+				<Label/>
+			</Field>
+			<Field id="source26label" type="textfield" hidden="true">
+				<!-- HOME MEDIA GALLERY (Internet Radio) -->
+				<Label/>
+			</Field>
+			<Field id="source27label" type="textfield" hidden="true">
+				<!-- SIRIUS -->
+				<Label/>
+			</Field>
+			<Field id="source33label" type="textfield" hidden="true">
+				<!-- ADAPTER PORT -->
+				<Label/>
+			</Field>
+			<!-- Tuner Preset Names -->
+			<Field id="tunerPresetA1label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetA2label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetA3label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetA4label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetA5label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetA6label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetA7label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetA8label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetA9label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetB1label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetB2label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetB3label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetB4label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetB5label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetB6label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetB7label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetB8label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetB9label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetC1label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetC2label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetC3label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetC4label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetC5label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetC6label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetC7label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetC8label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetC9label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetD1label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetD2label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetD3label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetD4label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetD5label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetD6label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetD7label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetD8label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetD9label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetE1label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetE2label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetE3label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetE4label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetE5label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetE6label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetE7label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetE8label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetE9label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetF1label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetF2label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetF3label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetF4label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetF5label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetF6label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetF7label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetF8label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetF9label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="osdLanguage" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+		</ConfigUI>
+		<UiDisplayStateId>status</UiDisplayStateId>
+		<States>
+			<State id="status">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Status</TriggerLabel>
+				<ControlPageLabel>Status</ControlPageLabel>
+			</State>
+			<State id="onOffState">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Power On/Off</TriggerLabel>
+				<ControlPageLabel>Power On/Off</ControlPageLabel>
+			</State>
+			<State id="display">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Display</TriggerLabel>
+				<ControlPageLabel>Display</ControlPageLabel>
+			</State>
+			<State id="connected">
+				<ValueType>Boolean</ValueType>
+				<TriggerLabel>Connected</TriggerLabel>
+				<ControlPageLabel>Connected</ControlPageLabel>
+			</State>
+			<State id="sep0">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="speakers">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Enabled Speaker Sets</TriggerLabel>
+				<ControlPageLabel>Enabled Speaker Sets</ControlPageLabel>
+			</State>
+			<State id="speakerSystem">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Speaker System</TriggerLabel>
+				<ControlPageLabel>Speakers System</ControlPageLabel>
+			</State>
+			<State id="hdmiAudio">
+				<ValueType>Boolean</ValueType>
+				<TriggerLabel>HDMI Audio Through</TriggerLabel>
+				<ControlPageLabel>HDMI Audio Through</ControlPageLabel>
+			</State>
+			<State id="pqls">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>PQLS Auto</TriggerLabel>
+				<ControlPageLabel>PQLS Auto</ControlPageLabel>
+			</State>
+			<State id="operatingMode">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Operating Mode</TriggerLabel>
+				<ControlPageLabel>Operating Mode</ControlPageLabel>
+			</State>
+			<State id="sep1">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="sleepMode">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Sleep Timer On</TriggerLabel>
+				<ControlPageLabel>Sleep Timer On</ControlPageLabel>
+			</State>
+			<State id="sleepTime">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Sleep Time Remaining</TriggerLabel>
+				<ControlPageLabel>Sleep Time Remaining</ControlPageLabel>
+			</State>
+			<State id="sep2">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="zone1power">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Power (Zone 1)</TriggerLabel>
+				<ControlPageLabel>Power (Zone 1)</ControlPageLabel>
+			</State>
+			<State id="zone1volume">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Volume (Zone 1 dB)</TriggerLabel>
+				<ControlPageLabel>Volume (Zone 1 dB)</ControlPageLabel>
+			</State>
+			<State id="zone1mute">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Mute (Zone 1)</TriggerLabel>
+				<ControlPageLabel>Mute (Zone 1)</ControlPageLabel>
+			</State>
+			<State id="zone1source">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Source Index (Zone 1)</TriggerLabel>
+				<ControlPageLabel>Source Index (Zone 1)</ControlPageLabel>
+			</State>
+			<State id="zone1sourceName">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Source Name (Zone 1)</TriggerLabel>
+				<ControlPageLabel>Source Name (Zone 1)</ControlPageLabel>
+			</State>
+			<State id="sep3">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="zone2power">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Power (Zone 2)</TriggerLabel>
+				<ControlPageLabel>Power (Zone 2)</ControlPageLabel>
+			</State>
+			<State id="zone2volume">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Volume (Zone 2 dB)</TriggerLabel>
+				<ControlPageLabel>Volume (Zone 2 dB)</ControlPageLabel>
+			</State>
+			<State id="zone2mute">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Mute (Zone 2)</TriggerLabel>
+				<ControlPageLabel>Mute (Zone 2)</ControlPageLabel>
+			</State>
+			<State id="zone2source">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Source Index (Zone 2)</TriggerLabel>
+				<ControlPageLabel>Source Index (Zone 2)</ControlPageLabel>
+			</State>
+			<State id="zone2sourceName">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Source Name (Zone 2)</TriggerLabel>
+				<ControlPageLabel>Source Name (Zone 2)</ControlPageLabel>
+			</State>
+			<State id="sep4">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="tunerFrequency">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Tuner Frequency Value (kHz/MHz)</TriggerLabel>
+				<ControlPageLabel>Tuner Frequency Value (kHz/MHz)</ControlPageLabel>
+			</State>
+			<State id="tunerFrequencyText">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Tuner Frequency Text</TriggerLabel>
+				<ControlPageLabel>Tuner Frequency Text</ControlPageLabel>
+			</State>
+			<State id="tunerBand">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Tuner Band (AM/FM)</TriggerLabel>
+				<ControlPageLabel>Tuner Band (AM/FM)</ControlPageLabel>
+			</State>
+			<State id="tunerPreset">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Tuner Preset</TriggerLabel>
+				<ControlPageLabel>Tuner Preset</ControlPageLabel>
+			</State>
+			<State id="sep5">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="siriusChannel">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Sirius Radio Channel</TriggerLabel>
+				<ControlPageLabel>Sirius Radio Channel</ControlPageLabel>
+			</State>
+			<State id="sep6">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="listeningMode">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Listening Mode</TriggerLabel>
+				<ControlPageLabel>Listening Mode</ControlPageLabel>
+			</State>
+			<State id="displayListeningMode">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Listening Mode (Displayed)</TriggerLabel>
+				<ControlPageLabel>Listening Mode (Displayed)</ControlPageLabel>
+			</State>
+			<State id="toneControl">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Tone Control</TriggerLabel>
+				<ControlPageLabel>Tone Control</ControlPageLabel>
+			</State>
+			<State id="toneBass">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Bass (Tone Control)</TriggerLabel>
+				<ControlPageLabel>Bass (Tone Control)</ControlPageLabel>
+			</State>
+			<State id="toneTreble">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Treble (Tone Control)</TriggerLabel>
+				<ControlPageLabel>Treble (Tone Control)</ControlPageLabel>
+			</State>
+			<State id="sep7">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="mcaccMemory">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>MCACC Memory</TriggerLabel>
+				<ControlPageLabel>MCACC Memory</ControlPageLabel>
+			</State>
+			<State id="mcaccMemoryName">
+				<ValueType>String</ValueType>
+				<TriggerLabel>MCACC Memory Name</TriggerLabel>
+				<ControlPageLabel>MCACC Memory Name</ControlPageLabel>
+			</State>
+			<State id="phaseControl">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Phase Control</TriggerLabel>
+				<ControlPageLabel>Phase Control</ControlPageLabel>
+			</State>
+			<State id="phaseControlPlusTime">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Phase Control Plus delay (ms)</TriggerLabel>
+				<ControlPageLabel>Phase Control Plus delay (ms)</ControlPageLabel>
+			</State>
+			<State id="soundDelay">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Sound Delay (sample frames)</TriggerLabel>
+				<ControlPageLabel>Sound Delay (sample frames)</ControlPageLabel>
+			</State>
+			<State id="vsb">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Virtual Surround Back</TriggerLabel>
+				<ControlPageLabel>Virtual Surround Back</ControlPageLabel>
+			</State>
+			<State id="vht">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Virtual Height</TriggerLabel>
+				<ControlPageLabel>Virtual Height</ControlPageLabel>
+			</State>
+			<State id="dialogEnhancement">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Dialog Enhancement</TriggerLabel>
+				<ControlPageLabel>Dialog Enhancement</ControlPageLabel>
+			</State>
+			<State id="signalSource">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Signal Source</TriggerLabel>
+				<ControlPageLabel>Signal Source</ControlPageLabel>
+			</State>
+			<State id="soundRetriever">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Sound Retriever</TriggerLabel>
+				<ControlPageLabel>Sound Retriever</ControlPageLabel>
+			</State>
+			<State id="analogInputAttenuator">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Analog Input Attenuator</TriggerLabel>
+				<ControlPageLabel>Analog Input Attenuator</ControlPageLabel>
+			</State>
+			<State id="lfeAttenuator">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>LFE Attenuator</TriggerLabel>
+				<ControlPageLabel>LFE Attenuator</ControlPageLabel>
+			</State>
+			<State id="lfeAttenuatorAmount">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>LFE Attenuation (dB)</TriggerLabel>
+				<ControlPageLabel>LFE Attenuation (dB)</ControlPageLabel>
+			</State>
+			<State id="sacdGain">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>SACD Gain (dB)</TriggerLabel>
+				<ControlPageLabel>SACD Gain (dB)</ControlPageLabel>
+			</State>
+			<State id="dynamicRangeCompression">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Dynamic Range Compression</TriggerLabel>
+				<ControlPageLabel>Dynamic Range Compression</ControlPageLabel>
+			</State>
+			<State id="equalizer">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Equalizer On</TriggerLabel>
+				<ControlPageLabel>Equalizer On</ControlPageLabel>
+			</State>
+			<State id="standingWave">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Standing Wave Compensation</TriggerLabel>
+				<ControlPageLabel>Standing Wave Compensation</ControlPageLabel>
+			</State>
+			<State id="autoDelay">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Auto Sound Delay</TriggerLabel>
+				<ControlPageLabel>Auto Sound Delay</ControlPageLabel>
+			</State>
+			<State id="digitalNR">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Digital Noise Reduction</TriggerLabel>
+				<ControlPageLabel>Digital Noise Reduction</ControlPageLabel>
+			</State>
+			<State id="dualMono">
+				<ValueType>Boolean</ValueType>
+				<TriggerLabel>Dual Mono</TriggerLabel>
+				<ControlPageLabel>Dual Mono</ControlPageLabel>
+			</State>
+			<State id="fixedPCM">
+				<ValueType>Boolean</ValueType>
+				<TriggerLabel>Fixed PCM Sample Rate</TriggerLabel>
+				<ControlPageLabel>Fixed PCM Sample Rate</ControlPageLabel>
+			</State>
+			<State id="pl2musicCenterWidth">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>ProLogic II Center Width</TriggerLabel>
+				<ControlPageLabel>ProLogic II Center Width</ControlPageLabel>
+			</State>
+			<State id="pl2musicPanorama">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>ProLogic II Panorama</TriggerLabel>
+				<ControlPageLabel>ProLogic II Panorama</ControlPageLabel>
+			</State>
+			<State id="pl2musicDimension">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>ProLogic II Dimension</TriggerLabel>
+				<ControlPageLabel>ProLogic II Dimension</ControlPageLabel>
+			</State>
+			<State id="pl2zHeightGain">
+				<ValueType>String</ValueType>
+				<TriggerLabel>ProLogic IIz Height Gain</TriggerLabel>
+				<ControlPageLabel>ProLogic IIz Height Gain</ControlPageLabel>
+			</State>
+			<State id="neo6centerImage">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Neo:6 Center Image</TriggerLabel>
+				<ControlPageLabel>Neo:6 Center Image</ControlPageLabel>
+			</State>
+			<State id="effectAmount">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Effect Amount</TriggerLabel>
+				<ControlPageLabel>Effect Amount</ControlPageLabel>
+			</State>
+			<State id="sep8">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="audioInputFormat">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Audio Input Format</TriggerLabel>
+				<ControlPageLabel>Audio Input Format</ControlPageLabel>
+			</State>
+			<State id="audioInputFrequency">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Audio Input Frequency</TriggerLabel>
+				<ControlPageLabel>Audio Input Frequency</ControlPageLabel>
+			</State>
+			<State id="inputChannels">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Input Channels</TriggerLabel>
+				<ControlPageLabel>Input Channels</ControlPageLabel>
+			</State>
+			<State id="outputChannels">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Output Channels</TriggerLabel>
+				<ControlPageLabel>Output Channels</ControlPageLabel>
+			</State>
+			<State id="channelVolumeL">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Front Left Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Front Left Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="channelVolumeR">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Front Right Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Front Right Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="channelVolumeC">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Center Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Center Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="channelVolumeSL">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Surround Left Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Surround Left Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="channelVolumeSR">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Surround Right Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Surround Right Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="channelVolumeSBL">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Surround Back Left Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Surround Back Left Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="channelVolumeSBR">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Surround Back Right Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Surround Back Right Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="channelVolumeSW">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Subwoofer Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Subwoofer Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="channelVolumeLH">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Front Left Height Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Front Left Height Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="channelVolumeRH">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Front Right Height Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Front Right Height Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="channelVolumeLW">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Front Left Wide Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Front Left Wide Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="channelVolumeRW">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Front Right Wide Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Front Right Wide Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="sep9">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="videoInputTerminal">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Video Input Terminal</TriggerLabel>
+				<ControlPageLabel>Video Input Terminal</ControlPageLabel>
+			</State>
+			<State id="videoInputResolution">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Video Input Resolution</TriggerLabel>
+				<ControlPageLabel>Video Input Resolution</ControlPageLabel>
+			</State>
+			<State id="videoInputAspect">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Video Input Aspect Ratio</TriggerLabel>
+				<ControlPageLabel>Video Input Aspect Ratio</ControlPageLabel>
+			</State>
+			<State id="videoInputColorFormat">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Video Input Color Format</TriggerLabel>
+				<ControlPageLabel>Video Input Color Format</ControlPageLabel>
+			</State>
+			<State id="videoInputColorSpace">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Video Input Color Space</TriggerLabel>
+				<ControlPageLabel>Video Input Color Space</ControlPageLabel>
+			</State>
+			<State id="videoInputBitDepth">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Video Input Bit Depth</TriggerLabel>
+				<ControlPageLabel>Video Input Bit Depth</ControlPageLabel>
+			</State>
+			<State id="sep10">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="videoOutputResolution">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Video Output Resolution</TriggerLabel>
+				<ControlPageLabel>Video Output Resolution</ControlPageLabel>
+			</State>
+			<State id="videoOutputAspect">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Video Output Aspect Ratio</TriggerLabel>
+				<ControlPageLabel>Video Output Aspect Ratio</ControlPageLabel>
+			</State>
+			<State id="videoOutputColorFormat">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Video Output Color Format</TriggerLabel>
+				<ControlPageLabel>Video Output Color Format</ControlPageLabel>
+			</State>
+			<State id="videoOutputColorSpace">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Video Output Color Space</TriggerLabel>
+				<ControlPageLabel>Video Output Color Space</ControlPageLabel>
+			</State>
+			<State id="videoOutputBitDepth">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Video Output Bit Depth</TriggerLabel>
+				<ControlPageLabel>Video Output Bit Depth</ControlPageLabel>
+			</State>
+			<State id="sep11">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="monitorRecommendedResolution">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Monitor Recommended Resolution</TriggerLabel>
+				<ControlPageLabel>Monitor Recommended Resolution</ControlPageLabel>
+			</State>
+			<State id="monitorColorSpaces">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Monitor Supported Color Spaces</TriggerLabel>
+				<ControlPageLabel>Monitor Supported Color Spaces</ControlPageLabel>
+			</State>
+			<State id="monitorBitDepth">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Monitor Bit Depth</TriggerLabel>
+				<ControlPageLabel>Monitor Bith Depth</ControlPageLabel>
+			</State>
+			<State id="sep12">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="videoConverter">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Video Converter On</TriggerLabel>
+				<ControlPageLabel>Video Converter On</ControlPageLabel>
+			</State>
+			<State id="videoResolution">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Preferred Video Resolution</TriggerLabel>
+				<ControlPageLabel>Preferred Video Resolution</ControlPageLabel>
+			</State>
+			<State id="videoPureCinema">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Pure Cinema Mode</TriggerLabel>
+				<ControlPageLabel>Pure Cinema Mode</ControlPageLabel>
+			</State>
+			<State id="videoProgressiveQuality">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Progressive Motion Quality</TriggerLabel>
+				<ControlPageLabel>Progressive Motion Quality</ControlPageLabel>
+			</State>
+			<State id="videoAdvancedAdjust">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Advanced Video Adjustment</TriggerLabel>
+				<ControlPageLabel>Advanced Video Adjustment</ControlPageLabel>
+			</State>
+			<State id="videoYNR">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Luminance Noise Reduction</TriggerLabel>
+				<ControlPageLabel>Luminance Noise Reduction</ControlPageLabel>
+			</State>
+			<State id="videoDetail">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Video Detail Adjustment</TriggerLabel>
+				<ControlPageLabel>Video Detail Adjustment</ControlPageLabel>
+			</State>
+			<State id="sep13">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="panelKeyLockMode">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Panel Key Lock Mode</TriggerLabel>
+				<ControlPageLabel>Panel Key Lock Mode</ControlPageLabel>
+			</State>
+			<State id="remoteLock">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Remote Lock</TriggerLabel>
+				<ControlPageLabel>Remote Lock</ControlPageLabel>
+			</State>
+		</States>
+	</Device>
+	<!-- Pioneer Receiver VSX-1022-K -->
+	<Device type="custom" id="vsx1022k">
+		<Name>VSX-1022-K</Name>
+		<ConfigUI>
+			<Field id="address" type="textfield">
+				<Label>Receiver IP Address:</Label>
+				<Description>Receiver IP address</Description>
+			</Field>
+			<Field id="separator0" type="separator"/>
+			<Field id="mcaccMemory1label" type="textfield">
+				<Label>MCACC Memory 1 Label:</Label>
+				<Description>MCACC Memory 1 Label</Description>
+			</Field>
+			<Field id="mcaccMemory2label" type="textfield">
+				<Label>MCACC Memory 2 Label:</Label>
+				<Description>MCACC Memory 2 Label</Description>
+			</Field>
+			<Field id="mcaccMemory3label" type="textfield">
+				<Label>MCACC Memory 3 Label:</Label>
+				<Description>MCACC Memory 3 Label</Description>
+			</Field>
+			<Field id="mcaccMemory4label" type="textfield">
+				<Label>MCACC Memory 4 Label:</Label>
+				<Description>MCACC Memory 4 Label</Description>
+			</Field>
+			<Field id="mcaccMemory5label" type="textfield">
+				<Label>MCACC Memory 5 Label:</Label>
+				<Description>MCACC Memory 5 Label</Description>
+			</Field>
+			<Field id="mcaccMemory6label" type="textfield">
+				<Label>MCACC Memory 6 Label:</Label>
+				<Description>MCACC Memory 6 Label</Description>
+			</Field>
+			<Field id="sep0" type="separator"/>
+			<Field id="instruction0" type="label" fontColor="darkgray" fontSize="small">
+				<Label>INSTRUCTIONS: For the Receiver IP Address, make sure that you're receiver has the "Network Standby" mode turned on in the "Network Setup" menu. Once that's turned on, find the receiver's IP address. Refer to the VSX-1022-K Owner's Manual for instructions on how to find the IP address.
+				</Label>
+			</Field>
+			<Field id="instruction1" type="label" fontColor="darkgray" fontSize="small">
+				<Label>MCACC Memory Labels are optional and only used for display purposes (on control pages, etc). The lablels you enter here do not have to match the memory labels stored in the receiver's internal settings.
+				</Label>
+			</Field>
+			<Field id="instruction2" type="label" fontColor="darkgray" fontSize="small">
+				<Label>Note that, while other receiver models may not be listed, selecting one of the supported VSX models will likely work with most other networked Pioneer receivers.
+				</Label>
+			</Field>
+			<Field id="tryingToConnect" type="checkbox" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="source01label" type="textfield" hidden="true">
+				<!-- CD -->
+				<Label/>
+			</Field>
+			<Field id="source02label" type="textfield" hidden="true">
+				<!-- TUNER -->
+				<Label/>
+			</Field>
+			<Field id="source04label" type="textfield" hidden="true">
+				<!-- DVD -->
+				<Label/>
+			</Field>
+			<Field id="source05label" type="textfield" hidden="true">
+				<!-- TV -->
+				<Label/>
+			</Field>
+			<Field id="source06label" type="textfield" hidden="true">
+				<!-- Sat/Cable -->
+				<Label/>
+			</Field>
+			<Field id="source10label" type="textfield" hidden="true">
+				<!-- VIDEO 1 -->
+				<Label/>
+			</Field>
+			<Field id="source15label" type="textfield" hidden="true">
+				<!-- DVR/BDR -->
+				<Label/>
+			</Field>
+			<Field id="source17label" type="textfield" hidden="true">
+				<!-- iPod/USB -->
+				<Label/>
+			</Field>
+			<Field id="source25label" type="textfield" hidden="true">
+				<!-- BD -->
+				<Label/>
+			</Field>
+			<Field id="source33label" type="textfield" hidden="true">
+				<!-- ADAPTER PORT -->
+				<Label/>
+			</Field>
+			<Field id="source38label" type="textfield" hidden="true">
+				<!-- INTERNET RADIO -->
+				<Label/>
+			</Field>
+			<Field id="source41label" type="textfield" hidden="true">
+				<!-- PANDORA -->
+				<Label/>
+			</Field>
+			<Field id="source44label" type="textfield" hidden="true">
+				<!-- MEDIA SERVER -->
+				<Label/>
+			</Field>
+			<Field id="source45label" type="textfield" hidden="true">
+				<!-- FAVORITES -->
+				<Label/>
+			</Field>
+			<!-- Tuner Preset Names -->
+			<Field id="tunerPresetA1label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetA2label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetA3label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetA4label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetA5label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetA6label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetA7label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetA8label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetA9label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetB1label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetB2label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetB3label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetB4label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetB5label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetB6label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetB7label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetB8label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetB9label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetC1label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetC2label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetC3label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetC4label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetC5label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetC6label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetC7label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetC8label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetC9label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetD1label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetD2label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetD3label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetD4label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetD5label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetD6label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetD7label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetD8label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetD9label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetE1label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetE2label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetE3label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetE4label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetE5label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetE6label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetE7label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetE8label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetE9label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetF1label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetF2label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetF3label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetF4label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetF5label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetF6label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetF7label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetF8label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetF9label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="osdLanguage" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+		</ConfigUI>
+		<UiDisplayStateId>status</UiDisplayStateId>
+		<States>
+			<State id="status">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Status</TriggerLabel>
+				<ControlPageLabel>Status</ControlPageLabel>
+			</State>
+			<State id="onOffState">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Power On/Off</TriggerLabel>
+				<ControlPageLabel>Power On/Off</ControlPageLabel>
+			</State>
+			<State id="display">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Display</TriggerLabel>
+				<ControlPageLabel>Display</ControlPageLabel>
+			</State>
+			<State id="connected">
+				<ValueType>Boolean</ValueType>
+				<TriggerLabel>Connected</TriggerLabel>
+				<ControlPageLabel>Connected</ControlPageLabel>
+			</State>
+			<State id="sep0">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="speakers">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Enabled Speaker Sets</TriggerLabel>
+				<ControlPageLabel>Enabled Speaker Sets</ControlPageLabel>
+			</State>
+			<State id="speakerSystem">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Speaker System</TriggerLabel>
+				<ControlPageLabel>Speakers System</ControlPageLabel>
+			</State>
+			<State id="hdmiAudio">
+				<ValueType>Boolean</ValueType>
+				<TriggerLabel>HDMI Audio Through</TriggerLabel>
+				<ControlPageLabel>HDMI Audio Through</ControlPageLabel>
+			</State>
+			<State id="pqls">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>PQLS Auto</TriggerLabel>
+				<ControlPageLabel>PQLS Auto</ControlPageLabel>
+			</State>
+			<State id="operatingMode">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Operating Mode</TriggerLabel>
+				<ControlPageLabel>Operating Mode</ControlPageLabel>
+			</State>
+			<State id="sep1">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="sleepMode">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Sleep Timer On</TriggerLabel>
+				<ControlPageLabel>Sleep Timer On</ControlPageLabel>
+			</State>
+			<State id="sleepTime">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Sleep Time Remaining</TriggerLabel>
+				<ControlPageLabel>Sleep Time Remaining</ControlPageLabel>
+			</State>
+			<State id="sep2">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="zone1power">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Power (Zone 1)</TriggerLabel>
+				<ControlPageLabel>Power (Zone 1)</ControlPageLabel>
+			</State>
+			<State id="zone1volume">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Volume (Zone 1 dB)</TriggerLabel>
+				<ControlPageLabel>Volume (Zone 1 dB)</ControlPageLabel>
+			</State>
+			<State id="zone1mute">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Mute (Zone 1)</TriggerLabel>
+				<ControlPageLabel>Mute (Zone 1)</ControlPageLabel>
+			</State>
+			<State id="zone1source">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Source Index (Zone 1)</TriggerLabel>
+				<ControlPageLabel>Source Index (Zone 1)</ControlPageLabel>
+			</State>
+			<State id="zone1sourceName">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Source Name (Zone 1)</TriggerLabel>
+				<ControlPageLabel>Source Name (Zone 1)</ControlPageLabel>
+			</State>
+			<State id="sep3">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="zone2power">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Power (Zone 2)</TriggerLabel>
+				<ControlPageLabel>Power (Zone 2)</ControlPageLabel>
+			</State>
+			<State id="zone2volume">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Volume (Zone 2 dB)</TriggerLabel>
+				<ControlPageLabel>Volume (Zone 2 dB)</ControlPageLabel>
+			</State>
+			<State id="zone2mute">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Mute (Zone 2)</TriggerLabel>
+				<ControlPageLabel>Mute (Zone 2)</ControlPageLabel>
+			</State>
+			<State id="zone2source">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Source Index (Zone 2)</TriggerLabel>
+				<ControlPageLabel>Source Index (Zone 2)</ControlPageLabel>
+			</State>
+			<State id="zone2sourceName">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Source Name (Zone 2)</TriggerLabel>
+				<ControlPageLabel>Source Name (Zone 2)</ControlPageLabel>
+			</State>
+			<State id="sep4">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="tunerFrequency">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Tuner Frequency Value (kHz/MHz)</TriggerLabel>
+				<ControlPageLabel>Tuner Frequency Value (kHz/MHz)</ControlPageLabel>
+			</State>
+			<State id="tunerFrequencyText">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Tuner Frequency Text</TriggerLabel>
+				<ControlPageLabel>Tuner Frequency Text</ControlPageLabel>
+			</State>
+			<State id="tunerBand">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Tuner Band (AM/FM)</TriggerLabel>
+				<ControlPageLabel>Tuner Band (AM/FM)</ControlPageLabel>
+			</State>
+			<State id="tunerPreset">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Tuner Preset</TriggerLabel>
+				<ControlPageLabel>Tuner Preset</ControlPageLabel>
+			</State>
+			<State id="sep5">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="siriusChannel">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Sirius Radio Channel</TriggerLabel>
+				<ControlPageLabel>Sirius Radio Channel</ControlPageLabel>
+			</State>
+			<State id="sep6">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="listeningMode">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Listening Mode</TriggerLabel>
+				<ControlPageLabel>Listening Mode</ControlPageLabel>
+			</State>
+			<State id="displayListeningMode">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Listening Mode (Displayed)</TriggerLabel>
+				<ControlPageLabel>Listening Mode (Displayed)</ControlPageLabel>
+			</State>
+			<State id="toneControl">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Tone Control</TriggerLabel>
+				<ControlPageLabel>Tone Control</ControlPageLabel>
+			</State>
+			<State id="toneBass">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Bass (Tone Control)</TriggerLabel>
+				<ControlPageLabel>Bass (Tone Control)</ControlPageLabel>
+			</State>
+			<State id="toneTreble">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Treble (Tone Control)</TriggerLabel>
+				<ControlPageLabel>Treble (Tone Control)</ControlPageLabel>
+			</State>
+			<State id="sep7">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="mcaccMemory">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>MCACC Memory</TriggerLabel>
+				<ControlPageLabel>MCACC Memory</ControlPageLabel>
+			</State>
+			<State id="mcaccMemoryName">
+				<ValueType>String</ValueType>
+				<TriggerLabel>MCACC Memory Name</TriggerLabel>
+				<ControlPageLabel>MCACC Memory Name</ControlPageLabel>
+			</State>
+			<State id="phaseControl">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Phase Control</TriggerLabel>
+				<ControlPageLabel>Phase Control</ControlPageLabel>
+			</State>
+			<State id="phaseControlPlusTime">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Phase Control Plus delay (ms)</TriggerLabel>
+				<ControlPageLabel>Phase Control Plus delay (ms)</ControlPageLabel>
+			</State>
+			<State id="soundDelay">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Sound Delay (sample frames)</TriggerLabel>
+				<ControlPageLabel>Sound Delay (sample frames)</ControlPageLabel>
+			</State>
+			<State id="vsb">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Virtual Surround Back</TriggerLabel>
+				<ControlPageLabel>Virtual Surround Back</ControlPageLabel>
+			</State>
+			<State id="vht">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Virtual Height</TriggerLabel>
+				<ControlPageLabel>Virtual Height</ControlPageLabel>
+			</State>
+			<State id="dialogEnhancement">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Dialog Enhancement</TriggerLabel>
+				<ControlPageLabel>Dialog Enhancement</ControlPageLabel>
+			</State>
+			<State id="signalSource">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Signal Source</TriggerLabel>
+				<ControlPageLabel>Signal Source</ControlPageLabel>
+			</State>
+			<State id="soundRetriever">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Sound Retriever</TriggerLabel>
+				<ControlPageLabel>Sound Retriever</ControlPageLabel>
+			</State>
+			<State id="analogInputAttenuator">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Analog Input Attenuator</TriggerLabel>
+				<ControlPageLabel>Analog Input Attenuator</ControlPageLabel>
+			</State>
+			<State id="lfeAttenuator">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>LFE Attenuator</TriggerLabel>
+				<ControlPageLabel>LFE Attenuator</ControlPageLabel>
+			</State>
+			<State id="lfeAttenuatorAmount">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>LFE Attenuation (dB)</TriggerLabel>
+				<ControlPageLabel>LFE Attenuation (dB)</ControlPageLabel>
+			</State>
+			<State id="sacdGain">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>SACD Gain (dB)</TriggerLabel>
+				<ControlPageLabel>SACD Gain (dB)</ControlPageLabel>
+			</State>
+			<State id="dynamicRangeCompression">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Dynamic Range Compression</TriggerLabel>
+				<ControlPageLabel>Dynamic Range Compression</ControlPageLabel>
+			</State>
+			<State id="equalizer">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Equalizer On</TriggerLabel>
+				<ControlPageLabel>Equalizer On</ControlPageLabel>
+			</State>
+			<State id="standingWave">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Standing Wave Compensation</TriggerLabel>
+				<ControlPageLabel>Standing Wave Compensation</ControlPageLabel>
+			</State>
+			<State id="autoDelay">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Auto Sound Delay</TriggerLabel>
+				<ControlPageLabel>Auto Sound Delay</ControlPageLabel>
+			</State>
+			<State id="digitalNR">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Digital Noise Reduction</TriggerLabel>
+				<ControlPageLabel>Digital Noise Reduction</ControlPageLabel>
+			</State>
+			<State id="dualMono">
+				<ValueType>Boolean</ValueType>
+				<TriggerLabel>Dual Mono</TriggerLabel>
+				<ControlPageLabel>Dual Mono</ControlPageLabel>
+			</State>
+			<State id="fixedPCM">
+				<ValueType>Boolean</ValueType>
+				<TriggerLabel>Fixed PCM Sample Rate</TriggerLabel>
+				<ControlPageLabel>Fixed PCM Sample Rate</ControlPageLabel>
+			</State>
+			<State id="pl2musicCenterWidth">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>ProLogic II Center Width</TriggerLabel>
+				<ControlPageLabel>ProLogic II Center Width</ControlPageLabel>
+			</State>
+			<State id="pl2musicPanorama">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>ProLogic II Panorama</TriggerLabel>
+				<ControlPageLabel>ProLogic II Panorama</ControlPageLabel>
+			</State>
+			<State id="pl2musicDimension">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>ProLogic II Dimension</TriggerLabel>
+				<ControlPageLabel>ProLogic II Dimension</ControlPageLabel>
+			</State>
+			<State id="pl2zHeightGain">
+				<ValueType>String</ValueType>
+				<TriggerLabel>ProLogic IIz Height Gain</TriggerLabel>
+				<ControlPageLabel>ProLogic IIz Height Gain</ControlPageLabel>
+			</State>
+			<State id="neo6centerImage">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Neo:6 Center Image</TriggerLabel>
+				<ControlPageLabel>Neo:6 Center Image</ControlPageLabel>
+			</State>
+			<State id="effectAmount">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Effect Amount</TriggerLabel>
+				<ControlPageLabel>Effect Amount</ControlPageLabel>
+			</State>
+			<State id="sep8">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="audioInputFormat">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Audio Input Format</TriggerLabel>
+				<ControlPageLabel>Audio Input Format</ControlPageLabel>
+			</State>
+			<State id="audioInputFrequency">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Audio Input Frequency</TriggerLabel>
+				<ControlPageLabel>Audio Input Frequency</ControlPageLabel>
+			</State>
+			<State id="inputChannels">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Input Channels</TriggerLabel>
+				<ControlPageLabel>Input Channels</ControlPageLabel>
+			</State>
+			<State id="outputChannels">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Output Channels</TriggerLabel>
+				<ControlPageLabel>Output Channels</ControlPageLabel>
+			</State>
+			<State id="channelVolumeL">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Front Left Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Front Left Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="channelVolumeR">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Front Right Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Front Right Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="channelVolumeC">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Center Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Center Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="channelVolumeSL">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Surround Left Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Surround Left Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="channelVolumeSR">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Surround Right Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Surround Right Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="channelVolumeSBL">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Surround Back Left Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Surround Back Left Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="channelVolumeSBR">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Surround Back Right Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Surround Back Right Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="channelVolumeSW">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Subwoofer Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Subwoofer Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="channelVolumeLH">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Front Left Height Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Front Left Height Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="channelVolumeRH">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Front Right Height Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Front Right Height Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="channelVolumeLW">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Front Left Wide Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Front Left Wide Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="channelVolumeRW">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Front Right Wide Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Front Right Wide Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="sep9">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="videoInputTerminal">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Video Input Terminal</TriggerLabel>
+				<ControlPageLabel>Video Input Terminal</ControlPageLabel>
+			</State>
+			<State id="videoInputResolution">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Video Input Resolution</TriggerLabel>
+				<ControlPageLabel>Video Input Resolution</ControlPageLabel>
+			</State>
+			<State id="videoInputAspect">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Video Input Aspect Ratio</TriggerLabel>
+				<ControlPageLabel>Video Input Aspect Ratio</ControlPageLabel>
+			</State>
+			<State id="videoInputColorFormat">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Video Input Color Format</TriggerLabel>
+				<ControlPageLabel>Video Input Color Format</ControlPageLabel>
+			</State>
+			<State id="videoInputColorSpace">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Video Input Color Space</TriggerLabel>
+				<ControlPageLabel>Video Input Color Space</ControlPageLabel>
+			</State>
+			<State id="videoInputBitDepth">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Video Input Bit Depth</TriggerLabel>
+				<ControlPageLabel>Video Input Bit Depth</ControlPageLabel>
+			</State>
+			<State id="sep10">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="videoOutputResolution">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Video Output Resolution</TriggerLabel>
+				<ControlPageLabel>Video Output Resolution</ControlPageLabel>
+			</State>
+			<State id="videoOutputAspect">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Video Output Aspect Ratio</TriggerLabel>
+				<ControlPageLabel>Video Output Aspect Ratio</ControlPageLabel>
+			</State>
+			<State id="videoOutputColorFormat">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Video Output Color Format</TriggerLabel>
+				<ControlPageLabel>Video Output Color Format</ControlPageLabel>
+			</State>
+			<State id="videoOutputColorSpace">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Video Output Color Space</TriggerLabel>
+				<ControlPageLabel>Video Output Color Space</ControlPageLabel>
+			</State>
+			<State id="videoOutputBitDepth">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Video Output Bit Depth</TriggerLabel>
+				<ControlPageLabel>Video Output Bit Depth</ControlPageLabel>
+			</State>
+			<State id="sep11">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="monitorRecommendedResolution">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Monitor Recommended Resolution</TriggerLabel>
+				<ControlPageLabel>Monitor Recommended Resolution</ControlPageLabel>
+			</State>
+			<State id="monitorColorSpaces">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Monitor Supported Color Spaces</TriggerLabel>
+				<ControlPageLabel>Monitor Supported Color Spaces</ControlPageLabel>
+			</State>
+			<State id="monitorBitDepth">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Monitor Bit Depth</TriggerLabel>
+				<ControlPageLabel>Monitor Bith Depth</ControlPageLabel>
+			</State>
+			<State id="sep12">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="videoConverter">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Video Converter On</TriggerLabel>
+				<ControlPageLabel>Video Converter On</ControlPageLabel>
+			</State>
+			<State id="videoResolution">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Preferred Video Resolution</TriggerLabel>
+				<ControlPageLabel>Preferred Video Resolution</ControlPageLabel>
+			</State>
+			<State id="videoPureCinema">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Pure Cinema Mode</TriggerLabel>
+				<ControlPageLabel>Pure Cinema Mode</ControlPageLabel>
+			</State>
+			<State id="videoProgressiveQuality">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Progressive Motion Quality</TriggerLabel>
+				<ControlPageLabel>Progressive Motion Quality</ControlPageLabel>
+			</State>
+			<State id="videoAdvancedAdjust">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Advanced Video Adjustment</TriggerLabel>
+				<ControlPageLabel>Advanced Video Adjustment</ControlPageLabel>
+			</State>
+			<State id="videoYNR">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Luminance Noise Reduction</TriggerLabel>
+				<ControlPageLabel>Luminance Noise Reduction</ControlPageLabel>
+			</State>
+			<State id="videoDetail">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Video Detail Adjustment</TriggerLabel>
+				<ControlPageLabel>Video Detail Adjustment</ControlPageLabel>
+			</State>
+			<State id="sep13">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="panelKeyLockMode">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Panel Key Lock Mode</TriggerLabel>
+				<ControlPageLabel>Panel Key Lock Mode</ControlPageLabel>
+			</State>
+			<State id="remoteLock">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Remote Lock</TriggerLabel>
+				<ControlPageLabel>Remote Lock</ControlPageLabel>
+			</State>
+		</States>
+	</Device>
+	<!-- Pioneer Receiver VSX-1122-K -->
+	<Device type="custom" id="vsx1122k">
+		<Name>VSX-1122-K</Name>
+		<ConfigUI>
+			<Field id="address" type="textfield">
+				<Label>Receiver IP Address:</Label>
+				<Description>Receiver IP address</Description>
+			</Field>
+			<Field id="separator0" type="separator"/>
+			<Field id="mcaccMemory1label" type="textfield">
+				<Label>MCACC Memory 1 Label:</Label>
+				<Description>MCACC Memory 1 Label</Description>
+			</Field>
+			<Field id="mcaccMemory2label" type="textfield">
+				<Label>MCACC Memory 2 Label:</Label>
+				<Description>MCACC Memory 2 Label</Description>
+			</Field>
+			<Field id="mcaccMemory3label" type="textfield">
+				<Label>MCACC Memory 3 Label:</Label>
+				<Description>MCACC Memory 3 Label</Description>
+			</Field>
+			<Field id="mcaccMemory4label" type="textfield">
+				<Label>MCACC Memory 4 Label:</Label>
+				<Description>MCACC Memory 4 Label</Description>
+			</Field>
+			<Field id="mcaccMemory5label" type="textfield">
+				<Label>MCACC Memory 5 Label:</Label>
+				<Description>MCACC Memory 5 Label</Description>
+			</Field>
+			<Field id="mcaccMemory6label" type="textfield">
+				<Label>MCACC Memory 6 Label:</Label>
+				<Description>MCACC Memory 6 Label</Description>
+			</Field>
+			<Field id="sep0" type="separator"/>
+			<Field id="instruction0" type="label" fontColor="darkgray" fontSize="small">
+				<Label>INSTRUCTIONS: For the Receiver IP Address, make sure that you're receiver has the "Network Standby" mode turned on in the "Network Setup" menu. Once that's turned on, find the receiver's IP address. Using the receiver's included IR remote control, press the "RECEIVER" power button (top left of remote) to turn on the receiver if it isn't already on.  Press the "RECEIVER" function button (middle right of remote) to ensure the next button presses are sent to the receiver and not another source device. Press the "HOME MENU" button. Use the up and down directional buttons to navigate to menu item 5 "Network Information." The first item on the Network Information screen will be the IP Address. Enter that address in the field above.
+				</Label>
+			</Field>
+			<Field id="instruction1" type="label" fontColor="darkgray" fontSize="small">
+				<Label>MCACC Memory Labels are optional and only used for display purposes (on control pages, etc). The lablels you enter here do not have to match the memory labels stored in the receiver's internal settings.
+				</Label>
+			</Field>
+			<Field id="instruction2" type="label" fontColor="darkgray" fontSize="small">
+				<Label>NOTES: 1) VSX-1122-K support is limited to Zones 1 and 2. 2) While other receiver models may not be listed, selecting one of the supported VSX models will likely work with most other networked Pioneer receivers.
+				</Label>
+			</Field>
+			<Field id="tryingToConnect" type="checkbox" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="source01label" type="textfield" hidden="true">
+				<!-- CD -->
+				<Label/>
+			</Field>
+			<Field id="source02label" type="textfield" hidden="true">
+				<!-- TUNER -->
+				<Label/>
+			</Field>
+			<Field id="source04label" type="textfield" hidden="true">
+				<!-- DVD -->
+				<Label/>
+			</Field>
+			<Field id="source05label" type="textfield" hidden="true">
+				<!-- TV -->
+				<Label/>
+			</Field>
+			<Field id="source06label" type="textfield" hidden="true">
+				<!-- SAT/CBL -->
+				<Label/>
+			</Field>
+			<Field id="source15label" type="textfield" hidden="true">
+				<!-- DVR/BDR -->
+				<Label/>
+			</Field>
+			<Field id="source17label" type="textfield" hidden="true">
+				<!-- iPod/USB -->
+				<Label/>
+			</Field>
+			<Field id="source19label" type="textfield" hidden="true">
+				<!-- HDMI 1 -->
+				<Label/>
+			</Field>
+			<Field id="source20label" type="textfield" hidden="true">
+				<!-- HDMI 2 -->
+				<Label/>
+			</Field>
+			<Field id="source21label" type="textfield" hidden="true">
+				<!-- HDMI 3 -->
+				<Label/>
+			</Field>
+			<Field id="source22label" type="textfield" hidden="true">
+				<!-- HDMI 4 -->
+				<Label/>
+			</Field>
+			<Field id="source23label" type="textfield" hidden="true">
+				<!-- HDMI 5 -->
+				<Label/>
+			</Field>
+			<Field id="source24label" type="textfield" hidden="true">
+				<!-- HDMI 6 -->
+				<Label/>
+			</Field>
+			<Field id="source25label" type="textfield" hidden="true">
+				<!-- BD -->
+				<Label/>
+			</Field>
+			<Field id="source33label" type="textfield" hidden="true">
+				<!-- ADAPTER PORT -->
+				<Label/>
+			</Field>
+			<Field id="source38label" type="textfield" hidden="true">
+				<!-- INTERNET RADIO -->
+				<Label/>
+			</Field>
+			<Field id="source40label" type="textfield" hidden="true">
+				<!-- SiriusXM -->
+				<Label/>
+			</Field>
+			<Field id="source41label" type="textfield" hidden="true">
+				<!-- PANDORA -->
+				<Label/>
+			</Field>
+			<Field id="source44label" type="textfield" hidden="true">
+				<!-- MEDIA SERVER -->
+				<Label/>
+			</Field>
+			<Field id="source45label" type="textfield" hidden="true">
+				<!-- FAVORITES -->
+				<Label/>
+			</Field>
+			<!-- Tuner Preset Names -->
+			<Field id="tunerPresetA1label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetA2label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetA3label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetA4label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetA5label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetA6label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetA7label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetA8label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetA9label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetB1label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetB2label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetB3label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetB4label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetB5label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetB6label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetB7label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetB8label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetB9label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetC1label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetC2label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetC3label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetC4label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetC5label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetC6label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetC7label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetC8label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetC9label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetD1label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetD2label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetD3label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetD4label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetD5label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetD6label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetD7label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetD8label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetD9label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetE1label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetE2label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetE3label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetE4label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetE5label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetE6label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetE7label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetE8label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetE9label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetF1label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetF2label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetF3label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetF4label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetF5label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetF6label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetF7label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetF8label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetF9label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="osdLanguage" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+		</ConfigUI>
+		<UiDisplayStateId>status</UiDisplayStateId>
+		<States>
+			<State id="status">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Status</TriggerLabel>
+				<ControlPageLabel>Status</ControlPageLabel>
+			</State>
+			<State id="onOffState">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Power On/Off</TriggerLabel>
+				<ControlPageLabel>Power On/Off</ControlPageLabel>
+			</State>
+			<State id="display">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Display</TriggerLabel>
+				<ControlPageLabel>Display</ControlPageLabel>
+			</State>
+			<State id="connected">
+				<ValueType>Boolean</ValueType>
+				<TriggerLabel>Connected</TriggerLabel>
+				<ControlPageLabel>Connected</ControlPageLabel>
+			</State>
+			<State id="sep0">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="speakers">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Enabled Speaker Sets</TriggerLabel>
+				<ControlPageLabel>Enabled Speaker Sets</ControlPageLabel>
+			</State>
+			<State id="speakerSystem">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Speaker System</TriggerLabel>
+				<ControlPageLabel>Speakers System</ControlPageLabel>
+			</State>
+			<State id="hdmiAudio">
+				<ValueType>Boolean</ValueType>
+				<TriggerLabel>HDMI Audio Through</TriggerLabel>
+				<ControlPageLabel>HDMI Audio Through</ControlPageLabel>
+			</State>
+			<State id="pqls">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>PQLS Auto</TriggerLabel>
+				<ControlPageLabel>PQLS Auto</ControlPageLabel>
+			</State>
+			<State id="operatingMode">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Operating Mode</TriggerLabel>
+				<ControlPageLabel>Operating Mode</ControlPageLabel>
+			</State>
+			<State id="sep1">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="sleepMode">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Sleep Timer On</TriggerLabel>
+				<ControlPageLabel>Sleep Timer On</ControlPageLabel>
+			</State>
+			<State id="sleepTime">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Sleep Time Remaining</TriggerLabel>
+				<ControlPageLabel>Sleep Time Remaining</ControlPageLabel>
+			</State>
+			<State id="sep2">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="zone1power">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Power (Zone 1)</TriggerLabel>
+				<ControlPageLabel>Power (Zone 1)</ControlPageLabel>
+			</State>
+			<State id="zone1volume">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Volume (Zone 1 dB)</TriggerLabel>
+				<ControlPageLabel>Volume (Zone 1 dB)</ControlPageLabel>
+			</State>
+			<State id="zone1mute">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Mute (Zone 1)</TriggerLabel>
+				<ControlPageLabel>Mute (Zone 1)</ControlPageLabel>
+			</State>
+			<State id="zone1source">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Source Index (Zone 1)</TriggerLabel>
+				<ControlPageLabel>Source Index (Zone 1)</ControlPageLabel>
+			</State>
+			<State id="zone1sourceName">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Source Name (Zone 1)</TriggerLabel>
+				<ControlPageLabel>Source Name (Zone 1)</ControlPageLabel>
+			</State>
+			<State id="sep3">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="zone2power">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Power (Zone 2)</TriggerLabel>
+				<ControlPageLabel>Power (Zone 2)</ControlPageLabel>
+			</State>
+			<State id="zone2volume">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Volume (Zone 2 dB)</TriggerLabel>
+				<ControlPageLabel>Volume (Zone 2 dB)</ControlPageLabel>
+			</State>
+			<State id="zone2mute">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Mute (Zone 2)</TriggerLabel>
+				<ControlPageLabel>Mute (Zone 2)</ControlPageLabel>
+			</State>
+			<State id="zone2source">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Source Index (Zone 2)</TriggerLabel>
+				<ControlPageLabel>Source Index (Zone 2)</ControlPageLabel>
+			</State>
+			<State id="zone2sourceName">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Source Name (Zone 2)</TriggerLabel>
+				<ControlPageLabel>Source Name (Zone 2)</ControlPageLabel>
+			</State>
+			<State id="sep4">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="tunerFrequency">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Tuner Frequency Value (kHz/MHz)</TriggerLabel>
+				<ControlPageLabel>Tuner Frequency Value (kHz/MHz)</ControlPageLabel>
+			</State>
+			<State id="tunerFrequencyText">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Tuner Frequency Text</TriggerLabel>
+				<ControlPageLabel>Tuner Frequency Text</ControlPageLabel>
+			</State>
+			<State id="tunerBand">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Tuner Band (AM/FM)</TriggerLabel>
+				<ControlPageLabel>Tuner Band (AM/FM)</ControlPageLabel>
+			</State>
+			<State id="tunerPreset">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Tuner Preset</TriggerLabel>
+				<ControlPageLabel>Tuner Preset</ControlPageLabel>
+			</State>
+			<State id="sep5">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="siriusChannel">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Sirius Radio Channel</TriggerLabel>
+				<ControlPageLabel>Sirius Radio Channel</ControlPageLabel>
+			</State>
+			<State id="sep6">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="listeningMode">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Listening Mode</TriggerLabel>
+				<ControlPageLabel>Listening Mode</ControlPageLabel>
+			</State>
+			<State id="displayListeningMode">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Listening Mode (Displayed)</TriggerLabel>
+				<ControlPageLabel>Listening Mode (Displayed)</ControlPageLabel>
+			</State>
+			<State id="toneControl">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Tone Control</TriggerLabel>
+				<ControlPageLabel>Tone Control</ControlPageLabel>
+			</State>
+			<State id="toneBass">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Bass (Tone Control)</TriggerLabel>
+				<ControlPageLabel>Bass (Tone Control)</ControlPageLabel>
+			</State>
+			<State id="toneTreble">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Treble (Tone Control)</TriggerLabel>
+				<ControlPageLabel>Treble (Tone Control)</ControlPageLabel>
+			</State>
+			<State id="sep7">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="mcaccMemory">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>MCACC Memory</TriggerLabel>
+				<ControlPageLabel>MCACC Memory</ControlPageLabel>
+			</State>
+			<State id="mcaccMemoryName">
+				<ValueType>String</ValueType>
+				<TriggerLabel>MCACC Memory Name</TriggerLabel>
+				<ControlPageLabel>MCACC Memory Name</ControlPageLabel>
+			</State>
+			<State id="phaseControl">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Phase Control</TriggerLabel>
+				<ControlPageLabel>Phase Control</ControlPageLabel>
+			</State>
+			<State id="phaseControlPlusTime">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Phase Control Plus delay (ms)</TriggerLabel>
+				<ControlPageLabel>Phase Control Plus delay (ms)</ControlPageLabel>
+			</State>
+			<State id="soundDelay">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Sound Delay (sample frames)</TriggerLabel>
+				<ControlPageLabel>Sound Delay (sample frames)</ControlPageLabel>
+			</State>
+			<State id="vsb">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Virtual Surround Back</TriggerLabel>
+				<ControlPageLabel>Virtual Surround Back</ControlPageLabel>
+			</State>
+			<State id="vht">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Virtual Height</TriggerLabel>
+				<ControlPageLabel>Virtual Height</ControlPageLabel>
+			</State>
+			<State id="dialogEnhancement">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Dialog Enhancement</TriggerLabel>
+				<ControlPageLabel>Dialog Enhancement</ControlPageLabel>
+			</State>
+			<State id="signalSource">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Signal Source</TriggerLabel>
+				<ControlPageLabel>Signal Source</ControlPageLabel>
+			</State>
+			<State id="soundRetriever">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Sound Retriever</TriggerLabel>
+				<ControlPageLabel>Sound Retriever</ControlPageLabel>
+			</State>
+			<State id="analogInputAttenuator">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Analog Input Attenuator</TriggerLabel>
+				<ControlPageLabel>Analog Input Attenuator</ControlPageLabel>
+			</State>
+			<State id="lfeAttenuator">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>LFE Attenuator</TriggerLabel>
+				<ControlPageLabel>LFE Attenuator</ControlPageLabel>
+			</State>
+			<State id="lfeAttenuatorAmount">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>LFE Attenuation (dB)</TriggerLabel>
+				<ControlPageLabel>LFE Attenuation (dB)</ControlPageLabel>
+			</State>
+			<State id="sacdGain">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>SACD Gain (dB)</TriggerLabel>
+				<ControlPageLabel>SACD Gain (dB)</ControlPageLabel>
+			</State>
+			<State id="dynamicRangeCompression">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Dynamic Range Compression</TriggerLabel>
+				<ControlPageLabel>Dynamic Range Compression</ControlPageLabel>
+			</State>
+			<State id="equalizer">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Equalizer On</TriggerLabel>
+				<ControlPageLabel>Equalizer On</ControlPageLabel>
+			</State>
+			<State id="standingWave">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Standing Wave Compensation</TriggerLabel>
+				<ControlPageLabel>Standing Wave Compensation</ControlPageLabel>
+			</State>
+			<State id="autoDelay">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Auto Sound Delay</TriggerLabel>
+				<ControlPageLabel>Auto Sound Delay</ControlPageLabel>
+			</State>
+			<State id="digitalNR">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Digital Noise Reduction</TriggerLabel>
+				<ControlPageLabel>Digital Noise Reduction</ControlPageLabel>
+			</State>
+			<State id="dualMono">
+				<ValueType>Boolean</ValueType>
+				<TriggerLabel>Dual Mono</TriggerLabel>
+				<ControlPageLabel>Dual Mono</ControlPageLabel>
+			</State>
+			<State id="fixedPCM">
+				<ValueType>Boolean</ValueType>
+				<TriggerLabel>Fixed PCM Sample Rate</TriggerLabel>
+				<ControlPageLabel>Fixed PCM Sample Rate</ControlPageLabel>
+			</State>
+			<State id="pl2musicCenterWidth">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>ProLogic II Center Width</TriggerLabel>
+				<ControlPageLabel>ProLogic II Center Width</ControlPageLabel>
+			</State>
+			<State id="pl2musicPanorama">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>ProLogic II Panorama</TriggerLabel>
+				<ControlPageLabel>ProLogic II Panorama</ControlPageLabel>
+			</State>
+			<State id="pl2musicDimension">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>ProLogic II Dimension</TriggerLabel>
+				<ControlPageLabel>ProLogic II Dimension</ControlPageLabel>
+			</State>
+			<State id="pl2zHeightGain">
+				<ValueType>String</ValueType>
+				<TriggerLabel>ProLogic IIz Height Gain</TriggerLabel>
+				<ControlPageLabel>ProLogic IIz Height Gain</ControlPageLabel>
+			</State>
+			<State id="neo6centerImage">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Neo:6 Center Image</TriggerLabel>
+				<ControlPageLabel>Neo:6 Center Image</ControlPageLabel>
+			</State>
+			<State id="effectAmount">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Effect Amount</TriggerLabel>
+				<ControlPageLabel>Effect Amount</ControlPageLabel>
+			</State>
+			<State id="sep8">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="audioInputFormat">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Audio Input Format</TriggerLabel>
+				<ControlPageLabel>Audio Input Format</ControlPageLabel>
+			</State>
+			<State id="audioInputFrequency">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Audio Input Frequency</TriggerLabel>
+				<ControlPageLabel>Audio Input Frequency</ControlPageLabel>
+			</State>
+			<State id="inputChannels">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Input Channels</TriggerLabel>
+				<ControlPageLabel>Input Channels</ControlPageLabel>
+			</State>
+			<State id="outputChannels">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Output Channels</TriggerLabel>
+				<ControlPageLabel>Output Channels</ControlPageLabel>
+			</State>
+			<State id="channelVolumeL">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Front Left Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Front Left Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="channelVolumeR">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Front Right Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Front Right Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="channelVolumeC">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Center Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Center Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="channelVolumeSL">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Surround Left Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Surround Left Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="channelVolumeSR">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Surround Right Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Surround Right Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="channelVolumeSBL">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Surround Back Left Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Surround Back Left Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="channelVolumeSBR">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Surround Back Right Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Surround Back Right Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="channelVolumeSW">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Subwoofer Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Subwoofer Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="channelVolumeLH">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Front Left Height Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Front Left Height Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="channelVolumeRH">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Front Right Height Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Front Right Height Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="channelVolumeLW">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Front Left Wide Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Front Left Wide Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="channelVolumeRW">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Front Right Wide Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Front Right Wide Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="sep9">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="videoInputTerminal">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Video Input Terminal</TriggerLabel>
+				<ControlPageLabel>Video Input Terminal</ControlPageLabel>
+			</State>
+			<State id="videoInputResolution">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Video Input Resolution</TriggerLabel>
+				<ControlPageLabel>Video Input Resolution</ControlPageLabel>
+			</State>
+			<State id="videoInputAspect">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Video Input Aspect Ratio</TriggerLabel>
+				<ControlPageLabel>Video Input Aspect Ratio</ControlPageLabel>
+			</State>
+			<State id="videoInputColorFormat">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Video Input Color Format</TriggerLabel>
+				<ControlPageLabel>Video Input Color Format</ControlPageLabel>
+			</State>
+			<State id="videoInputColorSpace">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Video Input Color Space</TriggerLabel>
+				<ControlPageLabel>Video Input Color Space</ControlPageLabel>
+			</State>
+			<State id="videoInputBitDepth">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Video Input Bit Depth</TriggerLabel>
+				<ControlPageLabel>Video Input Bit Depth</ControlPageLabel>
+			</State>
+			<State id="sep10">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="videoOutputResolution">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Video Output Resolution</TriggerLabel>
+				<ControlPageLabel>Video Output Resolution</ControlPageLabel>
+			</State>
+			<State id="videoOutputAspect">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Video Output Aspect Ratio</TriggerLabel>
+				<ControlPageLabel>Video Output Aspect Ratio</ControlPageLabel>
+			</State>
+			<State id="videoOutputColorFormat">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Video Output Color Format</TriggerLabel>
+				<ControlPageLabel>Video Output Color Format</ControlPageLabel>
+			</State>
+			<State id="videoOutputColorSpace">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Video Output Color Space</TriggerLabel>
+				<ControlPageLabel>Video Output Color Space</ControlPageLabel>
+			</State>
+			<State id="videoOutputBitDepth">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Video Output Bit Depth</TriggerLabel>
+				<ControlPageLabel>Video Output Bit Depth</ControlPageLabel>
+			</State>
+			<State id="sep11">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="monitorRecommendedResolution">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Monitor Recommended Resolution</TriggerLabel>
+				<ControlPageLabel>Monitor Recommended Resolution</ControlPageLabel>
+			</State>
+			<State id="monitorColorSpaces">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Monitor Supported Color Spaces</TriggerLabel>
+				<ControlPageLabel>Monitor Supported Color Spaces</ControlPageLabel>
+			</State>
+			<State id="monitorBitDepth">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Monitor Bit Depth</TriggerLabel>
+				<ControlPageLabel>Monitor Bith Depth</ControlPageLabel>
+			</State>
+			<State id="sep12">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="videoConverter">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Video Converter On</TriggerLabel>
+				<ControlPageLabel>Video Converter On</ControlPageLabel>
+			</State>
+			<State id="videoResolution">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Preferred Video Resolution</TriggerLabel>
+				<ControlPageLabel>Preferred Video Resolution</ControlPageLabel>
+			</State>
+			<State id="videoPureCinema">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Pure Cinema Mode</TriggerLabel>
+				<ControlPageLabel>Pure Cinema Mode</ControlPageLabel>
+			</State>
+			<State id="videoProgressiveQuality">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Progressive Motion Quality</TriggerLabel>
+				<ControlPageLabel>Progressive Motion Quality</ControlPageLabel>
+			</State>
+			<State id="videoAdvancedAdjust">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Advanced Video Adjustment</TriggerLabel>
+				<ControlPageLabel>Advanced Video Adjustment</ControlPageLabel>
+			</State>
+			<State id="videoYNR">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Luminance Noise Reduction</TriggerLabel>
+				<ControlPageLabel>Luminance Noise Reduction</ControlPageLabel>
+			</State>
+			<State id="videoDetail">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Video Detail Adjustment</TriggerLabel>
+				<ControlPageLabel>Video Detail Adjustment</ControlPageLabel>
+			</State>
+			<State id="sep13">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="panelKeyLockMode">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Panel Key Lock Mode</TriggerLabel>
+				<ControlPageLabel>Panel Key Lock Mode</ControlPageLabel>
+			</State>
+			<State id="remoteLock">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Remote Lock</TriggerLabel>
+				<ControlPageLabel>Remote Lock</ControlPageLabel>
+			</State>
+		</States>
+	</Device>
+	<!-- Pioneer Receiver VSX-1123-K -->
+	<Device type="custom" id="vsx1123k">
+		<Name>VSX-1123-K</Name>
+		<ConfigUI>
+			<Field id="address" type="textfield">
+				<Label>Receiver IP Address:</Label>
+				<Description>Receiver IP address</Description>
+			</Field>
+			<Field id="separator0" type="separator"/>
+			<Field id="mcaccMemory1label" type="textfield">
+				<Label>MCACC Memory 1 Label:</Label>
+				<Description>MCACC Memory 1 Label</Description>
+			</Field>
+			<Field id="mcaccMemory2label" type="textfield">
+				<Label>MCACC Memory 2 Label:</Label>
+				<Description>MCACC Memory 2 Label</Description>
+			</Field>
+			<Field id="mcaccMemory3label" type="textfield">
+				<Label>MCACC Memory 3 Label:</Label>
+				<Description>MCACC Memory 3 Label</Description>
+			</Field>
+			<Field id="mcaccMemory4label" type="textfield">
+				<Label>MCACC Memory 4 Label:</Label>
+				<Description>MCACC Memory 4 Label</Description>
+			</Field>
+			<Field id="mcaccMemory5label" type="textfield">
+				<Label>MCACC Memory 5 Label:</Label>
+				<Description>MCACC Memory 5 Label</Description>
+			</Field>
+			<Field id="mcaccMemory6label" type="textfield">
+				<Label>MCACC Memory 6 Label:</Label>
+				<Description>MCACC Memory 6 Label</Description>
+			</Field>
+			<Field id="sep0" type="separator"/>
+			<Field id="instruction0" type="label" fontColor="darkgray" fontSize="small">
+				<Label>INSTRUCTIONS: For the Receiver IP Address, make sure that you're receiver has the "Network Standby" mode turned on in the "Network Setup" menu. Once that's turned on, find the receiver's IP address. Using the receiver's included IR remote control, press the "RECEIVER" power button (top left of remote) to turn on the receiver if it isn't already on.  Press the "RECEIVER" function button (middle right of remote) to ensure the next button presses are sent to the receiver and not another source device. Press the "HOME MENU" button. Use the up and down directional buttons to navigate to menu item 5 "Network Information." The first item on the Network Information screen will be the IP Address. Enter that address in the field above.
+				</Label>
+			</Field>
+			<Field id="instruction1" type="label" fontColor="darkgray" fontSize="small">
+				<Label>MCACC Memory Labels are optional and only used for display purposes (on control pages, etc). The lablels you enter here do not have to match the memory labels stored in the receiver's internal settings.
+				</Label>
+			</Field>
+			<Field id="instruction2" type="label" fontColor="darkgray" fontSize="small">
+				<Label>NOTES: 1) VSX-1123-K support is limited to Zones 1 and 2. 2) While other receiver models may not be listed, selecting one of the supported VSX models will likely work with most other networked Pioneer receivers.
+				</Label>
+			</Field>
+			<Field id="tryingToConnect" type="checkbox" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="source01label" type="textfield" hidden="true">
+				<!-- CD -->
+				<Label/>
+			</Field>
+			<Field id="source02label" type="textfield" hidden="true">
+				<!-- TUNER -->
+				<Label/>
+			</Field>
+			<Field id="source04label" type="textfield" hidden="true">
+				<!-- DVD -->
+				<Label/>
+			</Field>
+			<Field id="source05label" type="textfield" hidden="true">
+				<!-- TV -->
+				<Label/>
+			</Field>
+			<Field id="source06label" type="textfield" hidden="true">
+				<!-- SAT/CBL -->
+				<Label/>
+			</Field>
+			<Field id="source15label" type="textfield" hidden="true">
+				<!-- DVR/BDR -->
+				<Label/>
+			</Field>
+			<Field id="source17label" type="textfield" hidden="true">
+				<!-- iPod/USB -->
+				<Label/>
+			</Field>
+			<Field id="source19label" type="textfield" hidden="true">
+				<!-- HDMI 1 -->
+				<Label/>
+			</Field>
+			<Field id="source20label" type="textfield" hidden="true">
+				<!-- HDMI 2 -->
+				<Label/>
+			</Field>
+			<Field id="source21label" type="textfield" hidden="true">
+				<!-- HDMI 3 -->
+				<Label/>
+			</Field>
+			<Field id="source22label" type="textfield" hidden="true">
+				<!-- HDMI 4 -->
+				<Label/>
+			</Field>
+			<Field id="source23label" type="textfield" hidden="true">
+				<!-- HDMI 5 -->
+				<Label/>
+			</Field>
+			<Field id="source24label" type="textfield" hidden="true">
+				<!-- HDMI 6 -->
+				<Label/>
+			</Field>
+			<Field id="source34label" type="textfield" hidden="true">
+				<!-- HDMI 7 -->
+				<Label/>
+			</Field>
+			<Field id="source25label" type="textfield" hidden="true">
+				<!-- BD -->
+				<Label/>
+			</Field>
+			<Field id="source33label" type="textfield" hidden="true">
+				<!-- ADAPTER PORT -->
+				<Label/>
+			</Field>
+			<Field id="source38label" type="textfield" hidden="true">
+				<!-- INTERNET RADIO -->
+				<Label/>
+			</Field>
+			<Field id="source40label" type="textfield" hidden="true">
+				<!-- SiriusXM -->
+				<Label/>
+			</Field>
+			<Field id="source41label" type="textfield" hidden="true">
+				<!-- PANDORA -->
+				<Label/>
+			</Field>
+			<Field id="source44label" type="textfield" hidden="true">
+				<!-- MEDIA SERVER -->
+				<Label/>
+			</Field>
+			<Field id="source45label" type="textfield" hidden="true">
+				<!-- FAVORITES -->
+				<Label/>
+			</Field>
+			<Field id="source48label" type="textfield" hidden="true">
+				<!-- MHL (Media Home Library) -->
+				<Label/>
+			</Field>
+			<!-- Tuner Preset Names -->
+			<Field id="tunerPresetA1label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetA2label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetA3label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetA4label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetA5label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetA6label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetA7label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetA8label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetA9label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetB1label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetB2label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetB3label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetB4label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetB5label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetB6label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetB7label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetB8label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetB9label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetC1label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetC2label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetC3label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetC4label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetC5label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetC6label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetC7label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetC8label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetC9label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetD1label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetD2label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetD3label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetD4label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetD5label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetD6label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetD7label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetD8label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetD9label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetE1label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetE2label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetE3label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetE4label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetE5label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetE6label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetE7label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetE8label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetE9label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetF1label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetF2label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetF3label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetF4label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetF5label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetF6label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetF7label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetF8label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetF9label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="osdLanguage" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+		</ConfigUI>
+		<UiDisplayStateId>status</UiDisplayStateId>
+		<States>
+			<State id="status">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Status</TriggerLabel>
+				<ControlPageLabel>Status</ControlPageLabel>
+			</State>
+			<State id="onOffState">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Power On/Off</TriggerLabel>
+				<ControlPageLabel>Power On/Off</ControlPageLabel>
+			</State>
+			<State id="display">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Display</TriggerLabel>
+				<ControlPageLabel>Display</ControlPageLabel>
+			</State>
+			<State id="connected">
+				<ValueType>Boolean</ValueType>
+				<TriggerLabel>Connected</TriggerLabel>
+				<ControlPageLabel>Connected</ControlPageLabel>
+			</State>
+			<State id="sep0">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="speakers">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Enabled Speaker Sets</TriggerLabel>
+				<ControlPageLabel>Enabled Speaker Sets</ControlPageLabel>
+			</State>
+			<State id="speakerSystem">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Speaker System</TriggerLabel>
+				<ControlPageLabel>Speakers System</ControlPageLabel>
+			</State>
+			<State id="hdmiAudio">
+				<ValueType>Boolean</ValueType>
+				<TriggerLabel>HDMI Audio Through</TriggerLabel>
+				<ControlPageLabel>HDMI Audio Through</ControlPageLabel>
+			</State>
+			<State id="pqls">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>PQLS Auto</TriggerLabel>
+				<ControlPageLabel>PQLS Auto</ControlPageLabel>
+			</State>
+			<State id="pqlsMode">
+				<ValueType>String</ValueType>
+				<TriggerLabel>PQLS Working Mode</TriggerLabel>
+				<ControlPageLabel>PQLS Working Mode</ControlPageLabel>
+			</State>
+			<State id="operatingMode">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Operating Mode</TriggerLabel>
+				<ControlPageLabel>Operating Mode</ControlPageLabel>
+			</State>
+			<State id="sep1">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="sleepMode">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Sleep Timer On</TriggerLabel>
+				<ControlPageLabel>Sleep Timer On</ControlPageLabel>
+			</State>
+			<State id="sleepTime">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Sleep Time Remaining</TriggerLabel>
+				<ControlPageLabel>Sleep Time Remaining</ControlPageLabel>
+			</State>
+			<State id="sep2">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="zone1power">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Power (Zone 1)</TriggerLabel>
+				<ControlPageLabel>Power (Zone 1)</ControlPageLabel>
+			</State>
+			<State id="zone1volume">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Volume (Zone 1 dB)</TriggerLabel>
+				<ControlPageLabel>Volume (Zone 1 dB)</ControlPageLabel>
+			</State>
+			<State id="zone1mute">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Mute (Zone 1)</TriggerLabel>
+				<ControlPageLabel>Mute (Zone 1)</ControlPageLabel>
+			</State>
+			<State id="zone1source">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Source Index (Zone 1)</TriggerLabel>
+				<ControlPageLabel>Source Index (Zone 1)</ControlPageLabel>
+			</State>
+			<State id="zone1sourceName">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Source Name (Zone 1)</TriggerLabel>
+				<ControlPageLabel>Source Name (Zone 1)</ControlPageLabel>
+			</State>
+			<State id="sep3">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="zone2power">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Power (Zone 2)</TriggerLabel>
+				<ControlPageLabel>Power (Zone 2)</ControlPageLabel>
+			</State>
+			<State id="zone2volume">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Volume (Zone 2 dB)</TriggerLabel>
+				<ControlPageLabel>Volume (Zone 2 dB)</ControlPageLabel>
+			</State>
+			<State id="zone2mute">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Mute (Zone 2)</TriggerLabel>
+				<ControlPageLabel>Mute (Zone 2)</ControlPageLabel>
+			</State>
+			<State id="zone2source">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Source Index (Zone 2)</TriggerLabel>
+				<ControlPageLabel>Source Index (Zone 2)</ControlPageLabel>
+			</State>
+			<State id="zone2sourceName">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Source Name (Zone 2)</TriggerLabel>
+				<ControlPageLabel>Source Name (Zone 2)</ControlPageLabel>
+			</State>
+			<State id="sep4">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="tunerFrequency">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Tuner Frequency Value (kHz/MHz)</TriggerLabel>
+				<ControlPageLabel>Tuner Frequency Value (kHz/MHz)</ControlPageLabel>
+			</State>
+			<State id="tunerFrequencyText">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Tuner Frequency Text</TriggerLabel>
+				<ControlPageLabel>Tuner Frequency Text</ControlPageLabel>
+			</State>
+			<State id="tunerBand">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Tuner Band (AM/FM)</TriggerLabel>
+				<ControlPageLabel>Tuner Band (AM/FM)</ControlPageLabel>
+			</State>
+			<State id="tunerPreset">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Tuner Preset</TriggerLabel>
+				<ControlPageLabel>Tuner Preset</ControlPageLabel>
+			</State>
+			<State id="sep5">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="siriusChannel">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Sirius Radio Channel</TriggerLabel>
+				<ControlPageLabel>Sirius Radio Channel</ControlPageLabel>
+			</State>
+			<State id="sep6">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="listeningMode">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Listening Mode</TriggerLabel>
+				<ControlPageLabel>Listening Mode</ControlPageLabel>
+			</State>
+			<State id="displayListeningMode">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Listening Mode (Displayed)</TriggerLabel>
+				<ControlPageLabel>Listening Mode (Displayed)</ControlPageLabel>
+			</State>
+			<State id="toneControl">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Tone Control</TriggerLabel>
+				<ControlPageLabel>Tone Control</ControlPageLabel>
+			</State>
+			<State id="toneBass">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Bass (Tone Control)</TriggerLabel>
+				<ControlPageLabel>Bass (Tone Control)</ControlPageLabel>
+			</State>
+			<State id="toneTreble">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Treble (Tone Control)</TriggerLabel>
+				<ControlPageLabel>Treble (Tone Control)</ControlPageLabel>
+			</State>
+			<State id="sep7">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="mcaccMemory">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>MCACC Memory</TriggerLabel>
+				<ControlPageLabel>MCACC Memory</ControlPageLabel>
+			</State>
+			<State id="mcaccMemoryName">
+				<ValueType>String</ValueType>
+				<TriggerLabel>MCACC Memory Name</TriggerLabel>
+				<ControlPageLabel>MCACC Memory Name</ControlPageLabel>
+			</State>
+			<State id="phaseControl">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Phase Control</TriggerLabel>
+				<ControlPageLabel>Phase Control</ControlPageLabel>
+			</State>
+			<State id="phaseControlPlusTime">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Phase Control Plus delay (ms)</TriggerLabel>
+				<ControlPageLabel>Phase Control Plus delay (ms)</ControlPageLabel>
+			</State>
+			<State id="phaseControlPlusWorkingTime">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Phase Control Plus Working delay (ms)</TriggerLabel>
+				<ControlPageLabel>Phase Control Plus Working delay (ms)</ControlPageLabel>
+			</State>
+			<State id="phaseControlPlusReversed">
+				<ValueType>Boolean</ValueType>
+				<TriggerLabel>Phase Control Plus Reversed Phase</TriggerLabel>
+				<ControlPageLabel>Phase Control Plus Reversed Phase</ControlPageLabel>
+			</State>
+			<State id="soundDelay">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Sound Delay (sample frames)</TriggerLabel>
+				<ControlPageLabel>Sound Delay (sample frames)</ControlPageLabel>
+			</State>
+			<State id="vsp">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Virtual Speakers</TriggerLabel>
+				<ControlPageLabel>Virtual Speakers</ControlPageLabel>
+			</State>
+			<State id="vsb">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Virtual Surround Back</TriggerLabel>
+				<ControlPageLabel>Virtual Surround Back</ControlPageLabel>
+			</State>
+			<State id="vht">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Virtual Height</TriggerLabel>
+				<ControlPageLabel>Virtual Height</ControlPageLabel>
+			</State>
+			<State id="dialogEnhancement">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Dialog Enhancement</TriggerLabel>
+				<ControlPageLabel>Dialog Enhancement</ControlPageLabel>
+			</State>
+			<State id="signalSource">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Signal Source</TriggerLabel>
+				<ControlPageLabel>Signal Source</ControlPageLabel>
+			</State>
+			<State id="soundRetriever">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Sound Retriever</TriggerLabel>
+				<ControlPageLabel>Sound Retriever</ControlPageLabel>
+			</State>
+			<State id="analogInputAttenuator">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Analog Input Attenuator</TriggerLabel>
+				<ControlPageLabel>Analog Input Attenuator</ControlPageLabel>
+			</State>
+			<State id="lfeAttenuator">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>LFE Attenuator</TriggerLabel>
+				<ControlPageLabel>LFE Attenuator</ControlPageLabel>
+			</State>
+			<State id="lfeAttenuatorAmount">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>LFE Attenuation (dB)</TriggerLabel>
+				<ControlPageLabel>LFE Attenuation (dB)</ControlPageLabel>
+			</State>
+			<State id="sacdGain">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>SACD Gain (dB)</TriggerLabel>
+				<ControlPageLabel>SACD Gain (dB)</ControlPageLabel>
+			</State>
+			<State id="dynamicRangeCompression">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Dynamic Range Compression</TriggerLabel>
+				<ControlPageLabel>Dynamic Range Compression</ControlPageLabel>
+			</State>
+			<State id="equalizer">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Equalizer On</TriggerLabel>
+				<ControlPageLabel>Equalizer On</ControlPageLabel>
+			</State>
+			<State id="standingWave">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Standing Wave Compensation</TriggerLabel>
+				<ControlPageLabel>Standing Wave Compensation</ControlPageLabel>
+			</State>
+			<State id="autoDelay">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Auto Sound Delay</TriggerLabel>
+				<ControlPageLabel>Auto Sound Delay</ControlPageLabel>
+			</State>
+			<State id="digitalNR">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Digital Noise Reduction</TriggerLabel>
+				<ControlPageLabel>Digital Noise Reduction</ControlPageLabel>
+			</State>
+			<State id="hiBit24">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Hi-bit 24</TriggerLabel>
+				<ControlPageLabel>Hi-bit 24</ControlPageLabel>
+			</State>
+			<State id="dualMono">
+				<ValueType>Boolean</ValueType>
+				<TriggerLabel>Dual Mono</TriggerLabel>
+				<ControlPageLabel>Dual Mono</ControlPageLabel>
+			</State>
+			<State id="fixedPCM">
+				<ValueType>Boolean</ValueType>
+				<TriggerLabel>Fixed PCM Sample Rate</TriggerLabel>
+				<ControlPageLabel>Fixed PCM Sample Rate</ControlPageLabel>
+			</State>
+			<State id="pl2musicCenterWidth">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>ProLogic II Center Width</TriggerLabel>
+				<ControlPageLabel>ProLogic II Center Width</ControlPageLabel>
+			</State>
+			<State id="pl2musicPanorama">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>ProLogic II Panorama</TriggerLabel>
+				<ControlPageLabel>ProLogic II Panorama</ControlPageLabel>
+			</State>
+			<State id="pl2musicDimension">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>ProLogic II Dimension</TriggerLabel>
+				<ControlPageLabel>ProLogic II Dimension</ControlPageLabel>
+			</State>
+			<State id="pl2zHeightGain">
+				<ValueType>String</ValueType>
+				<TriggerLabel>ProLogic IIz Height Gain</TriggerLabel>
+				<ControlPageLabel>ProLogic IIz Height Gain</ControlPageLabel>
+			</State>
+			<State id="neo6centerImage">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Neo:6 Center Image</TriggerLabel>
+				<ControlPageLabel>Neo:6 Center Image</ControlPageLabel>
+			</State>
+			<State id="effectAmount">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Effect Amount</TriggerLabel>
+				<ControlPageLabel>Effect Amount</ControlPageLabel>
+			</State>
+			<State id="sep8">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="audioInputFormat">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Audio Input Format</TriggerLabel>
+				<ControlPageLabel>Audio Input Format</ControlPageLabel>
+			</State>
+			<State id="audioInputFrequency">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Audio Input Frequency</TriggerLabel>
+				<ControlPageLabel>Audio Input Frequency</ControlPageLabel>
+			</State>
+			<State id="audioOutputFrequency">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Audio Output Frequency</TriggerLabel>
+				<ControlPageLabel>Audio Output Frequency</ControlPageLabel>
+			</State>
+			<State id="audioOutputBitDepth">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Audio Output Bit Depth</TriggerLabel>
+				<ControlPageLabel>Audio Output Bit Depth</ControlPageLabel>
+			</State>
+			<State id="inputChannels">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Input Channels</TriggerLabel>
+				<ControlPageLabel>Input Channels</ControlPageLabel>
+			</State>
+			<State id="outputChannels">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Output Channels</TriggerLabel>
+				<ControlPageLabel>Output Channels</ControlPageLabel>
+			</State>
+			<State id="channelVolumeL">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Front Left Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Front Left Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="channelVolumeR">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Front Right Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Front Right Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="channelVolumeC">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Center Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Center Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="channelVolumeSL">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Surround Left Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Surround Left Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="channelVolumeSR">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Surround Right Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Surround Right Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="channelVolumeSBL">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Surround Back Left Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Surround Back Left Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="channelVolumeSBR">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Surround Back Right Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Surround Back Right Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="channelVolumeSW">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Subwoofer Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Subwoofer Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="channelVolumeLH">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Front Left Height Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Front Left Height Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="channelVolumeRH">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Front Right Height Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Front Right Height Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="channelVolumeLW">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Front Left Wide Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Front Left Wide Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="channelVolumeRW">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Front Right Wide Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Front Right Wide Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="sep9">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="videoInputTerminal">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Video Input Terminal</TriggerLabel>
+				<ControlPageLabel>Video Input Terminal</ControlPageLabel>
+			</State>
+			<State id="videoInputResolution">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Video Input Resolution</TriggerLabel>
+				<ControlPageLabel>Video Input Resolution</ControlPageLabel>
+			</State>
+			<State id="videoInputAspect">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Video Input Aspect Ratio</TriggerLabel>
+				<ControlPageLabel>Video Input Aspect Ratio</ControlPageLabel>
+			</State>
+			<State id="videoInputColorFormat">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Video Input Color Format</TriggerLabel>
+				<ControlPageLabel>Video Input Color Format</ControlPageLabel>
+			</State>
+			<State id="videoInputColorSpace">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Video Input Color Space</TriggerLabel>
+				<ControlPageLabel>Video Input Color Space</ControlPageLabel>
+			</State>
+			<State id="videoInputBitDepth">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Video Input Bit Depth</TriggerLabel>
+				<ControlPageLabel>Video Input Bit Depth</ControlPageLabel>
+			</State>
+			<State id="sep10">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="videoOutputResolution">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Video Output Resolution</TriggerLabel>
+				<ControlPageLabel>Video Output Resolution</ControlPageLabel>
+			</State>
+			<State id="videoOutputAspect">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Video Output Aspect Ratio</TriggerLabel>
+				<ControlPageLabel>Video Output Aspect Ratio</ControlPageLabel>
+			</State>
+			<State id="videoOutputColorFormat">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Video Output Color Format</TriggerLabel>
+				<ControlPageLabel>Video Output Color Format</ControlPageLabel>
+			</State>
+			<State id="videoOutputColorSpace">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Video Output Color Space</TriggerLabel>
+				<ControlPageLabel>Video Output Color Space</ControlPageLabel>
+			</State>
+			<State id="videoOutputBitDepth">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Video Output Bit Depth</TriggerLabel>
+				<ControlPageLabel>Video Output Bit Depth</ControlPageLabel>
+			</State>
+			<State id="sep11">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="monitorRecommendedResolution">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Monitor Recommended Resolution</TriggerLabel>
+				<ControlPageLabel>Monitor Recommended Resolution</ControlPageLabel>
+			</State>
+			<State id="monitorColorSpaces">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Monitor Supported Color Spaces</TriggerLabel>
+				<ControlPageLabel>Monitor Supported Color Spaces</ControlPageLabel>
+			</State>
+			<State id="monitorBitDepth">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Monitor Bit Depth</TriggerLabel>
+				<ControlPageLabel>Monitor Bith Depth</ControlPageLabel>
+			</State>
+			<State id="sep12">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="videoConverter">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Video Converter On</TriggerLabel>
+				<ControlPageLabel>Video Converter On</ControlPageLabel>
+			</State>
+			<State id="videoResolution">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Preferred Video Resolution</TriggerLabel>
+				<ControlPageLabel>Preferred Video Resolution</ControlPageLabel>
+			</State>
+			<State id="videoPureCinema">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Pure Cinema Mode</TriggerLabel>
+				<ControlPageLabel>Pure Cinema Mode</ControlPageLabel>
+			</State>
+			<State id="videoProgressiveQuality">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Progressive Motion Quality</TriggerLabel>
+				<ControlPageLabel>Progressive Motion Quality</ControlPageLabel>
+			</State>
+			<State id="videoAdvancedAdjust">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Advanced Video Adjustment</TriggerLabel>
+				<ControlPageLabel>Advanced Video Adjustment</ControlPageLabel>
+			</State>
+			<State id="videoYNR">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Luminance Noise Reduction</TriggerLabel>
+				<ControlPageLabel>Luminance Noise Reduction</ControlPageLabel>
+			</State>
+			<State id="videoDetail">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Video Detail Adjustment</TriggerLabel>
+				<ControlPageLabel>Video Detail Adjustment</ControlPageLabel>
+			</State>
+			<State id="sep13">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="panelKeyLockMode">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Panel Key Lock Mode</TriggerLabel>
+				<ControlPageLabel>Panel Key Lock Mode</ControlPageLabel>
+			</State>
+			<State id="remoteLock">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Remote Lock</TriggerLabel>
+				<ControlPageLabel>Remote Lock</ControlPageLabel>
+			</State>
+		</States>
+	</Device>
+	<!-- Pioneer Receiver SC-75 -->
+	<Device type="custom" id="sc75">
+		<Name>SC-75</Name>
+		<ConfigUI>
+			<Field id="address" type="textfield">
+				<Label>Receiver IP Address:</Label>
+				<Description>Receiver IP address</Description>
+			</Field>
+			<Field id="separator0" type="separator"/>
+			<Field id="mcaccMemory1label" type="textfield">
+				<Label>MCACC Memory 1 Label:</Label>
+				<Description>MCACC Memory 1 Label</Description>
+			</Field>
+			<Field id="mcaccMemory2label" type="textfield">
+				<Label>MCACC Memory 2 Label:</Label>
+				<Description>MCACC Memory 2 Label</Description>
+			</Field>
+			<Field id="mcaccMemory3label" type="textfield">
+				<Label>MCACC Memory 3 Label:</Label>
+				<Description>MCACC Memory 3 Label</Description>
+			</Field>
+			<Field id="mcaccMemory4label" type="textfield">
+				<Label>MCACC Memory 4 Label:</Label>
+				<Description>MCACC Memory 4 Label</Description>
+			</Field>
+			<Field id="mcaccMemory5label" type="textfield">
+				<Label>MCACC Memory 5 Label:</Label>
+				<Description>MCACC Memory 5 Label</Description>
+			</Field>
+			<Field id="mcaccMemory6label" type="textfield">
+				<Label>MCACC Memory 6 Label:</Label>
+				<Description>MCACC Memory 6 Label</Description>
+			</Field>
+			<Field id="sep0" type="separator"/>
+			<Field id="instruction0" type="label" fontColor="darkgray" fontSize="small">
+				<Label>INSTRUCTIONS: For the Receiver IP Address, make sure that you're receiver has the "Network Standby" mode turned on in the "Network Setup" menu. Once that's turned on, find the receiver's IP address. Using the receiver's included IR remote control, press the "RECEIVER" power button (top left of remote) to turn on the receiver if it isn't already on.  Press the "RECEIVER" function button (middle right of remote) to ensure the next button presses are sent to the receiver and not another source device. Press the "HOME MENU" button. Use the up and down directional buttons to navigate to menu item 5 "Network Information." The first item on the Network Information screen will be the IP Address. Enter that address in the field above.
+				</Label>
+			</Field>
+			<Field id="instruction1" type="label" fontColor="darkgray" fontSize="small">
+				<Label>MCACC Memory Labels are optional and only used for display purposes (on control pages, etc). The lablels you enter here do not have to match the memory labels stored in the receiver's internal settings.
+				</Label>
+			</Field>
+			<Field id="instruction2" type="label" fontColor="darkgray" fontSize="small">
+				<Label>NOTES: 1) SC-75 support is limited to Zones 1 and 2. 2) While other receiver models may not be listed, selecting one of the supported SC or VSX models will likely work with most other networked Pioneer receivers.
+				</Label>
+			</Field>
+			<Field id="tryingToConnect" type="checkbox" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="source01label" type="textfield" hidden="true">
+				<!-- CD -->
+				<Label/>
+			</Field>
+			<Field id="source02label" type="textfield" hidden="true">
+				<!-- TUNER -->
+				<Label/>
+			</Field>
+			<Field id="source04label" type="textfield" hidden="true">
+				<!-- DVD -->
+				<Label/>
+			</Field>
+			<Field id="source05label" type="textfield" hidden="true">
+				<!-- TV -->
+				<Label/>
+			</Field>
+			<Field id="source06label" type="textfield" hidden="true">
+				<!-- SAT/CBL -->
+				<Label/>
+			</Field>
+			<Field id="source15label" type="textfield" hidden="true">
+				<!-- DVR/BDR -->
+				<Label/>
+			</Field>
+			<Field id="source17label" type="textfield" hidden="true">
+				<!-- iPod/USB -->
+				<Label/>
+			</Field>
+			<Field id="source19label" type="textfield" hidden="true">
+				<!-- HDMI 1 -->
+				<Label/>
+			</Field>
+			<Field id="source20label" type="textfield" hidden="true">
+				<!-- HDMI 2 -->
+				<Label/>
+			</Field>
+			<Field id="source21label" type="textfield" hidden="true">
+				<!-- HDMI 3 -->
+				<Label/>
+			</Field>
+			<Field id="source22label" type="textfield" hidden="true">
+				<!-- HDMI 4 -->
+				<Label/>
+			</Field>
+			<Field id="source23label" type="textfield" hidden="true">
+				<!-- HDMI 5 -->
+				<Label/>
+			</Field>
+			<Field id="source24label" type="textfield" hidden="true">
+				<!-- HDMI 6 -->
+				<Label/>
+			</Field>
+			<Field id="source34label" type="textfield" hidden="true">
+				<!-- HDMI 7 -->
+				<Label/>
+			</Field>
+			<Field id="source35label" type="textfield" hidden="true">
+				<!-- HDMI 8 -->
+				<Label/>
+			</Field>
+			<Field id="source25label" type="textfield" hidden="true">
+				<!-- BD -->
+				<Label/>
+			</Field>
+			<Field id="source33label" type="textfield" hidden="true">
+				<!-- ADAPTER PORT -->
+				<Label/>
+			</Field>
+			<Field id="source38label" type="textfield" hidden="true">
+				<!-- INTERNET RADIO -->
+				<Label/>
+			</Field>
+			<Field id="source41label" type="textfield" hidden="true">
+				<!-- PANDORA -->
+				<Label/>
+			</Field>
+			<Field id="source44label" type="textfield" hidden="true">
+				<!-- MEDIA SERVER -->
+				<Label/>
+			</Field>
+			<Field id="source45label" type="textfield" hidden="true">
+				<!-- FAVORITES -->
+				<Label/>
+			</Field>
+			<Field id="source48label" type="textfield" hidden="true">
+				<!-- MHL (Media Home Library) -->
+				<Label/>
+			</Field>
+			<!-- Tuner Preset Names -->
+			<Field id="tunerPresetA1label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetA2label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetA3label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetA4label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetA5label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetA6label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetA7label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetA8label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetA9label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetB1label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetB2label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetB3label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetB4label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetB5label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetB6label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetB7label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetB8label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetB9label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetC1label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetC2label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetC3label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetC4label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetC5label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetC6label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetC7label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetC8label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetC9label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetD1label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetD2label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetD3label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetD4label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetD5label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetD6label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetD7label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetD8label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetD9label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetE1label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetE2label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetE3label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetE4label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetE5label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetE6label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetE7label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetE8label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetE9label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetF1label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetF2label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetF3label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetF4label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetF5label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetF6label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetF7label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetF8label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="tunerPresetF9label" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+			<Field id="osdLanguage" type="textfield" hidden="true">
+				<Label/>
+			</Field>
+		</ConfigUI>
+		<UiDisplayStateId>status</UiDisplayStateId>
+		<States>
+			<State id="status">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Status</TriggerLabel>
+				<ControlPageLabel>Status</ControlPageLabel>
+			</State>
+			<State id="onOffState">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Power On/Off</TriggerLabel>
+				<ControlPageLabel>Power On/Off</ControlPageLabel>
+			</State>
+			<State id="display">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Display</TriggerLabel>
+				<ControlPageLabel>Display</ControlPageLabel>
+			</State>
+			<State id="connected">
+				<ValueType>Boolean</ValueType>
+				<TriggerLabel>Connected</TriggerLabel>
+				<ControlPageLabel>Connected</ControlPageLabel>
+			</State>
+			<State id="sep0">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="speakers">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Enabled Speaker Sets</TriggerLabel>
+				<ControlPageLabel>Enabled Speaker Sets</ControlPageLabel>
+			</State>
+			<State id="speakerSystem">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Speaker System</TriggerLabel>
+				<ControlPageLabel>Speakers System</ControlPageLabel>
+			</State>
+			<State id="hdmiAudio">
+				<ValueType>Boolean</ValueType>
+				<TriggerLabel>HDMI Audio Through</TriggerLabel>
+				<ControlPageLabel>HDMI Audio Through</ControlPageLabel>
+			</State>
+			<State id="pqls">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>PQLS Auto</TriggerLabel>
+				<ControlPageLabel>PQLS Auto</ControlPageLabel>
+			</State>
+			<State id="pqlsMode">
+				<ValueType>String</ValueType>
+				<TriggerLabel>PQLS Working Mode</TriggerLabel>
+				<ControlPageLabel>PQLS Working Mode</ControlPageLabel>
+			</State>
+			<State id="operatingMode">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Operating Mode</TriggerLabel>
+				<ControlPageLabel>Operating Mode</ControlPageLabel>
+			</State>
+			<State id="sep1">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="sleepMode">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Sleep Timer On</TriggerLabel>
+				<ControlPageLabel>Sleep Timer On</ControlPageLabel>
+			</State>
+			<State id="sleepTime">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Sleep Time Remaining</TriggerLabel>
+				<ControlPageLabel>Sleep Time Remaining</ControlPageLabel>
+			</State>
+			<State id="sep2">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="zone1power">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Power (Zone 1)</TriggerLabel>
+				<ControlPageLabel>Power (Zone 1)</ControlPageLabel>
+			</State>
+			<State id="zone1volume">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Volume (Zone 1 dB)</TriggerLabel>
+				<ControlPageLabel>Volume (Zone 1 dB)</ControlPageLabel>
+			</State>
+			<State id="zone1mute">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Mute (Zone 1)</TriggerLabel>
+				<ControlPageLabel>Mute (Zone 1)</ControlPageLabel>
+			</State>
+			<State id="zone1source">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Source Index (Zone 1)</TriggerLabel>
+				<ControlPageLabel>Source Index (Zone 1)</ControlPageLabel>
+			</State>
+			<State id="zone1sourceName">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Source Name (Zone 1)</TriggerLabel>
+				<ControlPageLabel>Source Name (Zone 1)</ControlPageLabel>
+			</State>
+			<State id="sep3">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="zone2power">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Power (Zone 2)</TriggerLabel>
+				<ControlPageLabel>Power (Zone 2)</ControlPageLabel>
+			</State>
+			<State id="zone2volume">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Volume (Zone 2 dB)</TriggerLabel>
+				<ControlPageLabel>Volume (Zone 2 dB)</ControlPageLabel>
+			</State>
+			<State id="zone2mute">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Mute (Zone 2)</TriggerLabel>
+				<ControlPageLabel>Mute (Zone 2)</ControlPageLabel>
+			</State>
+			<State id="zone2source">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Source Index (Zone 2)</TriggerLabel>
+				<ControlPageLabel>Source Index (Zone 2)</ControlPageLabel>
+			</State>
+			<State id="zone2sourceName">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Source Name (Zone 2)</TriggerLabel>
+				<ControlPageLabel>Source Name (Zone 2)</ControlPageLabel>
+			</State>
+			<State id="sep4">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="tunerFrequency">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Tuner Frequency Value (kHz/MHz)</TriggerLabel>
+				<ControlPageLabel>Tuner Frequency Value (kHz/MHz)</ControlPageLabel>
+			</State>
+			<State id="tunerFrequencyText">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Tuner Frequency Text</TriggerLabel>
+				<ControlPageLabel>Tuner Frequency Text</ControlPageLabel>
+			</State>
+			<State id="tunerBand">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Tuner Band (AM/FM)</TriggerLabel>
+				<ControlPageLabel>Tuner Band (AM/FM)</ControlPageLabel>
+			</State>
+			<State id="tunerPreset">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Tuner Preset</TriggerLabel>
+				<ControlPageLabel>Tuner Preset</ControlPageLabel>
+			</State>
+			<State id="sep5">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="siriusChannel">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Sirius Radio Channel</TriggerLabel>
+				<ControlPageLabel>Sirius Radio Channel</ControlPageLabel>
+			</State>
+			<State id="sep6">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="listeningMode">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Listening Mode</TriggerLabel>
+				<ControlPageLabel>Listening Mode</ControlPageLabel>
+			</State>
+			<State id="displayListeningMode">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Listening Mode (Displayed)</TriggerLabel>
+				<ControlPageLabel>Listening Mode (Displayed)</ControlPageLabel>
+			</State>
+			<State id="toneControl">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Tone Control</TriggerLabel>
+				<ControlPageLabel>Tone Control</ControlPageLabel>
+			</State>
+			<State id="toneBass">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Bass (Tone Control)</TriggerLabel>
+				<ControlPageLabel>Bass (Tone Control)</ControlPageLabel>
+			</State>
+			<State id="toneTreble">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Treble (Tone Control)</TriggerLabel>
+				<ControlPageLabel>Treble (Tone Control)</ControlPageLabel>
+			</State>
+			<State id="sep7">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="mcaccMemory">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>MCACC Memory</TriggerLabel>
+				<ControlPageLabel>MCACC Memory</ControlPageLabel>
+			</State>
+			<State id="mcaccMemoryName">
+				<ValueType>String</ValueType>
+				<TriggerLabel>MCACC Memory Name</TriggerLabel>
+				<ControlPageLabel>MCACC Memory Name</ControlPageLabel>
+			</State>
+			<State id="phaseControl">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Phase Control</TriggerLabel>
+				<ControlPageLabel>Phase Control</ControlPageLabel>
+			</State>
+			<State id="phaseControlPlusTime">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Phase Control Plus delay (ms)</TriggerLabel>
+				<ControlPageLabel>Phase Control Plus delay (ms)</ControlPageLabel>
+			</State>
+			<State id="phaseControlPlusWorkingTime">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Phase Control Plus Working delay (ms)</TriggerLabel>
+				<ControlPageLabel>Phase Control Plus Working delay (ms)</ControlPageLabel>
+			</State>
+			<State id="phaseControlPlusReversed">
+				<ValueType>Boolean</ValueType>
+				<TriggerLabel>Phase Control Plus Reversed Phase</TriggerLabel>
+				<ControlPageLabel>Phase Control Plus Reversed Phase</ControlPageLabel>
+			</State>
+			<State id="soundDelay">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Sound Delay (sample frames)</TriggerLabel>
+				<ControlPageLabel>Sound Delay (sample frames)</ControlPageLabel>
+			</State>
+			<State id="vsp">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Virtual Speakers</TriggerLabel>
+				<ControlPageLabel>Virtual Speakers</ControlPageLabel>
+			</State>
+			<State id="dialogEnhancement">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Dialog Enhancement</TriggerLabel>
+				<ControlPageLabel>Dialog Enhancement</ControlPageLabel>
+			</State>
+			<State id="signalSource">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Signal Source</TriggerLabel>
+				<ControlPageLabel>Signal Source</ControlPageLabel>
+			</State>
+			<State id="soundRetriever">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Sound Retriever</TriggerLabel>
+				<ControlPageLabel>Sound Retriever</ControlPageLabel>
+			</State>
+			<State id="analogInputAttenuator">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Analog Input Attenuator</TriggerLabel>
+				<ControlPageLabel>Analog Input Attenuator</ControlPageLabel>
+			</State>
+			<State id="lfeAttenuator">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>LFE Attenuator</TriggerLabel>
+				<ControlPageLabel>LFE Attenuator</ControlPageLabel>
+			</State>
+			<State id="lfeAttenuatorAmount">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>LFE Attenuation (dB)</TriggerLabel>
+				<ControlPageLabel>LFE Attenuation (dB)</ControlPageLabel>
+			</State>
+			<State id="sacdGain">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>SACD Gain (dB)</TriggerLabel>
+				<ControlPageLabel>SACD Gain (dB)</ControlPageLabel>
+			</State>
+			<State id="dynamicRangeCompression">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Dynamic Range Compression</TriggerLabel>
+				<ControlPageLabel>Dynamic Range Compression</ControlPageLabel>
+			</State>
+			<State id="equalizer">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Equalizer On</TriggerLabel>
+				<ControlPageLabel>Equalizer On</ControlPageLabel>
+			</State>
+			<State id="standingWave">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Standing Wave Compensation</TriggerLabel>
+				<ControlPageLabel>Standing Wave Compensation</ControlPageLabel>
+			</State>
+			<State id="autoDelay">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Auto Sound Delay</TriggerLabel>
+				<ControlPageLabel>Auto Sound Delay</ControlPageLabel>
+			</State>
+			<State id="digitalNR">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Digital Noise Reduction</TriggerLabel>
+				<ControlPageLabel>Digital Noise Reduction</ControlPageLabel>
+			</State>
+			<State id="hiBit24">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Hi-bit 24</TriggerLabel>
+				<ControlPageLabel>Hi-bit 24</ControlPageLabel>
+			</State>
+			<State id="dualMono">
+				<ValueType>Boolean</ValueType>
+				<TriggerLabel>Dual Mono</TriggerLabel>
+				<ControlPageLabel>Dual Mono</ControlPageLabel>
+			</State>
+			<State id="fixedPCM">
+				<ValueType>Boolean</ValueType>
+				<TriggerLabel>Fixed PCM Sample Rate</TriggerLabel>
+				<ControlPageLabel>Fixed PCM Sample Rate</ControlPageLabel>
+			</State>
+			<State id="pl2musicCenterWidth">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>ProLogic II Center Width</TriggerLabel>
+				<ControlPageLabel>ProLogic II Center Width</ControlPageLabel>
+			</State>
+			<State id="pl2musicPanorama">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>ProLogic II Panorama</TriggerLabel>
+				<ControlPageLabel>ProLogic II Panorama</ControlPageLabel>
+			</State>
+			<State id="pl2musicDimension">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>ProLogic II Dimension</TriggerLabel>
+				<ControlPageLabel>ProLogic II Dimension</ControlPageLabel>
+			</State>
+			<State id="pl2zHeightGain">
+				<ValueType>String</ValueType>
+				<TriggerLabel>ProLogic IIz Height Gain</TriggerLabel>
+				<ControlPageLabel>ProLogic IIz Height Gain</ControlPageLabel>
+			</State>
+			<State id="neo6centerImage">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Neo:6 Center Image</TriggerLabel>
+				<ControlPageLabel>Neo:6 Center Image</ControlPageLabel>
+			</State>
+			<State id="effectAmount">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Effect Amount</TriggerLabel>
+				<ControlPageLabel>Effect Amount</ControlPageLabel>
+			</State>
+			<State id="sep8">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="audioInputFormat">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Audio Input Format</TriggerLabel>
+				<ControlPageLabel>Audio Input Format</ControlPageLabel>
+			</State>
+			<State id="audioInputFrequency">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Audio Input Frequency</TriggerLabel>
+				<ControlPageLabel>Audio Input Frequency</ControlPageLabel>
+			</State>
+			<State id="audioOutputFrequency">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Audio Output Frequency</TriggerLabel>
+				<ControlPageLabel>Audio Output Frequency</ControlPageLabel>
+			</State>
+			<State id="audioOutputBitDepth">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Audio Output Bit Depth</TriggerLabel>
+				<ControlPageLabel>Audio Output Bit Depth</ControlPageLabel>
+			</State>
+			<State id="inputChannels">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Input Channels</TriggerLabel>
+				<ControlPageLabel>Input Channels</ControlPageLabel>
+			</State>
+			<State id="outputChannels">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Output Channels</TriggerLabel>
+				<ControlPageLabel>Output Channels</ControlPageLabel>
+			</State>
+			<State id="channelVolumeL">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Front Left Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Front Left Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="channelVolumeR">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Front Right Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Front Right Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="channelVolumeC">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Center Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Center Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="channelVolumeSL">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Surround Left Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Surround Left Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="channelVolumeSR">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Surround Right Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Surround Right Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="channelVolumeSBL">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Surround Back Left Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Surround Back Left Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="channelVolumeSBR">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Surround Back Right Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Surround Back Right Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="channelVolumeSW">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Subwoofer Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Subwoofer Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="channelVolumeLH">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Front Left Height Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Front Left Height Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="channelVolumeRH">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Front Right Height Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Front Right Height Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="channelVolumeLW">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Front Left Wide Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Front Left Wide Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="channelVolumeRW">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Front Right Wide Volume (dB)</TriggerLabel>
+				<ControlPageLabel>Front Right Wide Volume (dB)</ControlPageLabel>
+			</State>
+			<State id="sep9">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="videoInputTerminal">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Video Input Terminal</TriggerLabel>
+				<ControlPageLabel>Video Input Terminal</ControlPageLabel>
+			</State>
+			<State id="videoInputResolution">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Video Input Resolution</TriggerLabel>
+				<ControlPageLabel>Video Input Resolution</ControlPageLabel>
+			</State>
+			<State id="videoInputAspect">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Video Input Aspect Ratio</TriggerLabel>
+				<ControlPageLabel>Video Input Aspect Ratio</ControlPageLabel>
+			</State>
+			<State id="videoInputColorFormat">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Video Input Color Format</TriggerLabel>
+				<ControlPageLabel>Video Input Color Format</ControlPageLabel>
+			</State>
+			<State id="videoInputColorSpace">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Video Input Color Space</TriggerLabel>
+				<ControlPageLabel>Video Input Color Space</ControlPageLabel>
+			</State>
+			<State id="videoInputBitDepth">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Video Input Bit Depth</TriggerLabel>
+				<ControlPageLabel>Video Input Bit Depth</ControlPageLabel>
+			</State>
+			<State id="sep10">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="videoOutputResolution">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Video Output Resolution</TriggerLabel>
+				<ControlPageLabel>Video Output Resolution</ControlPageLabel>
+			</State>
+			<State id="videoOutputAspect">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Video Output Aspect Ratio</TriggerLabel>
+				<ControlPageLabel>Video Output Aspect Ratio</ControlPageLabel>
+			</State>
+			<State id="videoOutputColorFormat">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Video Output Color Format</TriggerLabel>
+				<ControlPageLabel>Video Output Color Format</ControlPageLabel>
+			</State>
+			<State id="videoOutputColorSpace">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Video Output Color Space</TriggerLabel>
+				<ControlPageLabel>Video Output Color Space</ControlPageLabel>
+			</State>
+			<State id="videoOutputBitDepth">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Video Output Bit Depth</TriggerLabel>
+				<ControlPageLabel>Video Output Bit Depth</ControlPageLabel>
+			</State>
+			<State id="sep11">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="monitorRecommendedResolution">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Monitor Recommended Resolution</TriggerLabel>
+				<ControlPageLabel>Monitor Recommended Resolution</ControlPageLabel>
+			</State>
+			<State id="monitorColorSpaces">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Monitor Supported Color Spaces</TriggerLabel>
+				<ControlPageLabel>Monitor Supported Color Spaces</ControlPageLabel>
+			</State>
+			<State id="monitorBitDepth">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Monitor Bit Depth</TriggerLabel>
+				<ControlPageLabel>Monitor Bith Depth</ControlPageLabel>
+			</State>
+			<State id="sep12">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="videoConverter">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Video Converter On</TriggerLabel>
+				<ControlPageLabel>Video Converter On</ControlPageLabel>
+			</State>
+			<State id="videoResolution">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Preferred Video Resolution</TriggerLabel>
+				<ControlPageLabel>Preferred Video Resolution</ControlPageLabel>
+			</State>
+			<State id="videoPureCinema">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Pure Cinema Mode</TriggerLabel>
+				<ControlPageLabel>Pure Cinema Mode</ControlPageLabel>
+			</State>
+			<State id="videoProgressiveQuality">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Progressive Motion Quality</TriggerLabel>
+				<ControlPageLabel>Progressive Motion Quality</ControlPageLabel>
+			</State>
+			<State id="videoAdvancedAdjust">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Advanced Video Adjustment</TriggerLabel>
+				<ControlPageLabel>Advanced Video Adjustment</ControlPageLabel>
+			</State>
+			<State id="videoYNR">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Luminance Noise Reduction</TriggerLabel>
+				<ControlPageLabel>Luminance Noise Reduction</ControlPageLabel>
+			</State>
+			<State id="videoDetail">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>Video Detail Adjustment</TriggerLabel>
+				<ControlPageLabel>Video Detail Adjustment</ControlPageLabel>
+			</State>
+			<State id="sep13">
+				<ValueType>Separator</ValueType>
+			</State>
+			<State id="panelKeyLockMode">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Panel Key Lock Mode</TriggerLabel>
+				<ControlPageLabel>Panel Key Lock Mode</ControlPageLabel>
+			</State>
+			<State id="remoteLock">
+				<ValueType boolType="OnOff">Boolean</ValueType>
+				<TriggerLabel>Remote Lock</TriggerLabel>
+				<ControlPageLabel>Remote Lock</ControlPageLabel>
+			</State>
+		</States>
+	</Device>
+	<!-- Virtual Volume Controller -->
+	<Device type="dimmer" id="virtualVolume">
+		<Name>Virtual Volume Controller</Name>
+		<ConfigUI>
+			<Field id="receiverDeviceId" type="menu">
+				<Label>Receiver:</Label>
+				<List class="indigo.devices" filter="self"/>
+			</Field>
+			<Field id="controlDestination" type="menu" defaultValue="zone1volume">
+				<Label>Volume Level to Control:</Label>
+				<List>
+					<Option value="zone1volume">Volume (Zone 1)</Option>
+					<Option value="zone2volume">Volume (Zone 2)</Option>
+				</List>
+			</Field>
+			<Field id="instruction0" type="label" fontColor="darkgray" fontSize="small">
+				<Label>INSTRUCTIONS: Select a Pioneer Receiver from the Receiver menu, then select the zone volume for that receiver that this Virtual Volume Controller will control. The Virtual Volume Controller device will appear in Indigo control pages and in Indigo Touch as a standard dimmer device and will allow you to control the selected Pioneer Receiver device volume like a dimmer.
+				</Label>
+			</Field>
+		</ConfigUI>
+	</Device>
+</Devices>

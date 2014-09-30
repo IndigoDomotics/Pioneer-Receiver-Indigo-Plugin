@@ -1,0 +1,337 @@
+<?xml version="1.0"?>
+<Actions>
+	<SupportURL>http://www.nathansheldon.com/files/Pioneer-Receiver-Plugin.php</SupportURL>
+	<Action id="zone1powerOn" deviceFilter="self" uiPath="Power">
+		<Name>Power On (Zone 1)</Name>
+		<CallbackMethod>zone1powerOn</CallbackMethod>
+	</Action>
+	<Action id="zone1powerOff" deviceFilter="self" uiPath="Power">
+		<Name>Power Off (Zone 1)</Name>
+		<CallbackMethod>zone1powerOff</CallbackMethod>
+	</Action>
+	<Action id="zone1powerToggle" deviceFilter="self" uiPath="Power">
+		<Name>Power Toggle (Zone 1)</Name>
+		<CallbackMethod>zone1powerToggle</CallbackMethod>
+	</Action>
+	<Action id="sep0" />
+	<Action id="zone1volumeUp" deviceFilter="self" uiPath="Volume">
+		<Name>Volume Up 0.5 dB (Zone 1)</Name>
+		<CallbackMethod>zone1volumeUp</CallbackMethod>
+	</Action>
+	<Action id="zone1volumeDown" deviceFilter="self" uiPath="Volume">
+		<Name>Volume Down 0.5 dB (Zone 1)</Name>
+		<CallbackMethod>zone1volumeDown</CallbackMethod>
+	</Action>
+	<Action id="zone1setVolume" deviceFilter="self" uiPath="Volume">
+		<Name>Set Volume dB (Zone 1)</Name>
+		<CallbackMethod>zone1setVolume</CallbackMethod>
+		<ConfigUI>
+			<Field id="volume" type="textfield" defaultValue="-30">
+				<Label>Volume for Zone 1 (dB):</Label>
+				<Description>Volume for Zone 1 (in dB)</Description>
+			</Field>
+			<Field id="label0" type="label" alignWithControl="true" fontColor="red" fontSize="small">
+				<Label>BE VERY CAREFUL!</Label>
+			</Field>
+			<Field id="label1" type="label" alignWithControl="true" fontColor="darkgray" fontSize="small">
+				<Label>Volume is expressed in terms of the full audio signal level, so a volume of 0 dB would be full volume (very loud). A moderate volume level would be around -30 dB and a quiet volume would be -50 dB.  Pioneer receivers are capabile of a volume range between -80.5 dB (no sound) and 12 dB (EXTREMELY loud). When entering a volume amount, the number must be in increments of 0.5 dB (e.g. Correct: -23.5 or -23, Incorrect: -23.9 or -23.2).
+				
+				
+				</Label>
+			</Field>
+			<Field id="description" type="textfield" hidden="true">
+				<Label></Label>
+			</Field>
+		</ConfigUI>
+	</Action>
+	<Action id="zone1muteOn" deviceFilter="self" uiPath="Volume">
+		<Name>Mute On (Zone 1)</Name>
+		<CallbackMethod>zone1muteOn</CallbackMethod>
+	</Action>
+	<Action id="zone1muteOff" deviceFilter="self" uiPath="Volume">
+		<Name>Mute Off (Zone 1)</Name>
+		<CallbackMethod>zone1muteOff</CallbackMethod>
+	</Action>
+	<Action id="zone1muteToggle" deviceFilter="self" uiPath="Volume">
+		<Name>Mute Toggle (Zone 1)</Name>
+		<CallbackMethod>zone1muteToggle</CallbackMethod>
+	</Action>
+	<Action id="sep1" />
+	<Action id="zone1sourceUp" deviceFilter="self" uiPath="Input Source">
+		<Name>Select Next Source (Zone 1)</Name>
+		<CallbackMethod>zone1sourceUp</CallbackMethod>
+	</Action>
+	<Action id="zone1sourceDown" deviceFilter="self" uiPath="Input Source">
+		<Name>Select Previous Source (Zone 1)</Name>
+		<CallbackMethod>zone1sourceDown</CallbackMethod>
+	</Action>
+	<Action id="zone1setSource" deviceFilter="self" uiPath="Input Source">
+		<Name>Select Source (Zone 1)</Name>
+		<CallbackMethod>zone1setSource</CallbackMethod>
+		<ConfigUI>
+			<Field id="source" type="menu">
+				<Label>Input Source:</Label>
+				<List class="self" method="uiSourceList"></List>
+			</Field>
+			<Field id="label0" type="label" alignWithControl="true" fontColor="darkgray" fontSize="small">
+				<Label>Select the input for zone 1 from the source list above.
+				</Label>
+			</Field>
+			<Field id="description" type="textfield" hidden="true">
+				<Label></Label>
+			</Field>
+		</ConfigUI>
+	</Action>
+	<Action id="sep2" uiPath="Power"/>
+	<Action id="zone2powerOn" deviceFilter="self" uiPath="Power">
+		<Name>Power On (Zone 2)</Name>
+		<CallbackMethod>zone2powerOn</CallbackMethod>
+	</Action>
+	<Action id="zone2powerOff" deviceFilter="self" uiPath="Power">
+		<Name>Power Off (Zone 2)</Name>
+		<CallbackMethod>zone2powerOff</CallbackMethod>
+	</Action>
+	<Action id="zone2powerToggle" deviceFilter="self" uiPath="Power">
+		<Name>Power Toggle (Zone 2)</Name>
+		<CallbackMethod>zone2powerToggle</CallbackMethod>
+	</Action>
+	<Action id="sep3" uiPath="Volume"/>
+	<Action id="zone2volumeUp" deviceFilter="self" uiPath="Volume">
+		<Name>Volume Up 1 dB (Zone 2)</Name>
+		<CallbackMethod>zone2volumeUp</CallbackMethod>
+	</Action>
+	<Action id="zone2volumeDown" deviceFilter="self" uiPath="Volume">
+		<Name>Volume Down 1 dB (Zone 2)</Name>
+		<CallbackMethod>zone2volumeDown</CallbackMethod>
+	</Action>
+	<Action id="zone2setVolume" deviceFilter="self" uiPath="Volume">
+		<Name>Set Volume dB (Zone 2)</Name>
+		<CallbackMethod>zone2setVolume</CallbackMethod>
+		<ConfigUI>
+			<Field id="volume" type="textfield" defaultValue="-30">
+				<Label>Volume for Zone 2 (dB):</Label>
+				<Description>Volume for Zone 2 (in dB)</Description>
+			</Field>
+			<Field id="label0" type="label" alignWithControl="true" fontColor="red" fontSize="small">
+				<Label>BE VERY CAREFUL!</Label>
+			</Field>
+			<Field id="label1" type="label" alignWithControl="true" fontColor="darkgray" fontSize="small">
+				<Label>Volume is expressed in terms of the full audio signal level, so a volume of 0 dB would be full volume (very loud). A moderate volume level would be around -30 dB and a quiet volume would be -50 dB.  Zones 2 and above in Pioneer receivers are capabile of a range between -81 dB (no sound) and 0 dB (VERY loud). When entering a volume amount, the number must be in increments of 1 dB (e.g. Correct: -23, Incorrect: -23.5 or -23.2).
+				
+				</Label>
+			</Field>
+			<Field id="description" type="textfield" hidden="true">
+				<Label></Label>
+			</Field>
+		</ConfigUI>
+	</Action>
+	<Action id="zone2muteOn" deviceFilter="self" uiPath="Volume">
+		<Name>Mute On (Zone 2)</Name>
+		<CallbackMethod>zone2muteOn</CallbackMethod>
+	</Action>
+	<Action id="zone2muteOff" deviceFilter="self" uiPath="Volume">
+		<Name>Mute Off (Zone 2)</Name>
+		<CallbackMethod>zone2muteOff</CallbackMethod>
+	</Action>
+	<Action id="zone2muteToggle" deviceFilter="self" uiPath="Volume">
+		<Name>Mute Toggle (Zone 2)</Name>
+		<CallbackMethod>zone2muteToggle</CallbackMethod>
+	</Action>
+	<Action id="sep4" uiPath="Input Source"/>
+	<Action id="zone2setSource" deviceFilter="self" uiPath="Input Source">
+		<Name>Select Source (Zone 2)</Name>
+		<CallbackMethod>zone2setSource</CallbackMethod>
+		<ConfigUI>
+			<Field id="source" type="menu">
+				<Label>Input Source:</Label>
+				<List class="self" method="uiSourceList"></List>
+			</Field>
+			<Field id="label0" type="label" alignWithControl="true" fontColor="darkgray" fontSize="small">
+				<Label>Select the input for zone 2 from the source list above.
+				</Label>
+			</Field>
+			<Field id="description" type="textfield" hidden="true">
+				<Label></Label>
+			</Field>
+		</ConfigUI>
+	</Action>
+	<Action id="sep5" />
+	<Action id="tunerPresetSelect" deviceFilter="self" uiPath="Tuner">
+		<Name>Select Tuner Preset</Name>
+		<CallbackMethod>tunerPresetSelect</CallbackMethod>
+		<ConfigUI>
+			<Field id="tunerPreset" type="menu">
+				<Label>Tuner Preset:</Label>
+				<List class="self" method="uiTunerPresetList"></List>
+			</Field>
+			<Field id="label0" type="label" alignWithControl="true" fontColor="darkgray" fontSize="small">
+				<Label>Select the Tuner Preset to change to.
+				</Label>
+			</Field>
+			<Field id="description" type="textfield" hidden="true">
+				<Label></Label>
+			</Field>
+		</ConfigUI>
+	</Action>
+	<Action id="tunerFrequencySet" deviceFilter="self" uiPath="Tuner">
+		<Name>Set Tuner Frequency</Name>
+		<CallbackMethod>tunerFrequencySet</CallbackMethod>
+		<ConfigUI>
+			<Field id="frequency" type="textfield">
+				<Label>Tuner Frequency:</Label>
+				<Description>Enter the tuner frequency (kHz or MHz).</Description>
+			</Field>
+			<Field id="band" type="menu">
+				<Label>Tuner Band:</Label>
+				<Description>Select the tuner frequency band.</Description>
+				<List>
+					<Option value="AM">AM</Option>
+					<Option value="FM">FM</Option>
+				</List>
+			</Field>
+			<Field id="label0" type="label" alignWithControl="true" fontColor="darkgray" fontSize="small">
+				<Label>NOTE: The Zone 1 input source must be set to Tuner in order for this action to work.
+				</Label>
+			</Field>
+			<Field id="description" type="textfield" hidden="true">
+				<Label></Label>
+			</Field>
+		</ConfigUI>
+	</Action>
+	<Action id="sep6" />
+	<Action id="listeningModeStereoNext" deviceFilter="self" uiPath="Listening Mode">
+		<Name>Next Stereo Listening Mode</Name>
+		<CallbackMethod>listeningModeStereoNext</CallbackMethod>
+	</Action>
+	<Action id="listeningModeAutoSurroundNext" deviceFilter="self" uiPath="Listening Mode">
+		<Name>Next Auto Surround Listening Mode</Name>
+		<CallbackMethod>listeningModeAutoSurroundNext</CallbackMethod>
+	</Action>
+	<Action id="listeningModeAdvancedSurroundNext" deviceFilter="self" uiPath="Listening Mode">
+		<Name>Next Advanced Surround Listening Mode</Name>
+		<CallbackMethod>listeningModeAdvancedSurroundNext</CallbackMethod>
+	</Action>
+	<Action id="listeningModeSelect" deviceFilter="self" uiPath="Listening Mode">
+		<Name>Select Listening Mode</Name>
+		<CallbackMethod>listeningModeSelect</CallbackMethod>
+		<ConfigUI>
+			<Field id="listeningMode" type="menu">
+				<Label>Listening Mode:</Label>
+				<Description>Select a listening mode to change to.</Description>
+				<List class="self" method="uiListeningModeList" filter="vsx1021k"></List>
+			</Field>
+			<Field id="label0" type="label" alignWithControl="true" fontColor="darkgray" fontSize="small">
+				<Label>NOTE: Not all listening modes will work with all input sources, audio formats, signal sources, or speaker configurations.
+				</Label>
+			</Field>
+			<Field id="description" type="textfield" hidden="true">
+				<Label></Label>
+			</Field>
+		</ConfigUI>
+	</Action>
+	<Action id="mcaccNext" deviceFilter="self" uiPath="Audio DSP">
+		<Name>Next MCACC Memory</Name>
+		<CallbackMethod>mcaccNext</CallbackMethod>
+	</Action>
+	<Action id="mcaccPrevious" deviceFilter="self" uiPath="Audio DSP">
+		<Name>Previous MCACC Memory</Name>
+		<CallbackMethod>mcaccPrevious</CallbackMethod>
+	</Action>
+	<Action id="mcaccSelect" deviceFilter="self" uiPath="Audio DSP">
+		<Name>Select MCACC Memory</Name>
+		<CallbackMethod>mcaccSelect</CallbackMethod>
+		<ConfigUI>
+			<Field id="mcaccMemory" type="menu">
+				<Label>MCACC Memory:</Label>
+				<Description>Select the MCACC settings memory bank to recall.</Description>
+				<List class="self" method="uiMcaccLabelList"></List>
+			</Field>
+			<Field id="description" type="textfield" hidden="true">
+				<Label></Label>
+			</Field>
+		</ConfigUI>
+	</Action>
+	<Action id="sep7" />
+	<Action id="remoteButtonPress" deviceFilter="self" uiPath="System">
+		<Name>Remote Control Button Press</Name>
+		<CallbackMethod>remoteButtonPress</CallbackMethod>
+		<ConfigUI>
+			<Field id="remoteButton" type="menu">
+				<Label>Button:</Label>
+				<Description>Select the button press to send.</Description>
+				<List class="self" method="uiButtonNames"></List>
+			</Field>
+			<Field id="label0" type="label" alignWithControl="true" fontColor="darkgray" fontSize="small">
+				<Label>NOTE: Not all button presses will work with all input sources.
+				</Label>
+			</Field>
+			<Field id="description" type="textfield" hidden="true">
+				<Label></Label>
+			</Field>
+		</ConfigUI>
+	</Action>
+	<Action id="setDisplayBrightness" deviceFilter="self" uiPath="System">
+		<Name>Set Display Brightness</Name>
+		<CallbackMethod>setDisplayBrightness</CallbackMethod>
+		<ConfigUI>
+			<Field id="displayBrightness" type="menu">
+				<Label>Display Brightness:</Label>
+				<Description>Set display brightness.</Description>
+				<List>
+					<Option value="3SAA">Off</Option>
+					<Option value="2SAA">Dim</Option>
+					<Option value="1SAA">Medium</Option>
+					<Option value="0SAA">Bright</Option>
+				</List>
+			</Field>
+			<Field id="description" type="textfield" hidden="true">
+				<Label></Label>
+			</Field>
+		</ConfigUI>
+	</Action>
+	<Action id="setSleepTimer" deviceFilter="self" uiPath="System">
+		<Name>Set Sleep Timer</Name>
+		<CallbackMethod>setSleepTimer</CallbackMethod>
+		<ConfigUI>
+			<Field id="sleepTime" type="menu">
+				<Label>Sleep Time Minutes:</Label>
+				<Description>Set sleep timer countdown minutes.</Description>
+				<List>
+					<Option value="000SAB">0 (off)</Option>
+					<Option value="030SAB">30 min.</Option>
+					<Option value="060SAB">60 min.</Option>
+					<Option value="090SAB">90 min.</Option>
+				</List>
+			</Field>
+			<Field id="description" type="textfield" hidden="true">
+				<Label></Label>
+			</Field>
+		</ConfigUI>
+	</Action>
+	<Action id="sep8" uiPath="System"/>
+	<Action id="sendRawCommand" deviceFilter="self" uiPath="System">
+		<Name>Send a Raw Command</Name>
+		<CallbackMethod>sendRawCommand</CallbackMethod>
+		<ConfigUI>
+			<Field id="command" type="textfield">
+				<Label>Command:</Label>
+			</Field>
+			<Field id="label0" type="label" alignWithControl="true" fontColor="red" fontSize="small">
+				<Label>WARNING:</Label>
+			</Field>
+			<Field id="label1" type="label" alignWithControl="true" fontColor="darkgray" fontSize="small">
+				<Label>This is an advanced feature and should only be used if you know exactly what you're doing or if you've been instructed to use this feature by technical support. Sending the wrong command could render some features of your receiver unusable or inaccessible. It's recommended that you turn debugging on in the Pioneer Receiver plugin configuration (Plugins menu). Enter the one-line command to send to the receiver.
+				
+				</Label>
+			</Field>
+			<Field id="description" type="textfield" hidden="true">
+				<Label></Label>
+			</Field>
+		</ConfigUI>
+	</Action>
+	<Action id="sep9" uiPath="System"/>
+	<Action id="refreshAllStates" deviceFilter="self" uiPath="System">
+		<Name>Refresh All States</Name>
+		<CallbackMethod>refreshAllStates</CallbackMethod>
+	</Action>
+</Actions>

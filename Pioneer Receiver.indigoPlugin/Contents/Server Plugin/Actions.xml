@@ -334,4 +334,36 @@
 		<Name>Refresh All States</Name>
 		<CallbackMethod>refreshAllStates</CallbackMethod>
 	</Action>
+	<Action id="sendScrollDown" deviceFilter="self" uiPath="Navigation">
+		<Name>OSD Scroll Down</Name>
+		<CallbackMethod>sendScrollDown</CallbackMethod>
+	</Action>
+	<Action id="sendScrollUp" deviceFilter="self" uiPath="Navigation">
+		<Name>OSD Scroll Up</Name>
+		<CallbackMethod>sendScrollUp</CallbackMethod>
+	</Action>
+	<Action id="sendSelect" deviceFilter="self" uiPath="Navigation">
+		<Name>OSD Select</Name>
+		<CallbackMethod>sendSelect</CallbackMethod>
+		<ConfigUI>
+			<Field id="index" type="menu">
+				<Label>OSD Index:</Label>
+				<Description>OSD Index</Description>
+				<List>
+					<Option value="1">1</Option>
+					<Option value="2">2</Option>
+					<Option value="3">3</Option>
+					<Option value="4">4</Option>
+					<Option value="5">5</Option>
+					<Option value="6">6</Option>
+					<Option value="7">7</Option>
+					<Option value="8">8</Option>
+				</List>
+			</Field>
+		</ConfigUI>
+	</Action>
+	<Action id="sendReturn" deviceFilter="self" uiPath="Navigation">
+		<Name>OSD Return</Name>
+		<CallbackMethod>sendReturn</CallbackMethod>
+	</Action>
 </Actions>

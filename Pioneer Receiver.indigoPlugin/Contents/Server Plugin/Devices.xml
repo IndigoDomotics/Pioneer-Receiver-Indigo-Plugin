@@ -1604,6 +1604,112 @@
 				<TriggerLabel>Remote Lock</TriggerLabel>
 				<ControlPageLabel>Remote Lock</ControlPageLabel>
 			</State>
+			<State id="GBP">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>GEP Entries</TriggerLabel>
+				<ControlPageLabel>GEP Entries</ControlPageLabel>
+			</State>
+			<State id="GCP">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Screen Name Label</TriggerLabel>
+				<ControlPageLabel>Screen Name Label</ControlPageLabel>
+			</State>
+			<State id="GDP_START">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>GDP Entries</TriggerLabel>
+				<ControlPageLabel>GDP Entries</ControlPageLabel>
+			</State>
+			<State id="GDP_END">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>GDP Entries</TriggerLabel>
+				<ControlPageLabel>GDP Entries</ControlPageLabel>
+			</State>
+			<State id="GDP_ENTRIES">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>GDP Entries</TriggerLabel>
+				<ControlPageLabel>GDP Entries</ControlPageLabel>
+			</State>
+			<State id="OSD_01">
+				<ValueType>String</ValueType>
+				<TriggerLabel>On Screen Display 01</TriggerLabel>
+				<ControlPageLabel>On Screen Display 01</ControlPageLabel>
+			</State>
+			<State id="OSD_01x">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>On Screen Display 01 Type</TriggerLabel>
+				<ControlPageLabel>On Screen Display 01 Type</ControlPageLabel>
+			</State>
+			<State id="OSD_02">
+				<ValueType>String</ValueType>
+				<TriggerLabel>On Screen Display 02</TriggerLabel>
+				<ControlPageLabel>On Screen Display 02</ControlPageLabel>
+			</State>
+			<State id="OSD_02x">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>On Screen Display 02 Type</TriggerLabel>
+				<ControlPageLabel>On Screen Display 02 Type</ControlPageLabel>
+			</State>
+			<State id="OSD_03">
+				<ValueType>String</ValueType>
+				<TriggerLabel>On Screen Display 03</TriggerLabel>
+				<ControlPageLabel>On Screen Display 03</ControlPageLabel>
+			</State>
+			<State id="OSD_03x">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>On Screen Display 03 Type</TriggerLabel>
+				<ControlPageLabel>On Screen Display 03 Type</ControlPageLabel>
+			</State>
+			<State id="OSD_04">
+				<ValueType>String</ValueType>
+				<TriggerLabel>On Screen Display 04</TriggerLabel>
+				<ControlPageLabel>On Screen Display 04</ControlPageLabel>
+			</State>
+			<State id="OSD_04x">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>On Screen Display 04 Type</TriggerLabel>
+				<ControlPageLabel>On Screen Display 04 Type</ControlPageLabel>
+			</State>
+			<State id="OSD_05">
+				<ValueType>String</ValueType>
+				<TriggerLabel>On Screen Display 05</TriggerLabel>
+				<ControlPageLabel>On Screen Display 05</ControlPageLabel>
+			</State>
+			<State id="OSD_05x">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>On Screen Display 05 Type</TriggerLabel>
+				<ControlPageLabel>On Screen Display 05 Type</ControlPageLabel>
+			</State>
+			<State id="OSD_06">
+				<ValueType>String</ValueType>
+				<TriggerLabel>On Screen Display 06</TriggerLabel>
+				<ControlPageLabel>On Screen Display 06</ControlPageLabel>
+			</State>
+			<State id="OSD_06x">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>On Screen Display 06 Type</TriggerLabel>
+				<ControlPageLabel>On Screen Display 06 Type</ControlPageLabel>
+			</State>
+			<State id="OSD_07">
+				<ValueType>String</ValueType>
+				<TriggerLabel>On Screen Display 07</TriggerLabel>
+				<ControlPageLabel>On Screen Display 07</ControlPageLabel>
+			</State>
+			<State id="OSD_07x">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>On Screen Display 07 Type</TriggerLabel>
+				<ControlPageLabel>On Screen Display 07 Type</ControlPageLabel>
+			</State>
+			<State id="OSD_08">
+				<ValueType>String</ValueType>
+				<TriggerLabel>On Screen Display 08</TriggerLabel>
+				<ControlPageLabel>On Screen Display 08</ControlPageLabel>
+			</State>
+			<State id="OSD_08x">
+				<ValueType>Number</ValueType>
+				<TriggerLabel>On Screen Display 08 Type</TriggerLabel>
+				<ControlPageLabel>On Screen Display 08 Type</ControlPageLabel>
+			</State>
+
 		</States>
 	</Device>
 	<!-- Pioneer Receiver VSX-1122-K -->

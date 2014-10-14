@@ -4,9 +4,21 @@
 # Copyright (c) 2012, Nathan Sheldon. All rights reserved.
 # http://www.nathansheldon.com/files/Pioneer-Receiver-Plugin.php
 #
-#	Version 1.0.6
+#	Version 1.0.7
 #
-#	History:	1.0.6 (18-Aug-2014)
+#	History:		1.0.7 (13-Oct-2014)
+#				* added zone1power toggle for vsx1022k
+#				* added zone2sourceName for vsx1022k
+#				* corrected boolean On/Off states for onOffState, zone1power, zone2power
+#				* corrected log entry formatting in updateDeviceState
+#				* changed getInputSourceNames to default source names and optimized code
+#				* changed uiSourceList to order by source number and optimized code
+#				* optimized deviceStartComm code
+#				* [incomplete] added on screen display states for vsx1022k
+#				* [incomplete] added OSD actions sendScrollDown, sendScrollUp, sendSelect,
+#				  sendReturn for vsx1022
+#				__
+#				1.0.6 (18-Aug-2014)
 #				* Fixed bug in 1.0.5 that caused every receiver except for the VSX-1021-K
 #				  to return E06 (invalid parameter) errors when the Pioneer Receiver
 #				  plugin attempted to gather all input source names.
@@ -280,60 +292,15 @@ class Plugin(indigo.PluginBase):
 	
 	########################################
 	def deviceStartComm(self, device):
-		try:
-			self.debugLog("deviceStartComm called: " + str(device))
-		except Exception, e:
-			self.debugLog("deviceStartComm called: " + device.name + " (Unable to display device states due to error: " + str(e) + ")")
-		#
-		# VSX-1021-K Device
-		#
-		if device.deviceTypeId == "vsx1021k":
-			# Prior to version 0.9.7, the "onOffState" state did not exist. If
-			#   that state does not exist, force an update of the device.
-			if not device.states.get('onOffState', False):
-				self.debugLog(u"Updating device state list.")
-				# This will forece Indigo to update the device with the new states.
-				device.stateListOrDisplayStateIdChanged()
-			
-			# Add this device to the list of devices associated with this plugin.
-			if device.id not in self.deviceList:
-				self.debugLog("deviceStartComm: adding vsx1021k deviceId " + str(device.id) + " to deviceList.")
-				self.deviceList.append(device.id)
+		self.debugLog("deviceStartComm called: " + str(device))
+
+		# This will forece Indigo to update the device with the new states.
+		self.debugLog(u"Updating device state list.")
+		device.stateListOrDisplayStateIdChanged()
 		
-		#
-		# VSX-1022-K Device
-		#
-		if device.deviceTypeId == "vsx1022k":
-			# Add this device to the list of devices associated with this plugin.
+		if device.deviceTypeId in ["vsx1021k", "vsx1022k", "vsx1122k", "vsx1123k", "sc75"]:
 			if device.id not in self.deviceList:
-				self.debugLog("deviceStartComm: adding vsx1022k deviceId " + str(device.id) + " to deviceList.")
-				self.deviceList.append(device.id)
-		
-		#
-		# VSX-1122-K Device
-		#
-		if device.deviceTypeId == "vsx1122k":
-			# Add this device to the list of devices associated with this plugin.
-			if device.id not in self.deviceList:
-				self.debugLog("deviceStartComm: adding vsx1122k deviceId " + str(device.id) + " to deviceList.")
-				self.deviceList.append(device.id)
-		
-		#
-		# VSX-1123-K Device
-		#
-		if device.deviceTypeId == "vsx1123k":
-			# Add this device to the list of devices associated with this plugin.
-			if device.id not in self.deviceList:
-				self.debugLog("deviceStartComm: adding vsx1123k deviceId " + str(device.id) + " to deviceList.")
-				self.deviceList.append(device.id)
-		
-		#
-		# SC-75 Device
-		#
-		if device.deviceTypeId == "sc75":
-			# Add this device to the list of devices associated with this plugin.
-			if device.id not in self.deviceList:
-				self.debugLog("deviceStartComm: adding sc75 deviceId " + str(device.id) + " to deviceList.")
+				self.debugLog("deviceStartComm: adding + device.deviceTypeId + deviceId " + str(device.id) + " to deviceList.")
 				self.deviceList.append(device.id)
 		
 		#
@@ -507,9 +474,9 @@ class Plugin(indigo.PluginBase):
 		#   if it's different than the current state.
 		if (newValue != device.states[state]):
 			try:
-				self.debugLog("updateDeviceState: Updating device " + device.name + " state: " + str(state) + " = " + str(newValue))
+				self.debugLog(u"updateDeviceState: Updating device " + device.name + " state: " + str(state) + " = " + str(newValue))
 			except Exception, e:
-				self.debugLog("updateDeviceState: Updating device " + device.name + " state: (Unable to display state due to error: " + str(e) + ")")
+				self.debugLog(u"updateDeviceState: Updating device " + device.name + " state: " + str(state) + " (Unable to display state due to error: " + str(e) + ")")
 			# If this is a floating point number, specify the maximum
 			#   number of digits to make visible in the state.  Everything
 			#   in this plugin only needs 1 decimal place of precission.
@@ -859,31 +826,31 @@ class Plugin(indigo.PluginBase):
 			state = "zone1power"
 			if response == "PWR0":
 				# Power (zone 1) is on.
-				newValue = True
+				newValue = "On"
 				# Only set a result message if this is a change from the current state.
-				if not device.states['zone1power']:
+				if device.states['zone1power'] == "Off":
 					# Set the result to be logged.
 					result = "power (zone 1): on"
 				# Update the onOffState.
-				self.updateDeviceState(device, 'onOffState', True)
+				self.updateDeviceState(device, 'onOffState', "On")
 				# If zone 2 is also on, make sure the status reflects that.
-				if device.states['zone2power']:
+				if device.states['zone2power'] == "On":
 					# Set the "status" state on the server.
 					self.updateDeviceState(device, "status", "on (zones 1+2)")
 				else:
 					self.updateDeviceState(device, "status", "on (zone 1)")
 			elif response == "PWR1":
 				# Power (zone 1) is off.
-				newValue = False
-				if device.states['zone1power']:
+				newValue = "Off"
+				if device.states['zone1power'] == "On":
 					result = "power (zone 1): off"
 				# If zone 2 is on, make sure the status reflects that.
-				if device.states['zone2power']:
+				if device.states['zone2power'] == "On":
 					self.updateDeviceState(device, "status", "on (zone 2)")
 				else:
 					self.updateDeviceState(device, "status", "off")
 					# Update the onOffState.
-					self.updateDeviceState(device, 'onOffState', False)
+					self.updateDeviceState(device, 'onOffState', "Off")
 				# Clear all the state values.
 				#   Set "zone1volume" to -999.0 dB.
 				self.updateDeviceState(device, "zone1volume", -999.0)
@@ -906,16 +873,16 @@ class Plugin(indigo.PluginBase):
 						self.updateDeviceState(virtualVolumeDevice, 'brightnessLevel', 0)
 			elif response == "PWR2":
 				# Power (zone 1) is off (network standby mode, only VSX-1022-K reports this).
-				newValue = False
-				if device.states['zone1power']:
+				newValue = "Off"
+				if device.states['zone1power'] == "On":
 					result = "power (zone 1): off"
 				# If zone 2 is on, make sure the status reflects that.
-				if device.states['zone2power']:
+				if device.states['zone2power'] == "On":
 					self.updateDeviceState(device, "status", "on (zone 2)")
 				else:
 					self.updateDeviceState(device, "status", "off")
 					# Update the onOffState.
-					self.updateDeviceState(device, 'onOffState', False)
+					self.updateDeviceState(device, 'onOffState', "Off")
 				# Clear all the state values.
 				#   Set "zone1volume" to -999.0 dB.
 				self.updateDeviceState(device, "zone1volume", -999.0)
@@ -941,7 +908,8 @@ class Plugin(indigo.PluginBase):
 			state = "zone1mute"
 			if response == "MUT0":
 				# Mute is on.
-				newValue = True
+				##newValue = True
+				newValue = "On"
 				if not device.states['zone1mute']:
 					result = "mute (zone 1): on"
 				# Look for Virtual Volume Controllers that might need updating.
@@ -952,7 +920,8 @@ class Plugin(indigo.PluginBase):
 						self.updateDeviceState(virtualVolumeDevice, 'brightnessLevel', 0)
 			elif response == "MUT1":
 				# Mute is off.
-				newValue = False
+				##newValue = False
+				newValue = "Off"
 				if device.states['zone1mute']:
 					result = "mute (zone 1): off"
 				# Look for Virtual Volume Controllers that might need updating.
@@ -976,7 +945,9 @@ class Plugin(indigo.PluginBase):
 			newValue = int(response[2:])
 			# Check to see if zone 1 is already set to this input or if zone 1
 			#   power is off.  In either case, ignore this update.
-			if device.states[state] == newValue or device.states['zone1power'] == False:
+			# Changed in 1.07 since it is tied to source name
+			#if device.states[state] == newValue or device.states['zone1power'] == "Off":
+			if device.states['zone1power'] == "Off":
 				state = ""
 				newValue = ""
 		elif response.startswith("VOL"):
@@ -986,7 +957,7 @@ class Plugin(indigo.PluginBase):
 			newValue = float(response[3:]) * 1.0
 			newValue = -80.5 + 0.5 * newValue
 			# Volume is at minimum or zone 1 power is off, volume is meaningless, so set it to minimum.
-			if (newValue < -80.0) or (not device.states['zone1power']):
+			if (newValue < -80.0) or (device.states['zone1power'] == "Off"):
 				newValue = -999.0
 				result = "volume (zone 1): minimum."
 			else:
@@ -1018,28 +989,28 @@ class Plugin(indigo.PluginBase):
 			state = "zone2power"
 			if response == "APR0":
 				# Power (zone 2) is on.
-				newValue = True
-				if not device.states['zone2power']:
+				newValue = "On"
+				if device.states['zone2power'] == "Off":
 					result = "power (zone 2): on"
 				# Update the onOffState.
-				self.updateDeviceState(device, 'onOffState', True)
+				self.updateDeviceState(device, 'onOffState', "On")
 				# If main power (zone 1) is on, set the status to reflect that.
-				if device.states['zone1power']:
+				if device.states['zone1power'] == "On":
 					self.updateDeviceState(device, "status", "on (zones 1+2)")
 				else:
 					self.updateDeviceState(device, "status", "on (zone 2)")
 			elif response == "APR1":
 				# Power (zone 2) is off.
-				newValue = False
-				if device.states['zone2power']:
+				newValue = "Off"
+				if device.states['zone2power'] == "On":
 					result = "power (zone 2): off"
 				# If main power (zone 1) is on, make sure the status reflects that.
-				if device.states['zone1power']:
+				if device.states['zone1power'] == "On":
 					self.updateDeviceState(device, "status", "on (zone 1)")
 				else:
 					self.updateDeviceState(device, "status", "off")
 					# Update the onOffState.
-					self.updateDeviceState(device, 'onOffState', False)
+					self.updateDeviceState(device, 'onOffState', "Off")
 				# Clear all the state values.
 				#   Set "zone1volume" to -999 dB.
 				self.updateDeviceState(device, "zone2volume", -999)
@@ -1065,7 +1036,7 @@ class Plugin(indigo.PluginBase):
 			newValue = int(response[3:])
 			# Check to see if zone 2 is already set to this input or if zone 2
 			#   power is off.  If either is the case, ignore this update.
-			if device.states[state] == newValue or device.states['zone2power'] == False:
+			if device.states[state] == newValue or device.states['zone2power'] == "Off":
 				state = ""
 				newValue = ""
 		elif response.startswith("Z2MUT"):
@@ -1110,7 +1081,7 @@ class Plugin(indigo.PluginBase):
 				# Zone 2 mute is meaningless when using the RCA line outputs, so
 				# look for Virtual Volume Controllers that might need updating.
 				# If zone 2 power is on, the zone 2 line output will always be at 100% volume.
-				if device.states['zone2power'] == True:
+				if device.states['zone2power'] == "On":
 					for thisId in self.volumeDeviceList:
 						virtualVolumeDevice = indigo.devices[thisId]
 						controlDestination = virtualVolumeDevice.pluginProps.get('controlDestination', "")
@@ -1129,7 +1100,7 @@ class Plugin(indigo.PluginBase):
 			# Convert to dB.
 			newValue = int(response[2:])
 			newValue = -81 + newValue
-			if newValue < -80 or device.states['zone2power'] == False:
+			if newValue < -80 or device.states['zone2power'] == "Off":
 				newValue = -999
 				result = "volume (zone 2): minimum."
 			else:
@@ -1157,7 +1128,7 @@ class Plugin(indigo.PluginBase):
 							theVolume = -81
 						theVolume = 100 - int(round(theVolume / -81.0 * 100, 0))
 						# If zone 2 power is on, use theVolume. If not, use zero.
-						if device.states['zone2power'] == True:
+						if device.states['zone2power'] == "On":
 							self.debugLog("processResponse: updating Virtual Volume Device ID " + str(thisId) + " brightness level to " + str(theVolume))
 							self.updateDeviceState(virtualVolumeDevice, 'brightnessLevel', theVolume)
 						else:
@@ -1169,7 +1140,7 @@ class Plugin(indigo.PluginBase):
 				# Zone 2 volume is meaningless when using the RCA line outputs, so
 				# look for Virtual Volume Controllers that might need updating.
 				# If zone 2 power is on, the zone 2 line output will always be at 100% volume.
-				if device.states['zone2power'] == True:
+				if device.states['zone2power'] == "On":
 					for thisId in self.volumeDeviceList:
 						virtualVolumeDevice = indigo.devices[thisId]
 						controlDestination = virtualVolumeDevice.pluginProps.get('controlDestination', "")
@@ -1851,7 +1822,8 @@ class Plugin(indigo.PluginBase):
 				phaseControlPlusWorkingDelay = int(phaseControlPlusWorkingDelay)
 				state = "phaseControlPlusWorkingDelay"
 				newValue = phaseControlPlusWorkingDelay
-				self.updateDeviceState(device, state, newValue)
+				# not sure we need this; state not configured in Devices.xml
+				#self.updateDeviceState(device, state, newValue)
 				
 				phaseControlPlusReversed = data[54:55]	# 1-byte Phase Control Plus reversed phase.
 				# Translate Phase Control Plus reversed state.
@@ -2069,6 +2041,44 @@ class Plugin(indigo.PluginBase):
 			
 			result = "video input/output information updated"
 			
+		elif response.startswith("GBP"):
+			state = "GBP"
+			newValue = response[3:]
+			self.updateDeviceState(device, state, newValue)
+			# clear invalid OSD data
+			#entries = int(newValue) + 1
+			entries = 1
+			newValue = ""
+			while entries <= 8:
+				state = "OSD_" + str(entries).zfill(2)
+				self.updateDeviceState(device, state, newValue)
+				state = state + "x"
+				self.updateDeviceState(device, state, newValue)
+				entries = entries + 1
+		elif response.startswith("GCP"):
+			state = "GCP"
+			newValue = response[11:len(response)-1]
+			self.updateDeviceState(device, state, newValue)
+		elif response.startswith("GDP"):
+			state = "GDP_START"
+			newValue = int(response[3:8])
+			self.updateDeviceState(device, state, newValue)
+			state = "GDP_END"
+			newValue = int(response[8:13])
+			self.updateDeviceState(device, state, newValue)
+			state = "GDP_ENTRIES"
+			newValue = int(response[13:])
+			self.updateDeviceState(device, state, newValue)
+		elif response.startswith("GEP"):
+			# OSD value
+			state = "OSD_" + response[3:5]
+			newValue = response[9:len(response)-1]
+			self.updateDeviceState(device, state, newValue)
+			# OSD meta-data
+			state = state + "x"
+			newValue = response[5:8]
+			self.updateDeviceState(device, state, newValue)
+
 		else:
 			# Unrecognized response received.
 			self.debugLog("Unrecognized response received from " + device.name + ": " + response)
@@ -2079,7 +2089,7 @@ class Plugin(indigo.PluginBase):
 		if state != "":
 			# If this is a zone power state change to True and the current
 			#   zone power state is False, get more status information.
-			if (state == "zone1power" and newValue == True and device.states['zone1power'] == False) or (state == "zone2power" and newValue == True and device.states['zone2power'] == False):
+			if (state == "zone1power" and newValue == "On" and device.states['zone1power'] == "Off") or (state == "zone2power" and newValue == "On" and device.states['zone2power'] == "Off"):
 				getStatusUpdate = True
 			
 			# Update the state on the server.
@@ -2093,7 +2103,12 @@ class Plugin(indigo.PluginBase):
 		if state == "zone1source":
 			# Get the specified input source name (just in case the user changed
 			#   the input name since the last full status update).
-			self.sendCommand(device, "?RGB" + response[2:])
+			if device.deviceTypeId in ["vsx1021k", "vsx1122k", "vsx1123k", "sc75"]:
+				self.sendCommand(device, "?RGB" + response[2:])
+			elif device.deviceTypeId in ["vsx1022k"]:
+				sourceLabel = "source" + response[2:] + "label"
+				self.updateDeviceState (device, 'zone1sourceName', device.pluginProps[sourceLabel]) 
+			
 			# Audio Status.
 			self.getAudioInOutStatus(device)
 			# If this is an input change to the Tuner, get the station preset info.
@@ -2141,7 +2156,7 @@ class Plugin(indigo.PluginBase):
 			self.updateDeviceState(device, 'tunerFrequencyText', frequencyText)
 		
 		# If both zones are off, clear some states that should have no value when the unit is off.
-		if device.states['zone1power'] == False and device.states['zone2power'] == False:
+		if device.states['zone1power'] == "Off" and device.states['zone2power'] == "Off":
 			self.updateDeviceState(device, "audioInputFormat", "")
 			self.updateDeviceState(device, "audioInputFrequency", 0)
 			self.updateDeviceState(device, "inputChannels", "")
@@ -2226,35 +2241,23 @@ class Plugin(indigo.PluginBase):
 		
 		# Make sure it's not a virtual volume device.
 		if devType != "virtualVolume":
-			# Get the names of all the input sources.
-			for theNumber, theName in sourceNames.items():
-				# Only ask for information on sources recognized by the device type.
-				#   VSX-1021-K
-				if devType is "vsk1021k":
-					if theNumber not in vsx1021kSourceMask:
-						self.sendCommand(device, "?RGB" + theNumber)
-						self.sleep(0.1)		# Wait for responses to be processed.
-				#   VSX-1022-K
-				if devType is "vsk1022k":
-					if theNumber not in vsx1022kSourceMask:
-						self.sendCommand(device, "?RGB" + theNumber)
-						self.sleep(0.1)		# Wait for responses to be processed.
-				#   VSX-1122-K
-				if devType is "vsk1122k":
-					if theNumber not in vsx1122kSourceMask:
-						self.sendCommand(device, "?RGB" + theNumber)
-						self.sleep(0.1)		# Wait for responses to be processed.
-				#   VSX-1123-K
-				if devType is "vsk1123k":
-					if theNumber not in vsx1123kSourceMask:
-						self.sendCommand(device, "?RGB" + theNumber)
-						self.sleep(0.1)		# Wait for responses to be processed.
-				#   SC-75
-				if devType is "sc75":
-					if theNumber not in sc75SourceMask:
-						self.sendCommand(device, "?RGB" + theNumber)
-						self.sleep(0.1)		# Wait for responses to be processed.
 
+			# Figure out which source mask to use
+			SourceMask = eval(devType + "SourceMask")
+
+			# Copy default source names to device properties
+			devProps = device.pluginProps
+			for theNumber, theName in sourceNames.items():
+				if theNumber not in SourceMask:
+					devProps["source" + str(theNumber) + "label"] = theName
+			self.updateDeviceProps (device, devProps)
+
+			# Get the names of all the input sources from receivers
+			if devType in ["vsx1021k", "vsx1122k", "vsx1123k", "sc75"]:
+				for theNumber, theName in sourceNames.items():
+					if theNumber not in SourceMask:
+						self.sendCommand(device, "?RGB" + theNumber)
+						self.sleep(0.1)		# Wait for responses to be processed.
 	#
 	# Tuner Preset Names
 	#
@@ -2509,6 +2512,23 @@ class Plugin(indigo.PluginBase):
 			self.sendCommand(device, "?VST")		# Video Status.
 			
 	#
+	# OSD Status
+	#
+	def getOSDStatus(self, device):
+		self.debugLog("getOSDStatus: Getting " + device.name + " On-Screen Display status.")
+		
+		devType = device.deviceTypeId
+		
+		# Make sure it's not a virtual volume device.
+		if devType != "virtualVolume":
+			# Since this method is called just after an input source change, wait a second
+			#   for the system to finalize the change.
+			self.sleep(1)
+			if devType == "vsx1021k" or devType == "vsx1022k":
+				self.sendCommand(device, "?GAP")
+			elif devType == "vsx1122k" or devType == "vsx1123k" or devType == "sc75":
+				self.sendCommand(device, "?GAH")
+	#
 	# All Status Information
 	#
 	def getReceiverStatus(self, device):
@@ -2535,7 +2555,7 @@ class Plugin(indigo.PluginBase):
 				self.getInputSourceNames(device)		# Input Source Names.
 				
 				# Information related to both zones...
-				if device.states['zone1power'] == True or device.states['zone2power'] == True:
+				if device.states['zone1power'] == "On" or device.states['zone2power'] == "On":
 					self.getVolumeStatus(device)		# Volume Status.
 					self.getMuteStatus(device)			# Mute Status
 					self.getInputSourceStatus(device)	# Input Source Status.
@@ -2547,7 +2567,7 @@ class Plugin(indigo.PluginBase):
 					self.getSystemSetupStatus(device)	# System Setup Status.
 				
 				# Information relevant only to the main zone (1)...
-				if device.states['zone1power'] == True:
+				if device.states['zone1power'] == "On":
 					self.getAudioDspSettings(device)	# Audio DSP Settings.
 					self.getVideoDspSettings(device)	# Video DSP Settings.
 					self.getChannelVolumeLevels(device)	# Channel Volume Levels.
@@ -2633,12 +2653,23 @@ class Plugin(indigo.PluginBase):
 		
 		# Make sure it's not a virtual volume device.
 		if device.deviceTypeId != "virtualVolume":
-			command = "?P"	# Query power status first to wake up 2012+ receiver CPUs.
-			self.sendCommand(device, command)
-			self.sleep(0.1)
-			command = "PZ"	# Power Toggle
-			self.sendCommand(device, command)
-			self.sleep(0.1)
+			if device.deviceTypeId == "vsx1022k":
+				command = "?PWR"
+				self.sendCommand(device, command)
+				self.sleep(0.1)
+				if device.states["zone1power"] == "Off":
+					command = "PO"
+				else:
+					command = "PF"
+				self.sendCommand(device, command)
+				self.sleep(0.1)
+			else:
+				command = "?P"	# Query power status first to wake up 2012+ receiver CPUs.
+				self.sendCommand(device, command)
+				self.sleep(0.1)
+				command = "PZ"	# Power Toggle
+				self.sendCommand(device, command)
+				self.sleep(0.1)
 			
 	#
 	# Volume Up 0.5 dB (Zone 1)
@@ -3183,7 +3214,7 @@ class Plugin(indigo.PluginBase):
 		# Make sure it's not a virtual volume device.
 		if device.deviceTypeId != "virtualVolume":
 			# Make sure we can actually change the frequency directly.
-			if not device.states['zone1power']:
+			if device.states['zone1power'] == "Off":
 				# Zone 1 power is off.  Can't make any changes.
 				self.errorLog("Cannot set tuner frequency. " + device.name + " zone 1 is currently turned off.")
 			elif device.states['zone1source'] != 2:
@@ -3813,7 +3844,88 @@ class Plugin(indigo.PluginBase):
 		if device.deviceTypeId != "virtualVolume":
 			self.sendCommand(device, command)
 			self.sleep(0.1)
+
+	#
+	# OSD Scroll Down
+	#
+	def sendScrollDown(self, action):
+		device = indigo.devices[action.deviceId]
+
+		# Catch attempts to send a command to a Virtual Volume Controller device,
+		#   which is not possible (but because it's not currently possible to prevent
+		#   the user from selecting it as a destination device in the Indigo UI, we
+		#   must check for it).
+		if device.deviceTypeId == "virtualVolume":
+			self.errorLog(u"Device \"" + device.name + "\" is a Virtual Volume Controller, not a Pioneer receiver. Modify the Indigo action to send the command to a Pioneer receiver instead of this device.")
+			return False
+
+		scrollValue = int(device.states["GDP_END"]) + 1
+		if scrollValue <= int(device.states["GDP_ENTRIES"]):
+			command = str(scrollValue).zfill(5) + "GGP"
+			self.sendCommand(device, command)
+			self.sleep(0.1)
 			
+	#
+	# OSD Scroll Up
+	#
+	def sendScrollUp(self, action):
+		device = indigo.devices[action.deviceId]
+
+		# Catch attempts to send a command to a Virtual Volume Controller device,
+		#   which is not possible (but because it's not currently possible to prevent
+		#   the user from selecting it as a destination device in the Indigo UI, we
+		#   must check for it).
+		if device.deviceTypeId == "virtualVolume":
+			self.errorLog(u"Device \"" + device.name + "\" is a Virtual Volume Controller, not a Pioneer receiver. Modify the Indigo action to send the command to a Pioneer receiver instead of this device.")
+			return False
+
+		if int(device.states["GBP"]) != 1:
+			scrollValue = int(device.states["GDP_START"]) - int(device.states["GBP"])
+			if scrollValue < 1:
+				command = "00001" + "GGP"
+			else:
+				command = str(scrollValue).zfill(5) + "GGP"
+			self.sendCommand(device, command)
+			self.sleep(0.1)
+			
+	#
+	# OSD Select
+	#
+	def sendSelect(self, action):
+		device = indigo.devices[action.deviceId]
+
+		# Catch attempts to send a command to a Virtual Volume Controller device,
+		#   which is not possible (but because it's not currently possible to prevent
+		#   the user from selecting it as a destination device in the Indigo UI, we
+		#   must check for it).
+		if device.deviceTypeId == "virtualVolume":
+			self.errorLog(u"Device \"" + device.name + "\" is a Virtual Volume Controller, not a Pioneer receiver. Modify the Indigo action to send the command to a Pioneer receiver instead of this device.")
+			return False
+
+		index = int(action.props.get('index', False))
+		command = str(int(device.states["GDP_START"]) + index - 1).zfill(5) + "GHP"
+		self.sendCommand(device, command)
+		self.sleep(0.1)
+
+	#
+	# Return
+	#
+	def sendReturn(self, action):
+		device = indigo.devices[action.deviceId]
+
+		# Catch attempts to send a command to a Virtual Volume Controller device,
+		#   which is not possible (but because it's not currently possible to prevent
+		#   the user from selecting it as a destination device in the Indigo UI, we
+		#   must check for it).
+		if device.deviceTypeId == "virtualVolume":
+			self.errorLog(u"Device \"" + device.name + "\" is a Virtual Volume Controller, not a Pioneer receiver. Modify the Indigo action to send the command to a Pioneer receiver instead of this device.")
+			return False
+
+		command = "31PB"
+		self.sendCommand(device, command)
+		self.sleep(0.1)
+
+
 	#
 	# Refresh All States
 	#
@@ -3915,7 +4027,7 @@ class Plugin(indigo.PluginBase):
 				try:
 					# Turn on mute if toggling device to "Off". Turn off mute if
 					#   toggling the device to "On".
-					if device.states['onOffState'] == True:
+					if device.states['onOffState'] == "On":
 						if controlDestination == "zone1volume":
 							self.sendCommand(receiver, "MO")	# Zone 1 Mute On
 						if controlDestination == "zone2volume":
@@ -4818,70 +4930,25 @@ class Plugin(indigo.PluginBase):
 		if device.deviceTypeId == "virtualVolume":
 			self.errorLog(u"Device \"" + device.name + "\" is a Virtual Volume Controller, not a Pioneer receiver. Modify the Indigo action to send the command to a Pioneer receiver instead of this device.")
 			return []
-		
+	
+		if typeId == "zone1setSource":
+			SourceMask = eval(device.deviceTypeId + "SourceMask")
+		elif typeId == "zone2setSource":
+			SourceMask = eval(device.deviceTypeId + "Zone2SourceMask")
+
+		# Source 46 (AirPlay) and 47 (DMR) are not selectable, but
+		#   are valid sources, so they're not in the mask array.
+		if device.deviceTypeId == "vsx1022k":
+			SourceMask.extend(['46', '47'])
+	
 		# Go through the defined sources to decide which to add to the list.
 		for thisNumber, thisName in sourceNames.items():
-			# Create the list based on which zone for which this is being compiled.
-			if typeId == "zone1setSource":
-				# If this source ID is not masked (i.e. is available) on this model, add it.
-				if device.deviceTypeId == "vsx1021k":
-					if thisNumber not in vsx1021kSourceMask:
-						propName = "source" + str(thisNumber) + "label"
-						thisName = device.pluginProps[propName]
-						theList.append((thisNumber, thisName))
-				elif device.deviceTypeId == "vsx1022k":
-					if thisNumber not in vsx1022kSourceMask and thisNumber not in ['46', '47']:
-						# Source 46 (AirPlay) and 47 (DMR) are not selectable, but
-						#   are valid sources, so they're not in the mask array.
-						propName = "source" + str(thisNumber) + "label"
-						thisName = device.pluginProps[propName]
-						theList.append((thisNumber, thisName))
-				elif device.deviceTypeId == "vsx1122k":
-					if thisNumber not in vsx1122kSourceMask:
-						propName = "source" + str(thisNumber) + "label"
-						thisName = device.pluginProps[propName]
-						theList.append((thisNumber, thisName))
-				elif device.deviceTypeId == "vsx1123k":
-					if thisNumber not in vsx1123kSourceMask:
-						propName = "source" + str(thisNumber) + "label"
-						thisName = device.pluginProps[propName]
-						theList.append((thisNumber, thisName))
-				elif device.deviceTypeId == "sc75":
-					if thisNumber not in sc75SourceMask:
-						propName = "source" + str(thisNumber) + "label"
-						thisName = device.pluginProps[propName]
-						theList.append((thisNumber, thisName))
-			elif typeId == "zone2setSource":
-				# If this source ID is not masked (i.e. is available) on this model, add it.
-				if device.deviceTypeId == "vsx1021k":
-					if thisNumber not in vsx1021kZone2SourceMask:
-						propName = "source" + str(thisNumber) + "label"
-						thisName = device.pluginProps[propName]
-						theList.append((thisNumber, thisName))
-				elif device.deviceTypeId == "vsx1022k":
-					if thisNumber not in vsx1022kZone2SourceMask and thisNumber not in ['46', '47']:
-						# Source 46 (AirPlay) and 47 (DMR) are not selectable, but
-						#   are valid sources, so they're not in the mask array.
-						propName = "source" + str(thisNumber) + "label"
-						thisName = device.pluginProps[propName]
-						theList.append((thisNumber, thisName))
-				elif device.deviceTypeId == "vsx1122k":
-					if thisNumber not in vsx1122kZone2SourceMask:
-						propName = "source" + str(thisNumber) + "label"
-						thisName = device.pluginProps[propName]
-						theList.append((thisNumber, thisName))
-				elif device.deviceTypeId == "vsx1123k":
-					if thisNumber not in vsx1123kZone2SourceMask:
-						propName = "source" + str(thisNumber) + "label"
-						thisName = device.pluginProps[propName]
-						theList.append((thisNumber, thisName))
-				elif device.deviceTypeId == "sc75":
-					if thisNumber not in sc75Zone2SourceMask:
-						propName = "source" + str(thisNumber) + "label"
-						thisName = device.pluginProps[propName]
-						theList.append((thisNumber, thisName))
-		
-		return theList
+			if thisNumber not in SourceMask:
+				propName = "source" + str(thisNumber) + "label"
+				thisName = device.pluginProps[propName]
+				theList.append((thisNumber, thisName))
+
+		return sorted(theList, key=lambda source: source[0])
 	
 	# Get Tuner Preset List for Use in UI.
 	########################################

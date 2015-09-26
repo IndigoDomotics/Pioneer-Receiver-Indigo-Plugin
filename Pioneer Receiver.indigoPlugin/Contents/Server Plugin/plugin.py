@@ -4,9 +4,13 @@
 # Copyright (c) 2012, Nathan Sheldon. All rights reserved.
 # http://www.nathansheldon.com/files/Pioneer-Receiver-Plugin.php
 #
-#	Version 1.0.6
+#	Version 1.0.7
 #
-#	History:	1.0.6 (18-Aug-2014)
+#	History:	1.0.7 (25-Sep-2015)
+#				* Fixed 2 bugs that caused the plugin to crash when communicating with
+#				  the VSX-1123-K.
+#				--
+#				1.0.6 (18-Aug-2014)
 #				* Fixed bug in 1.0.5 that caused every receiver except for the VSX-1021-K
 #				  to return E06 (invalid parameter) errors when the Pioneer Receiver
 #				  plugin attempted to gather all input source names.
@@ -154,7 +158,7 @@ vsx1122kZone2SourceMask = ['03', '10', '12', '13', '14', '19', '25', '26', '27',
 # VSX-1123-K source mask.
 vsx1123kSourceMask = ['03', '10', '12', '13', '14', '26', '27', '31', '35', '46', '47']
 # VSX-1123-K zone 2 source mask.
-vsx1123kZone2SourceMask = ['03', '10', '12', '13', '14', '19', '25', '26', '27', '31', '35', '46', '47']
+vsx1123kZone2SourceMask = ['03', '10', '12', '13', '14', '19', '25', '26', '27', '31', '35', '46', '47', '48']
 # SC-75 source mask.
 sc75SourceMask = ['00', '03', '12', '13', '14', '27', '46', '47']
 # SC-75 zone 2 source mask.
@@ -1849,7 +1853,7 @@ class Plugin(indigo.PluginBase):
 				phaseControlPlusWorkingDelay = data[52:54]	# 2-byte Phase Control Plus working delay (ms).
 				# Convert Phase Control Plus string to number.
 				phaseControlPlusWorkingDelay = int(phaseControlPlusWorkingDelay)
-				state = "phaseControlPlusWorkingDelay"
+				state = "phaseControlPlusWorkingTime"
 				newValue = phaseControlPlusWorkingDelay
 				self.updateDeviceState(device, state, newValue)
 				

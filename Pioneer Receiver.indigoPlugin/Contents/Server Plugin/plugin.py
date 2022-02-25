@@ -4,9 +4,12 @@
 # Copyright (c) 2012, Nathan Sheldon. All rights reserved.
 # http://www.nathansheldon.com/files/Pioneer-Receiver-Plugin.php
 #
-#	Version 1.0.7
+#	Version 1.0.8
 #
-#	History:	1.0.7 (25-Sep-2015)
+#	History:	1.0.8 (27-Sep-2015)
+#				* Fixed another bug that caused the plugin to crash when communicating
+#				  with the VSX-1123-K.
+#				1.0.7 (25-Sep-2015)
 #				* Fixed 2 bugs that caused the plugin to crash when communicating with
 #				  the VSX-1123-K.
 #				--
@@ -156,7 +159,7 @@ vsx1122kSourceMask = ['03', '10', '12', '13', '14', '26', '27', '31', '34', '35'
 # VSX-1122-K zone 2 source mask.
 vsx1122kZone2SourceMask = ['03', '10', '12', '13', '14', '19', '25', '26', '27', '31', '34', '35', '46', '47', '48']
 # VSX-1123-K source mask.
-vsx1123kSourceMask = ['03', '10', '12', '13', '14', '26', '27', '31', '35', '46', '47']
+vsx1123kSourceMask = ['03', '10', '12', '13', '14', '26', '27', '31', '35', '46', '47', '48']
 # VSX-1123-K zone 2 source mask.
 vsx1123kZone2SourceMask = ['03', '10', '12', '13', '14', '19', '25', '26', '27', '31', '35', '46', '47', '48']
 # SC-75 source mask.

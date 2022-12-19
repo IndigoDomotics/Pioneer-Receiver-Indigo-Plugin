@@ -5,9 +5,12 @@
 Copyright (c) 2012, Nathan Sheldon. All rights reserved.
 http://www.nathansheldon.com/files/Pioneer-Receiver-Plugin.php  <--- this link may not remain active.
 
-    Version 1.0.8
+    Version 2022.0.2
 
-    History:    2022.0.1 (18-Dec-2022) -- DaveL17
+    History:    2022.0.2 (19-Dec-2022) -- DaveL17
+                * (Some) more code clean up.
+
+                2022.0.1 (18-Dec-2022) -- DaveL17
                 * Updates to Indigo 2022.1 and Python 3.
                 * Improves compliance with PEP8.
 
@@ -716,7 +719,7 @@ class Plugin(indigo.PluginBase):
     ########################################
     def runConcurrentThread(self):
         self.debugLog("runConcurrentThread called.")
-        loopCount = 0
+        # loopCount = 0  TODO: the only reference now. No longer necessary?
         #
         # Continuously loop through all receiver devices. Obtain any data that they might be providing and process it.
         #
@@ -768,8 +771,8 @@ class Plugin(indigo.PluginBase):
     # Update Device State
     ########################################
     def updateDeviceState(self, device, state, newValue):
-        # Change the device state on the server if it's different than the current state.
-        if (newValue != device.states[state]):
+        # Change the device state on the server if it's different from the current state.
+        if newValue != device.states[state]:
             try:
                 self.debugLog(f"updateDeviceState: Updating device {device.name} state: {state} = {newValue}")
             except Exception as e:
@@ -796,8 +799,8 @@ class Plugin(indigo.PluginBase):
     ########################################
     def connect(self, device):
         # Display this debug message only once every 50 times the method is called.
-        if self.devicesWaitingToConnect.get(device.id, 0) % 10 == 0 or self.devicesWaitingToConnect.get(device.id,
-                                                                                                        0) == 0:
+        if (self.devicesWaitingToConnect.get(device.id, 0) % 10 == 0
+                or self.devicesWaitingToConnect.get(device.id, 0) == 0):
             self.debugLog("connect method called.")
 
         connected = device.states['connected']
@@ -1106,24 +1109,18 @@ class Plugin(indigo.PluginBase):
         #
         # ERRORS
         #
+
+        state = "status"
+        newValue = "error"
         if response == "E02":
-            state = "status"
-            newValue = "error"
             self.errorLog(device.name + ": not available now.")
         elif response == "E03":
-            state = "status"
-            newValue = "error"
             self.errorLog(device.name + ": invalid command.")
         elif response == "E04":
-            state = "status"
-            newValue = "error"
             self.errorLog(device.name + ": command error.")
         elif response == "E06":
-            state = "status"
-            newValue = "error"
             self.errorLog(device.name + ": parameter error.")
         elif response == "B00":
-            state = "status"
             newValue = "busy"
             self.errorLog(device.name + ": system busy.")
         #
@@ -1417,7 +1414,8 @@ class Plugin(indigo.PluginBase):
             state = "zone2volume"
             # Convert to dB.
             newValue = int(response[2:])
-            newValue = -81 + newValue
+            # newValue = -81 + newValue
+            newValue += -81
             if newValue < -80 or not device.states['zone2power']:
                 newValue = -999
                 result = "volume (zone 2): minimum."
@@ -1710,8 +1708,7 @@ class Plugin(indigo.PluginBase):
                 newValue = True
                 result = "remote control lock: on"
         elif response.startswith("FR"):
-            # Tuner Frequency update.
-            # Only update the state if either zone 1 or 2 is actually using the Tuner.
+            # Tuner Frequency update. Only update the state if either zone 1 or 2 is actually using the Tuner.
             if device.states['zone1source'] == 2 or device.states['zone2source'] == 2:
                 state = "tunerFrequency"
                 # Extract the band (AM or FM)
@@ -1736,8 +1733,7 @@ class Plugin(indigo.PluginBase):
                 # Set the tuner frequency on the server
                 newValue = frequency
         elif response.startswith("PR"):
-            # Tuner Preset update.
-            # Only update the state if either zone 1 or 2 is actually using the Tuner.
+            # Tuner Preset update. Only update the state if either zone 1 or 2 is actually using the Tuner.
             if device.states['zone1source'] == 2 or device.states['zone2source'] == 2:
                 state = "tunerPreset"
                 # Get the preset letter plus the non-leading-zero number.
@@ -2063,8 +2059,8 @@ class Plugin(indigo.PluginBase):
             newValue = 50 - int(response[3:])
             result = f"video detail amount: {newValue}"
         elif response.startswith("AST"):
-            # Audio Status information update.
-            #   Multiple data are provided in this response (43 bytes, or 55 for VSX-1123-K).
+            # Audio Status information update. Multiple data are provided in this response (43 bytes, or 55 for
+            # VSX-1123-K).
             state = ""
             newValue = ""
             data = response[3:]  # strip the AST text.
@@ -2163,8 +2159,7 @@ class Plugin(indigo.PluginBase):
             result = "audio input/output information updated"
 
         elif response.startswith("VST"):
-            # Video Status information update.
-            #   Multiple data are provided in this response.
+            # Video Status information update. Multiple data are provided in this response.
             state = ""
             newValue = ""
             data = response[3:]  # Strip off the leading "VST".
@@ -3448,8 +3443,7 @@ class Plugin(indigo.PluginBase):
 
         # Make sure it's not a virtual volume device.
         if device.deviceTypeId != "virtualVolume":
-            # If the current speaker system setup is not "A + Zone 2",
-            #   zone mute and volume commands will be ignored.
+            # If the current speaker system setup is not "A + Zone 2", zone mute and volume commands will be ignored.
             if device.states['speakerSystem'] == "A + Zone 2":
                 command = "Z2MZ"  # Toggle Mute
                 self.sendCommand(device, command)
@@ -4010,8 +4004,8 @@ class Plugin(indigo.PluginBase):
                     )
                     error = True
             else:
-                # Current zone 1 input source is something other than the special ones above.
-                #   Make sure the command being sent is one of the standard commands.
+                # Current zone 1 input source is something other than the special ones above. Make sure the command
+                # being sent is one of the standard commands.
                 if command not in defaultCursorCommands:
                     self.errorLog(
                         f"{device.name}: remote control button"
@@ -4256,7 +4250,7 @@ class Plugin(indigo.PluginBase):
                         f"{device.states['zone1sourceName']} input source. Action ignored."
                     )
                     error = True
-            # TODO: there doesn't appear to be a source '27commandMap'.
+            # TODO: there doesn't appear to be a source '27commandMap' above.
             elif source == 27:
                 command = source27commandMap.get(command, "")
                 if len(command) == 0:
@@ -4442,7 +4436,7 @@ class Plugin(indigo.PluginBase):
         # ====== TURN ON ======
         if action.deviceAction == indigo.kDeviceAction.TurnOn:
             try:
-                self.debugLog("device on:\n%s" % action)
+                self.debugLog(f"device on:\n{action}")
             except Exception as e:
                 self.debugLog(f"device on: (Unable to display action data due to error: {e})")
             # Select the proper action based on the controlDestination value.
@@ -4464,7 +4458,7 @@ class Plugin(indigo.PluginBase):
         # ====== TURN OFF ======
         elif action.deviceAction == indigo.kDeviceAction.TurnOff:
             try:
-                self.debugLog("device off:\n%s" % action)
+                self.debugLog(f"device off:\n{action}")
             except Exception as e:
                 self.debugLog(f"device off: (Unable to display action due to error: {e})")
             # Select the proper action based on the controlDestination value.
@@ -4484,7 +4478,7 @@ class Plugin(indigo.PluginBase):
         # ====== TOGGLE ======
         elif action.deviceAction == indigo.kDeviceAction.Toggle:
             try:
-                self.debugLog("device toggle:\n%s" % action)
+                self.debugLog(f"device toggle:\n{action}")
             except Exception as e:
                 self.debugLog(f"device toggle: (Unable to display action due to error: {e})")
             # Select the proper action based on the controlDestination value.
@@ -4512,7 +4506,7 @@ class Plugin(indigo.PluginBase):
         # ====== SET BRIGHTNESS ======
         elif action.deviceAction == indigo.kDeviceAction.SetBrightness:
             try:
-                self.debugLog("device set brightness:\n%s" % action)
+                self.debugLog(f"device set brightness:\n{action}")
             except Exception as e:
                 self.debugLog(f"device set brightness: (Unable to display action due to error: {e})")
             # Select the proper action based on the controlDestination value.
@@ -4538,7 +4532,8 @@ class Plugin(indigo.PluginBase):
                         command = theVolume + "VL"  # Set Volume.
                         self.sendCommand(receiver, command)
                         self.debugLog(
-                            f"actionControlDimmerRelay: brightnessLevel: {brightnessLevel}, theVolume: {theVolume}")
+                            f"actionControlDimmerRelay: brightnessLevel: {brightnessLevel}, theVolume: {theVolume}"
+                        )
                     elif controlDestination == "zone2volume":
                         # This formula converts from the 100 unit scale to the 81 unit scale used by the receiver's
                         # zone 2 volume commands.
@@ -4554,7 +4549,8 @@ class Plugin(indigo.PluginBase):
                         command = theVolume + "ZV"  # Set Volume.
                         self.sendCommand(receiver, command)
                         self.debugLog(
-                            f"actionControlDimmerRelay: brightnessLevel: {brightnessLevel}, theVolume: {theVolume}")
+                            f"actionControlDimmerRelay: brightnessLevel: {brightnessLevel}, theVolume: {theVolume}"
+                        )
                 except Exception as e:
                     self.errorLog(
                         f"{device.name}: Error executing Set Volume action for receiver device {receiver.name}. {e}"
@@ -4563,7 +4559,7 @@ class Plugin(indigo.PluginBase):
         # ====== BRIGHTEN BY ======
         elif action.deviceAction == indigo.kDeviceAction.BrightenBy:
             try:
-                self.debugLog("device brighten by:\n%s" % action)
+                self.debugLog(f"device brighten by:\n{action}")
             except Exception as e:
                 self.debugLog(f"device brighten by: (Unable to display action due to error: {e})")
             # Select the proper action based on the controlDestination value.
@@ -4622,7 +4618,8 @@ class Plugin(indigo.PluginBase):
                         command = theVolume + "ZV"  # Set Volume.
                         self.sendCommand(receiver, command)
                         self.debugLog(
-                            f"actionControlDimmerRelay: brightnessLevel: {brightnessLevel}, theVolume: {theVolume}")
+                            f"actionControlDimmerRelay: brightnessLevel: {brightnessLevel}, theVolume: {theVolume}"
+                        )
                 except Exception as e:
                     self.errorLog(
                         f"{device.name}: Error executing Set Volume action for receiver device {receiver.name}. {e}"
@@ -4631,7 +4628,7 @@ class Plugin(indigo.PluginBase):
         # ====== DIM BY ======
         elif action.deviceAction == indigo.kDeviceAction.DimBy:
             try:
-                self.debugLog("device dim by:\n%s" % action)
+                self.debugLog(f"device dim by:\n{action}")
             except Exception as e:
                 self.debugLog(f"device dim by: (Unable to display action due to error: {e})")
             brightnessLevel = currentBrightness - int(action.actionValue)
@@ -4661,7 +4658,8 @@ class Plugin(indigo.PluginBase):
                         command = theVolume + "VL"  # Set Volume.
                         self.sendCommand(receiver, command)
                         self.debugLog(
-                            f"actionControlDimmerRelay: brightnessLevel: {brightnessLevel}, theVolume: {theVolume}")
+                            f"actionControlDimmerRelay: brightnessLevel: {brightnessLevel}, theVolume: {theVolume}"
+                        )
                     elif controlDestination == "zone2volume":
                         # This formula converts from the 100 unit scale to the 81 unit scale used by the receiver's
                         # zone 2 volume commands.
@@ -4677,7 +4675,8 @@ class Plugin(indigo.PluginBase):
                         command = theVolume + "ZV"  # Set Volume.
                         self.sendCommand(receiver, command)
                         self.debugLog(
-                            f"actionControlDimmerRelay: brightnessLevel: {brightnessLevel}, theVolume: {theVolume}")
+                            f"actionControlDimmerRelay: brightnessLevel: {brightnessLevel}, theVolume: {theVolume}"
+                        )
                 except Exception as e:
                     self.errorLog(
                         f"{device.name}: Error executing Set Volume action for receiver device {receiver.name}. {e}"
@@ -5156,7 +5155,8 @@ class Plugin(indigo.PluginBase):
     def validateDeviceConfigUi(self, valuesDict, typeId=0, deviceId=0):
         try:
             self.debugLog(
-                f"validateDeviceConfig called. valuesDict: {valuesDict} typeId: {typeId}, deviceId: {deviceId}.")
+                f"validateDeviceConfig called. valuesDict: {valuesDict} typeId: {typeId}, deviceId: {deviceId}."
+            )
         except Exception as e:
             self.debugLog(
                 f"validateDeviceConfig called. typeId: {typeId} deviceId: {deviceId} (Unable to display valuesDict due "
@@ -5478,7 +5478,7 @@ class Plugin(indigo.PluginBase):
 
     # Get Source List for Use in UI.
     ########################################
-    def uiSourceList(self, filter="", valuesDict=None, typeId="", deviceId=0):
+    def uiSourceList(self, filter="", valuesDict=None, typeId="", deviceId=0):  # noqa
         self.debugLog(f"uiSourceList called. typeId: {typeId}, targetId: {deviceId}")
 
         theList = list()  # Menu item list.
@@ -5559,7 +5559,7 @@ class Plugin(indigo.PluginBase):
 
     # Get Tuner Preset List for Use in UI.
     ########################################
-    def uiTunerPresetList(self, filter="", valuesDict=None, typeId="", deviceId=0):
+    def uiTunerPresetList(self, filter="", valuesDict=None, typeId="", deviceId=0):  # noqa
         self.debugLog(f"uiTunerPresetList called. typeId: {typeId}, targetId: {deviceId}")
 
         theList = list()  # Menu item list.
@@ -5592,7 +5592,7 @@ class Plugin(indigo.PluginBase):
 
     # Get MCACC Label List for Use in UI.
     ########################################
-    def uiMcaccLabelList(self, filter="", valuesDict=None, typeId="", deviceId=0):
+    def uiMcaccLabelList(self, filter="", valuesDict=None, typeId="", deviceId=0):  # noqa
         self.debugLog(f"uiMcaccLabelList called. typeId: {typeId}, targetId: {deviceId}")
 
         theList = list()  # Menu item list.
@@ -5623,7 +5623,7 @@ class Plugin(indigo.PluginBase):
 
     # Get Remote Control Button Names
     ########################################
-    def uiButtonNames(self, filter="", valuesDict=None, typeId="", deviceId=0):
+    def uiButtonNames(self, filter="", valuesDict=None, typeId="", deviceId=0):  # noqa
         self.debugLog(f"uiButtonNames called. typeId: {typeId}, targetId: {deviceId}")
 
         theList = list()  # Menu item list.
@@ -5649,7 +5649,7 @@ class Plugin(indigo.PluginBase):
 
     # Get List of Listening Modes.
     ########################################
-    def uiListeningModeList(self, filter="", valuesDict=None, typeId="", deviceId=0):
+    def uiListeningModeList(self, filter="", valuesDict=None, typeId="", deviceId=0):  # noqa
         self.debugLog(f"uiListeningModeList called. typeId: {typeId}, targetId: {deviceId}")
 
         theList = list()  # Menu item list.
@@ -5675,8 +5675,7 @@ class Plugin(indigo.PluginBase):
 
         for theNumber in sortedlist:
             theName = listeningModes[theNumber]
-            # Show only items related to the device type passed in
-            #   the "filter" variable.
+            # Show only items related to the device type passed in the "filter" variable.
             if filter == "vsx1021k":
                 if theNumber not in vsx1021kListeningModeMask:
                     # Don't list modes with "(cyclic)" in the name.
@@ -5708,7 +5707,7 @@ class Plugin(indigo.PluginBase):
     # Get List of Pioneer Receiver Devices.
     ########################################
     # (This method is deprecated as of 0.9.6, but kept for possible future reference.
-    def uiReceiverDevices(self, filter="", valuesDict=None, typeId="", targetId=0):
+    def uiReceiverDevices(self, filter="", valuesDict=None, typeId="", targetId=0):  # noqa
         self.debugLog(f"uiReceiverDevices called. typeId: {typeId}, targetId: {targetId}")
 
         theList = list()  # Menu item list.

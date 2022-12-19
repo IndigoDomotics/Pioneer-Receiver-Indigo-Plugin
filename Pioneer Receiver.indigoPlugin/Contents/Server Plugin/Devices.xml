@@ -35,11 +35,11 @@
 			</Field>
 			<Field id="sep0" type="separator"/>
 			<Field id="instruction0" type="label" fontColor="darkgray" fontSize="small">
-				<Label>INSTRUCTIONS: For the Receiver IP Address, make sure that you're receiver has the "Network Standby" mode turned on in the "Network Setup" menu. Once that's turned on, find the receiver's IP address. Using the receiver's included IR remote control, press the "RECEIVER" power button (top left of remote) to turn on the receiver if it isn't already on.  Press the "RECEIVER" function button (middle right of remote) to ensure the next button presses are sent to the receiver and not another source device. Press the "HOME MENU" button. Use the up and down directional buttons to navigate to menu item 5 "Network Information." The first item on the Network Information screen will be the IP Address. Enter that address in the field above.
+				<Label>INSTRUCTIONS: For the Receiver IP Address, make sure that your receiver has the "Network Standby" mode turned on in the "Network Setup" menu. Once that's turned on, find the receiver's IP address. Using the receiver's included IR remote control, press the "RECEIVER" power button (top left of remote) to turn on the receiver if it isn't already on.  Press the "RECEIVER" function button (middle right of remote) to ensure the next button presses are sent to the receiver and not another source device. Press the "HOME MENU" button. Use the up and down directional buttons to navigate to menu item 5 "Network Information." The first item on the Network Information screen will be the IP Address. Enter that address in the field above.
 				</Label>
 			</Field>
 			<Field id="instruction1" type="label" fontColor="darkgray" fontSize="small">
-				<Label>MCACC Memory Labels are optional and only used for display purposes (on control pages, etc). The lablels you enter here do not have to match the memory labels stored in the receiver's internal settings.
+				<Label>MCACC Memory Labels are optional and only used for display purposes (on control pages, etc.). The labels you enter here do not have to match the memory labels stored in the receiver's internal settings.
 				</Label>
 			</Field>
 			<Field id="instruction2" type="label" fontColor="darkgray" fontSize="small">
@@ -748,7 +748,7 @@
 			<State id="monitorBitDepth">
 				<ValueType>String</ValueType>
 				<TriggerLabel>Monitor Bit Depth</TriggerLabel>
-				<ControlPageLabel>Monitor Bith Depth</ControlPageLabel>
+				<ControlPageLabel>Monitor Bit Depth</ControlPageLabel>
 			</State>
 			<State id="sep12">
 				<ValueType>Separator</ValueType>
@@ -838,11 +838,11 @@
 			</Field>
 			<Field id="sep0" type="separator"/>
 			<Field id="instruction0" type="label" fontColor="darkgray" fontSize="small">
-				<Label>INSTRUCTIONS: For the Receiver IP Address, make sure that you're receiver has the "Network Standby" mode turned on in the "Network Setup" menu. Once that's turned on, find the receiver's IP address. Refer to the VSX-1022-K Owner's Manual for instructions on how to find the IP address.
+				<Label>INSTRUCTIONS: For the Receiver IP Address, make sure that your receiver has the "Network Standby" mode turned on in the "Network Setup" menu. Once that's turned on, find the receiver's IP address. Refer to the VSX-1022-K Owner's Manual for instructions on how to find the IP address.
 				</Label>
 			</Field>
 			<Field id="instruction1" type="label" fontColor="darkgray" fontSize="small">
-				<Label>MCACC Memory Labels are optional and only used for display purposes (on control pages, etc). The lablels you enter here do not have to match the memory labels stored in the receiver's internal settings.
+				<Label>MCACC Memory Labels are optional and only used for display purposes (on control pages, etc.). The labels you enter here do not have to match the memory labels stored in the receiver's internal settings.
 				</Label>
 			</Field>
 			<Field id="instruction2" type="label" fontColor="darkgray" fontSize="small">
@@ -1551,7 +1551,7 @@
 			<State id="monitorBitDepth">
 				<ValueType>String</ValueType>
 				<TriggerLabel>Monitor Bit Depth</TriggerLabel>
-				<ControlPageLabel>Monitor Bith Depth</ControlPageLabel>
+				<ControlPageLabel>Monitor Bit Depth</ControlPageLabel>
 			</State>
 			<State id="sep12">
 				<ValueType>Separator</ValueType>
@@ -1641,11 +1641,11 @@
 			</Field>
 			<Field id="sep0" type="separator"/>
 			<Field id="instruction0" type="label" fontColor="darkgray" fontSize="small">
-				<Label>INSTRUCTIONS: For the Receiver IP Address, make sure that you're receiver has the "Network Standby" mode turned on in the "Network Setup" menu. Once that's turned on, find the receiver's IP address. Using the receiver's included IR remote control, press the "RECEIVER" power button (top left of remote) to turn on the receiver if it isn't already on.  Press the "RECEIVER" function button (middle right of remote) to ensure the next button presses are sent to the receiver and not another source device. Press the "HOME MENU" button. Use the up and down directional buttons to navigate to menu item 5 "Network Information." The first item on the Network Information screen will be the IP Address. Enter that address in the field above.
+				<Label>INSTRUCTIONS: For the Receiver IP Address, make sure that your receiver has the "Network Standby" mode turned on in the "Network Setup" menu. Once that's turned on, find the receiver's IP address. Using the receiver's included IR remote control, press the "RECEIVER" power button (top left of remote) to turn on the receiver if it isn't already on.  Press the "RECEIVER" function button (middle right of remote) to ensure the next button presses are sent to the receiver and not another source device. Press the "HOME MENU" button. Use the up and down directional buttons to navigate to menu item 5 "Network Information." The first item on the Network Information screen will be the IP Address. Enter that address in the field above.
 				</Label>
 			</Field>
 			<Field id="instruction1" type="label" fontColor="darkgray" fontSize="small">
-				<Label>MCACC Memory Labels are optional and only used for display purposes (on control pages, etc). The lablels you enter here do not have to match the memory labels stored in the receiver's internal settings.
+				<Label>MCACC Memory Labels are optional and only used for display purposes (on control pages, etc.). The labels you enter here do not have to match the memory labels stored in the receiver's internal settings.
 				</Label>
 			</Field>
 			<Field id="instruction2" type="label" fontColor="darkgray" fontSize="small">
@@ -2378,7 +2378,7 @@
 			<State id="monitorBitDepth">
 				<ValueType>String</ValueType>
 				<TriggerLabel>Monitor Bit Depth</TriggerLabel>
-				<ControlPageLabel>Monitor Bith Depth</ControlPageLabel>
+				<ControlPageLabel>Monitor Bit Depth</ControlPageLabel>
 			</State>
 			<State id="sep12">
 				<ValueType>Separator</ValueType>
@@ -2468,11 +2468,11 @@
 			</Field>
 			<Field id="sep0" type="separator"/>
 			<Field id="instruction0" type="label" fontColor="darkgray" fontSize="small">
-				<Label>INSTRUCTIONS: For the Receiver IP Address, make sure that you're receiver has the "Network Standby" mode turned on in the "Network Setup" menu. Once that's turned on, find the receiver's IP address. Using the receiver's included IR remote control, press the "RECEIVER" power button (top left of remote) to turn on the receiver if it isn't already on.  Press the "RECEIVER" function button (middle right of remote) to ensure the next button presses are sent to the receiver and not another source device. Press the "HOME MENU" button. Use the up and down directional buttons to navigate to menu item 5 "Network Information." The first item on the Network Information screen will be the IP Address. Enter that address in the field above.
+				<Label>INSTRUCTIONS: For the Receiver IP Address, make sure that your receiver has the "Network Standby" mode turned on in the "Network Setup" menu. Once that's turned on, find the receiver's IP address. Using the receiver's included IR remote control, press the "RECEIVER" power button (top left of remote) to turn on the receiver if it isn't already on.  Press the "RECEIVER" function button (middle right of remote) to ensure the next button presses are sent to the receiver and not another source device. Press the "HOME MENU" button. Use the up and down directional buttons to navigate to menu item 5 "Network Information." The first item on the Network Information screen will be the IP Address. Enter that address in the field above.
 				</Label>
 			</Field>
 			<Field id="instruction1" type="label" fontColor="darkgray" fontSize="small">
-				<Label>MCACC Memory Labels are optional and only used for display purposes (on control pages, etc). The lablels you enter here do not have to match the memory labels stored in the receiver's internal settings.
+				<Label>MCACC Memory Labels are optional and only used for display purposes (on control pages, etc.). The labels you enter here do not have to match the memory labels stored in the receiver's internal settings.
 				</Label>
 			</Field>
 			<Field id="instruction2" type="label" fontColor="darkgray" fontSize="small">
@@ -3248,7 +3248,7 @@
 			<State id="monitorBitDepth">
 				<ValueType>String</ValueType>
 				<TriggerLabel>Monitor Bit Depth</TriggerLabel>
-				<ControlPageLabel>Monitor Bith Depth</ControlPageLabel>
+				<ControlPageLabel>Monitor Bit Depth</ControlPageLabel>
 			</State>
 			<State id="sep12">
 				<ValueType>Separator</ValueType>
@@ -3338,11 +3338,11 @@
 			</Field>
 			<Field id="sep0" type="separator"/>
 			<Field id="instruction0" type="label" fontColor="darkgray" fontSize="small">
-				<Label>INSTRUCTIONS: For the Receiver IP Address, make sure that you're receiver has the "Network Standby" mode turned on in the "Network Setup" menu. Once that's turned on, find the receiver's IP address. Using the receiver's included IR remote control, press the "RECEIVER" power button (top left of remote) to turn on the receiver if it isn't already on.  Press the "RECEIVER" function button (middle right of remote) to ensure the next button presses are sent to the receiver and not another source device. Press the "HOME MENU" button. Use the up and down directional buttons to navigate to menu item 5 "Network Information." The first item on the Network Information screen will be the IP Address. Enter that address in the field above.
+				<Label>INSTRUCTIONS: For the Receiver IP Address, make sure that your receiver has the "Network Standby" mode turned on in the "Network Setup" menu. Once that's turned on, find the receiver's IP address. Using the receiver's included IR remote control, press the "RECEIVER" power button (top left of remote) to turn on the receiver if it isn't already on.  Press the "RECEIVER" function button (middle right of remote) to ensure the next button presses are sent to the receiver and not another source device. Press the "HOME MENU" button. Use the up and down directional buttons to navigate to menu item 5 "Network Information." The first item on the Network Information screen will be the IP Address. Enter that address in the field above.
 				</Label>
 			</Field>
 			<Field id="instruction1" type="label" fontColor="darkgray" fontSize="small">
-				<Label>MCACC Memory Labels are optional and only used for display purposes (on control pages, etc). The lablels you enter here do not have to match the memory labels stored in the receiver's internal settings.
+				<Label>MCACC Memory Labels are optional and only used for display purposes (on control pages, etc.). The labels you enter here do not have to match the memory labels stored in the receiver's internal settings.
 				</Label>
 			</Field>
 			<Field id="instruction2" type="label" fontColor="darkgray" fontSize="small">
@@ -4108,7 +4108,7 @@
 			<State id="monitorBitDepth">
 				<ValueType>String</ValueType>
 				<TriggerLabel>Monitor Bit Depth</TriggerLabel>
-				<ControlPageLabel>Monitor Bith Depth</ControlPageLabel>
+				<ControlPageLabel>Monitor Bit Depth</ControlPageLabel>
 			</State>
 			<State id="sep12">
 				<ValueType>Separator</ValueType>

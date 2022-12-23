@@ -7,7 +7,10 @@ http://www.nathansheldon.com/files/Pioneer-Receiver-Plugin.php  <--- this link m
 
     Version 2022.0.2
 
-    History:    2022.0.2 (19-Dec-2022) -- DaveL17
+    History:    2022.0.3 (23-Dec-2022)
+                * Addresses telnet error "str vs. bytes"
+
+                2022.0.2 (19-Dec-2022) -- DaveL17
                 * (Some) more code clean up.
 
                 2022.0.1 (18-Dec-2022) -- DaveL17
@@ -839,7 +842,8 @@ class Plugin(indigo.PluginBase):
                 connected = True
                 # Upon initial connection to a Pioneer receiver, it is necessary to "prime" the connection by simply
                 # sending a CR and LF.
-                self.tn[device.id].write("\r\n")
+                # self.tn[device.id].write("\r\n")
+                self.tn[device.id].write(str.encode("\r\n"))
                 connecting = False
                 # Update the device state on the server.
                 self.updateDeviceState(device, 'status', "connected")
@@ -1017,7 +1021,8 @@ class Plugin(indigo.PluginBase):
         # Only proceed if we're not trying to connect.
         if connected:
             try:
-                self.tn[device.id].write(command)
+                # self.tn[device.id].write(command)
+                self.tn[device.id].write(str.encode(command))
             except EOFError:
                 # Connection is closed. Update status and try to re-open.
                 self.errorLog(

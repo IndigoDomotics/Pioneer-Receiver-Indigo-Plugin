@@ -1060,7 +1060,9 @@ class Plugin(indigo.PluginBase):
         if connected:
             try:
                 # Read the data and return it without blocking.
-                response = self.tn[device.id].read_very_eager()
+                # TODO: trying to overcome bytes/str error.  DaveL17 2023-01-14
+                # response = self.tn[device.id].read_very_eager()
+                response = self.tn[device.id].encode().read_very_eager()
                 # Strip the CR and LF from the end of the response.
                 response = response.rstrip("\r\n")
                 # Force the response to be an ASCII string.

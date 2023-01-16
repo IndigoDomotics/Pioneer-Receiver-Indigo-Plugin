@@ -750,7 +750,7 @@ class Plugin(indigo.PluginBase):
                         if response != "":
                             # There is often more than one line.  Process all of them.
                             for responseLine in response.splitlines():
-                                result = self.processResponse(indigo.devices[deviceId], responseLine.encode())
+                                result = self.processResponse(indigo.devices[deviceId], responseLine)
                                 # If there was a result, send it to the log.
                                 if result != "":
                                     indigo.server.log(result, indigo.devices[deviceId].name)
@@ -1108,6 +1108,7 @@ class Plugin(indigo.PluginBase):
         result = ""
         state = ""
         newValue = ""
+        response = response.encode('utf-8')
 
         #
         # Test for each type of command response.

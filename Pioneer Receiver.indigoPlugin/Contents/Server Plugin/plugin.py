@@ -750,7 +750,7 @@ class Plugin(indigo.PluginBase):
                         if response != "":
                             # There is often more than one line.  Process all of them.
                             for responseLine in response.splitlines():
-                                result = self.processResponse(indigo.devices[deviceId], responseLine)
+                                result = self.processResponse(indigo.devices[deviceId], responseLine.encode())
                                 # If there was a result, send it to the log.
                                 if result != "":
                                     indigo.server.log(result, indigo.devices[deviceId].name)
@@ -1102,7 +1102,7 @@ class Plugin(indigo.PluginBase):
         # Get the type of device.  In the future, we'll support different receiver types.
         devType = device.deviceTypeId
 
-        # Make a copy of the device properties so we can change them if needed.
+        # Make a copy of the device properties, so we can change them if needed.
         devProps = device.pluginProps
 
         result = ""

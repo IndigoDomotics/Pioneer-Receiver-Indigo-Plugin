@@ -539,7 +539,7 @@ class Plugin(indigo.PluginBase):
                         f"{device.name} is configured to connect on the same IP address as \""
                         f"{indigo.devices[deviceId].name}\". Only one Indigo device can connect to the same Pioneer "
                         f"receiver at a time. Change the IP address of, or remove one of the devices.")
-                    self.updateDeviceState(device, 'status', "error")
+                    self.updateDeviceState(device, 'status', "error1")
                     self.updateDeviceState(device, 'connected', False)
                     indigo.device.enable(device, False)
 
@@ -972,7 +972,7 @@ class Plugin(indigo.PluginBase):
                 del self.devicesWaitingToConnect[device.id]
         except Exception as e:
             self.errorLog(f"disconnect: Error disconnecting from {device.name}: {e}")
-            self.updateDeviceState(device, 'status', "error")
+            self.updateDeviceState(device, 'status', "error2")
             self.updateDeviceState(device, 'connected', False)
             devProps['tryingToConnect'] = False
             self.updateDeviceProps(device, devProps)
@@ -1033,7 +1033,7 @@ class Plugin(indigo.PluginBase):
             except Exception as e:
                 # Unknown error.
                 self.errorLog(f"Failed to send data to {device.name}: {e}")
-                self.updateDeviceState(device, 'status', "error")
+                self.updateDeviceState(device, 'status', "error3")
                 self.updateDeviceState(device, 'connected', False)
         elif not connected and not connecting:
             # Show an error and try to connect.
@@ -1077,7 +1077,7 @@ class Plugin(indigo.PluginBase):
             except Exception as e:
                 # Unknown error.
                 self.errorLog(f"Failed to receive data from {device.name}: {e}")
-                self.updateDeviceState(device, 'status', "error")
+                self.updateDeviceState(device, 'status', "error4")
                 self.updateDeviceState(device, 'connected', False)
         elif not connected and not connecting:
             # Show an error and try to connect.

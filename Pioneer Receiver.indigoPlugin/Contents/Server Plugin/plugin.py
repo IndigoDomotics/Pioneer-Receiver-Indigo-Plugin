@@ -7,7 +7,10 @@ http://www.nathansheldon.com/files/Pioneer-Receiver-Plugin.php  <--- this link m
 
     Version 2022.0.2
 
-    History:    2022.0.3 (23-Dec-2022)
+    History:    2022.0.9 (20-Jan-2023) -- DaveL17
+                * Changes status message for unrecognized responses to be "unknown".
+
+                2022.0.3 (23-Dec-2022) -- DaveL17
                 * Addresses telnet error "str vs. bytes"
 
                 2022.0.2 (19-Dec-2022) -- DaveL17
@@ -1095,7 +1098,7 @@ class Plugin(indigo.PluginBase):
     #########################################
     def processResponse(self, device, response):
         # Update the Indigo receiver device based on the response from the receiver.
-        self.debugLog(f"processResponse: from: {device.name} response: {response}.")
+        self.debugLog(f"processResponse: from: {device.name} response: {response}")
 
         # Get the type of device.  In the future, we'll support different receiver types.
         devType = device.deviceTypeId
@@ -2369,6 +2372,7 @@ class Plugin(indigo.PluginBase):
         else:
             # Unrecognized response received.
             self.debugLog(f"Unrecognized response received from {device.name}: {response}")
+            newValue = "unknown"
 
         getStatusUpdate = False  # Should we perform a full status update?
 

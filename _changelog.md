@@ -1,5 +1,9 @@
 History:
 
+2022.0.11 (2023-01-26)
+* Added docstring placeholders.
+* Code cleanup and increased PEP8 compliance.
+
 2022.0.10 (25-Jan-2023) -- DaveL17
 * Moves constants to separate file, and refactors for PEP8.
 * Moves change log to separate file.

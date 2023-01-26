@@ -5,7 +5,7 @@
 Copyright (c) 2012, Nathan Sheldon. All rights reserved.
 http://www.nathansheldon.com/files/Pioneer-Receiver-Plugin.php  <--- this link may not remain active.
 
-Version 2022.0.10
+Version 2022.0.11
 """
 
 ################################################################################
@@ -24,23 +24,27 @@ except ImportError:
 ################################################################################
 # noinspection PyPep8Naming
 class Plugin(indigo.PluginBase):
+    """
+    Placeholder - fixme
+
+    """
     ########################################
     # Class Globals
     ########################################
 
     # Dictionary of device telnet sessions.
-    tn = dict()
+    tn = {}
     # List of devices whose complete status is being updated.
     devicesBeingUpdated = []
     # Dictionary of device connection waiting counters (device ID:1/10 second count)
-    devicesWaitingToConnect = dict()
+    devicesWaitingToConnect = {}
 
     ########################################
-    def __init__(self, pluginId, pluginDisplayName, pluginVersion, pluginPrefs):
-        indigo.PluginBase.__init__(self, pluginId, pluginDisplayName, pluginVersion, pluginPrefs)
-        self.debug = pluginPrefs.get('showDebugInfo', False)
-        self.deviceList = []
-        self.volumeDeviceList = []
+    def __init__(self, plugin_id, plugin_display_name, plugin_version, plugin_prefs):
+        indigo.PluginBase.__init__(self, plugin_id, plugin_display_name, plugin_version, plugin_prefs)
+        self.debug = plugin_prefs.get('showDebugInfo', False)
+        self.device_list = []
+        self.volume_device_list = []
 
     ########################################
     def __del__(self):
@@ -53,37 +57,54 @@ class Plugin(indigo.PluginBase):
     # Device Start
     ########################################
     def startup(self):
-        ...
+        """
+        Placeholder - fixme
+
+        :return:
+        """
+        # ...
 
     ########################################
     def deviceCreated(self, device):
+        """
+        Placeholder - fixme
+
+        :param device:
+        :return:
+        """
         try:
             self.debugLog(f"deviceCreated called: {device}")
-        except Exception as e:
-            self.debugLog(f"deviceCreated called: {device.name} (Unable to display device states due to error: {e})")
+        except Exception as err:
+            self.debugLog(f"deviceCreated called: {device.name} (Unable to display device states due to error: {err})")
 
         #
         # VSX-1021-K, VSX-1022-K, VSX-1122-K, VSX-1123-K, SC-75 Devices
         #
-        if (
-                device.deviceTypeId == "vsx1021k"
-                or device.deviceTypeId == "vsx1022k"
-                or device.deviceTypeId == "vsx1122k"
-                or device.deviceTypeId == "vsx1123k"
-                or device.deviceTypeId == "sc75"
-        ):
+        if device.deviceTypeId in ["vsx1021k", "vsx1022k", "vsx1122k", "vsx1123k", "sc75"]:
+            # Delete extra lines if valid - fixme
+            # (
+            # device.deviceTypeId == "vsx1021k"
+            # or device.deviceTypeId == "vsx1022k"
+            # or device.deviceTypeId == "vsx1122k"
+            # or device.deviceTypeId == "vsx1123k"
+            # or device.deviceTypeId == "sc75"
+            # ):
+
             # If the device has the same IP address as another device, generate an error.
             self.debugLog("deviceCreated: Testing to see if using duplicate IP.")
-            devProps = device.pluginProps
-            for deviceId in self.deviceList:
+            dev_props = device.pluginProps
+            for device_id in self.device_list:
                 self.debugLog(
-                    f"deviceCreated: checking device {indigo.devices[deviceId].name} (ID {deviceId} address "
-                    f"{indigo.devices[deviceId].pluginProps['address']}."
+                    f"deviceCreated: checking device {indigo.devices[device_id].name} (ID {device_id} address "
+                    f"{indigo.devices[device_id].pluginProps['address']}."
                 )
-                if (deviceId != device.id) and (devProps['address'] == indigo.devices[deviceId].pluginProps['address']):
+                if (
+                        (device_id != device.id)
+                        and (dev_props['address'] == indigo.devices[device_id].pluginProps['address'])
+                ):
                     self.errorLog(
                         f"{device.name} is configured to connect on the same IP address as \""
-                        f"{indigo.devices[deviceId].name}\". Only one Indigo device can connect to the same Pioneer "
+                        f"{indigo.devices[device_id].name}\". Only one Indigo device can connect to the same Pioneer "
                         f"receiver at a time. Change the IP address of, or remove one of the devices.")
                     self.updateDeviceState(device, 'status', "error")
                     self.updateDeviceState(device, 'connected', False)
@@ -101,10 +122,18 @@ class Plugin(indigo.PluginBase):
 
     ########################################
     def deviceStartComm(self, device):
+        """
+        Placeholder - fixme
+
+        :param device:
+        :return:
+        """
         try:
             self.debugLog(f"deviceStartComm called: {device}")
-        except Exception as e:
-            self.debugLog(f"deviceStartComm called: {device.name} (Unable to display device states due to error: {e})")
+        except Exception as err:
+            self.debugLog(
+                f"deviceStartComm called: {device.name} (Unable to display device states due to error: {err})"
+            )
         #
         # VSX-1021-K Device
         #
@@ -117,76 +146,81 @@ class Plugin(indigo.PluginBase):
                 device.stateListOrDisplayStateIdChanged()
 
             # Add this device to the list of devices associated with this plugin.
-            if device.id not in self.deviceList:
-                self.debugLog(f"deviceStartComm: adding vsx1021k deviceId {device.id} to deviceList.")
-                self.deviceList.append(device.id)
+            if device.id not in self.device_list:
+                self.debugLog(f"deviceStartComm: adding vsx1021k device_id {device.id} to deviceList.")
+                self.device_list.append(device.id)
 
         #
         # VSX-1022-K Device
         #
         if device.deviceTypeId == "vsx1022k":
             # Add this device to the list of devices associated with this plugin.
-            if device.id not in self.deviceList:
-                self.debugLog(f"deviceStartComm: adding vsx1022k deviceId {device.id} to deviceList.")
-                self.deviceList.append(device.id)
+            if device.id not in self.device_list:
+                self.debugLog(f"deviceStartComm: adding vsx1022k device_id {device.id} to deviceList.")
+                self.device_list.append(device.id)
 
         #
         # VSX-1122-K Device
         #
         if device.deviceTypeId == "vsx1122k":
             # Add this device to the list of devices associated with this plugin.
-            if device.id not in self.deviceList:
-                self.debugLog(f"deviceStartComm: adding vsx1122k deviceId {device.id} to deviceList.")
-                self.deviceList.append(device.id)
+            if device.id not in self.device_list:
+                self.debugLog(f"deviceStartComm: adding vsx1122k device_id {device.id} to deviceList.")
+                self.device_list.append(device.id)
 
         #
         # VSX-1123-K Device
         #
         if device.deviceTypeId == "vsx1123k":
             # Add this device to the list of devices associated with this plugin.
-            if device.id not in self.deviceList:
-                self.debugLog(f"deviceStartComm: adding vsx1123k deviceId {device.id} to deviceList.")
-                self.deviceList.append(device.id)
+            if device.id not in self.device_list:
+                self.debugLog(f"deviceStartComm: adding vsx1123k device_id {device.id} to deviceList.")
+                self.device_list.append(device.id)
 
         #
         # SC-75 Device
         #
         if device.deviceTypeId == "sc75":
             # Add this device to the list of devices associated with this plugin.
-            if device.id not in self.deviceList:
-                self.debugLog(f"deviceStartComm: adding sc75 deviceId {device.id} to deviceList.")
-                self.deviceList.append(device.id)
+            if device.id not in self.device_list:
+                self.debugLog(f"deviceStartComm: adding sc75 device_id {device.id} to deviceList.")
+                self.device_list.append(device.id)
 
         #
         # Virtual Volume Controller Device
         #
         if device.deviceTypeId == "virtualVolume":
             # Add this device to the list of volume devices associated with this plugin.
-            if device.id not in self.volumeDeviceList:
+            if device.id not in self.volume_device_list:
                 self.debugLog(
-                    f"deviceStartComm: adding virtualVolume deviceId {device.id} to volumeDeviceList."
+                    f"deviceStartComm: adding virtualVolume device_id {device.id} to volumeDeviceList."
                 )
-                self.volumeDeviceList.append(device.id)
+                self.volume_device_list.append(device.id)
             # Update the device to the value of the receiver device control to which it is configured to virtualize.
-            receiverDeviceId = int(device.pluginProps.get('receiverDeviceId', ""))
-            controlDestination = device.pluginProps.get('controlDestination', "")
-            if receiverDeviceId > 0 and len(controlDestination) > 0:
+            receiver_device_id = int(device.pluginProps.get('receiverDeviceId', ""))
+            control_destination = device.pluginProps.get('controlDestination', "")
+            if receiver_device_id > 0 and len(control_destination) > 0:
                 # Query the receiver devices for volume and mute status. This will update the virtual volume controller.
-                receiver = indigo.devices[receiverDeviceId]
+                receiver = indigo.devices[receiver_device_id]
                 if receiver.states['connected']:
                     self.getVolumeStatus(receiver)
                     self.getMuteStatus(receiver)
 
     ########################################
     def deviceStopComm(self, device):
+        """
+        Placeholder - fixme
+        :param device:
+        :return:
+        """
         self.debugLog(f"deviceStopComm called: {device.name}")
         #
         # VSX-1021-K Device
         #
         if device.deviceTypeId == "vsx1021k":
             # Remove this device from the list of devices associated with this plugin.
-            if device.id in self.deviceList:
-                self.deviceList.remove(device.id)
+            if device.id in self.device_list:
+                self.device_list.remove(device.id)
             # Make sure it's disconnected.
             if device.states['connected']:
                 self.disconnect(device)
@@ -196,8 +230,8 @@ class Plugin(indigo.PluginBase):
         #
         if device.deviceTypeId == "vsx1022k":
             # Remove this device from the list of devices associated with this plugin.
-            if device.id in self.deviceList:
-                self.deviceList.remove(device.id)
+            if device.id in self.device_list:
+                self.device_list.remove(device.id)
             # Make sure it's disconnected.
             if device.states['connected']:
                 self.disconnect(device)
@@ -207,8 +241,8 @@ class Plugin(indigo.PluginBase):
         #
         if device.deviceTypeId == "vsx1122k":
             # Remove this device from the list of devices associated with this plugin.
-            if device.id in self.deviceList:
-                self.deviceList.remove(device.id)
+            if device.id in self.device_list:
+                self.device_list.remove(device.id)
             # Make sure it's disconnected.
             if device.states['connected']:
                 self.disconnect(device)
@@ -218,8 +252,8 @@ class Plugin(indigo.PluginBase):
         #
         if device.deviceTypeId == "vsx1123k":
             # Remove this device from the list of devices associated with this plugin.
-            if device.id in self.deviceList:
-                self.deviceList.remove(device.id)
+            if device.id in self.device_list:
+                self.device_list.remove(device.id)
             # Make sure it's disconnected.
             if device.states['connected']:
                 self.disconnect(device)
@@ -229,8 +263,8 @@ class Plugin(indigo.PluginBase):
         #
         if device.deviceTypeId == "sc75":
             # Remove this device from the list of devices associated with this plugin.
-            if device.id in self.deviceList:
-                self.deviceList.remove(device.id)
+            if device.id in self.device_list:
+                self.device_list.remove(device.id)
             # Make sure it's disconnected.
             if device.states['connected']:
                 self.disconnect(device)
@@ -240,33 +274,45 @@ class Plugin(indigo.PluginBase):
         #
         if device.deviceTypeId == "virtualVolume":
             # Remove this device from the list of level devices associated with this plugin.
-            if device.id in self.volumeDeviceList:
-                self.volumeDeviceList.remove(device.id)
+            if device.id in self.volume_device_list:
+                self.volume_device_list.remove(device.id)
 
     ########################################
-    def didDeviceCommPropertyChange(self, origDev, newDev):
+    def didDeviceCommPropertyChange(self, orig_dev, new_dev):
+        """
+        Placeholder - fixme
+
+        :param orig_dev:
+        :param new_dev:
+        :return:
+        """
         # Automatically called by plugin host when device properties change.
         self.debugLog("didDeviceCommPropertyChange called.")
         #
         # VSX-1021-K, VSX-1022-K, VSX-1122-K, VSX-1123-K, or SC-75
         #
         if (
-                origDev.deviceTypeId == "vsx1021k"
-                or newDev.deviceTypeId == "vsx1022k"
-                or newDev.deviceTypeId == "vsx1122k"
-                or newDev.deviceTypeId == "vsx1123k"
-                or newDev.deviceTypeId == "sc75"
+                orig_dev.deviceTypeId == "vsx1021k"
+                or new_dev.deviceTypeId == "vsx1022k"
+                or new_dev.deviceTypeId == "vsx1122k"
+                or new_dev.deviceTypeId == "vsx1123k"
+                or new_dev.deviceTypeId == "sc75"
         ):
-            if origDev.pluginProps['address'] != newDev.pluginProps['address']:
+            if orig_dev.pluginProps['address'] != new_dev.pluginProps['address']:
                 return True
             return False
         else:
-            if origDev.pluginProps != newDev.pluginProps:
+            if orig_dev.pluginProps != new_dev.pluginProps:
                 return True
             return False
 
     ########################################
     def runConcurrentThread(self):
+        """
+        Placeholder - fixme
+
+        :return:
+        """
         self.debugLog("runConcurrentThread called.")
         # loopCount = 0  TODO: the only reference now. No longer necessary?
         #
@@ -274,41 +320,39 @@ class Plugin(indigo.PluginBase):
         #
         try:
             while True:
-                # self.debugLog("runConcurrentThread while loop started.")
                 self.sleep(0.1)
                 # Cycle through each receiver device.
-                for deviceId in self.deviceList:
+                for device_id in self.device_list:
                     response = ""
-                    responseLine = ""
+                    response_line = ""
                     result = ""
 
-                    connected = indigo.devices[deviceId].states.get('connected', False)
+                    connected = indigo.devices[device_id].states.get('connected', False)
 
                     # Only proceed if we're connected.
                     if connected:
                         # Remove the device ID from the devicesWaitingToConnect dictionary.
-                        if self.devicesWaitingToConnect.get(deviceId, -1) > -1:
-                            del self.devicesWaitingToConnect[deviceId]
+                        if self.devicesWaitingToConnect.get(device_id, -1) > -1:
+                            del self.devicesWaitingToConnect[device_id]
                         # Call the readData method with the device instance
-                        # self.debugLog(f"Reading data for {indigo.devices[deviceId].name}.")
-                        response = self.readData(indigo.devices[deviceId])
+                        response = self.readData(indigo.devices[device_id])
                         # If a response was returned, process it.
                         if response != "":
                             # There is often more than one line.  Process all of them.
-                            for responseLine in response.splitlines():
-                                result = self.processResponse(indigo.devices[deviceId], responseLine)
+                            for response_line in response.splitlines():
+                                result = self.processResponse(indigo.devices[device_id], response_line)
                                 # If there was a result, send it to the log.
                                 if result != "":
-                                    indigo.server.log(result, indigo.devices[deviceId].name)
+                                    indigo.server.log(result, indigo.devices[device_id].name)
                     else:
                         # Since we're not connected, try to connect.
-                        self.connect(indigo.devices[deviceId])
+                        self.connect(indigo.devices[device_id])
 
         except self.StopThread:
             self.debugLog("runConcurrentThread stopped.")
             # Cycle through each receiver device.
-            for deviceId in self.deviceList:
-                self.disconnect(indigo.devices[deviceId])
+            for device_id in self.device_list:
+                self.disconnect(indigo.devices[device_id])
 
         self.debugLog("runConcurrentThread exiting.")
 
@@ -318,44 +362,64 @@ class Plugin(indigo.PluginBase):
 
     # Update Device State
     ########################################
-    def updateDeviceState(self, device, state, newValue):
+    def updateDeviceState(self, device, state, new_value):
+        """
+        Placeholder - fixme
+
+        :param device:
+        :param state:
+        :param new_value:
+        :return:
+        """
         # Change the device state on the server if it's different from the current state.
-        if newValue != device.states[state]:
+        if new_value != device.states[state]:
             try:
-                self.debugLog(f"updateDeviceState: Updating device {device.name} state: {state} = {newValue}")
-            except Exception as e:
+                self.debugLog(f"updateDeviceState: Updating device {device.name} state: {state} = {new_value}")
+            except Exception as err:
                 self.debugLog(
                     f"updateDeviceState: Updating device {device.name} state: (Unable to display state due to "
-                    f"error: {e})")
+                    f"error: {err})")
             # If this is a floating point number, specify the maximum number of digits to make visible in the state.
             # Everything in this plugin only needs 1 decimal place of precision. If this isn't a floating point value,
             # don't specify a number of decimal places to display.
-            if newValue.__class__.__name__ == 'float':
-                device.updateStateOnServer(key=state, value=newValue, decimalPlaces=1)
+            if new_value.__class__.__name__ == 'float':
+                device.updateStateOnServer(key=state, value=new_value, decimalPlaces=1)
             else:
-                device.updateStateOnServer(key=state, value=newValue)
+                device.updateStateOnServer(key=state, value=new_value)
 
     # Update Device Properties
     ########################################
-    def updateDeviceProps(self, device, newProps):
+    def updateDeviceProps(self, device, new_props):
+        """
+        Placeholder - fixme
+
+        :param device:
+        :param new_props:
+        :return:
+        """
         # Change the properties for this device that are stored on the server.
-        if device.pluginProps != newProps:
+        if device.pluginProps != new_props:
             self.debugLog(f"updateDeviceProps: Updating device {device.name} properties.")
-            device.replacePluginPropsOnServer(newProps)
+            device.replacePluginPropsOnServer(new_props)
 
     # Connect to a Receiver Device
     ########################################
     def connect(self, device):
+        """
+        Placeholder - fixme
+        :param device:
+        :return:
+        """
         # Display this debug message only once every 50 times the method is called.
         if (self.devicesWaitingToConnect.get(device.id, 0) % 10 == 0
                 or self.devicesWaitingToConnect.get(device.id, 0) == 0):
             self.debugLog("connect method called.")
 
         connected = device.states['connected']
-        devProps = device.pluginProps
-        connecting = devProps.get('tryingToConnect', False)
+        dev_props = device.pluginProps
+        connecting = dev_props.get('tryingToConnect', False)
         # Get the device address.
-        receiverIp = devProps['address']
+        receiver_ip = dev_props['address']
 
         # Display these debug messages only once every 50 times the method is called.
         if self.devicesWaitingToConnect.get(device.id, 0) % 50 == 0:
@@ -366,21 +430,21 @@ class Plugin(indigo.PluginBase):
         if not connected and not connecting:
             connecting = True
             # Update the device properties just in case the properties aren't up-to-date.
-            devProps['tryingToConnect'] = True
-            self.updateDeviceProps(device, devProps)
+            dev_props['tryingToConnect'] = True
+            self.updateDeviceProps(device, dev_props)
 
             # Try to connect to the receiver.
-            self.debugLog(f"connect: Connecting to {device.name} at {receiverIp}")
+            self.debugLog(f"connect: Connecting to {device.name} at {receiver_ip}")
             try:
                 self.updateDeviceState(device, 'status', "connecting")
 
                 # Use the correct TCP port number based on device type.
                 if device.deviceTypeId == "vsx1022k":
                     # The VSX-1022-K only accepts connections on port 8102.
-                    self.tn[device.id] = telnetlib.Telnet(receiverIp, 8102)
+                    self.tn[device.id] = telnetlib.Telnet(receiver_ip, 8102)
                 else:
                     # All other receivers accept connections on the standard telnet port.
-                    self.tn[device.id] = telnetlib.Telnet(receiverIp)
+                    self.tn[device.id] = telnetlib.Telnet(receiver_ip)
 
                 # Connection established if we get to this point.
                 indigo.server.log("Connection established.", device.name)
@@ -393,39 +457,39 @@ class Plugin(indigo.PluginBase):
                 # Update the device state on the server.
                 self.updateDeviceState(device, 'status', "connected")
                 self.updateDeviceState(device, 'connected', True)
-                devProps['tryingToConnect'] = False
-                self.updateDeviceProps(device, devProps)
+                dev_props['tryingToConnect'] = False
+                self.updateDeviceProps(device, dev_props)
                 # Remove the device ID from the list of devices waiting to connect.
-                waitingCount = self.devicesWaitingToConnect.get(device.id, -1)
-                if waitingCount > -1:
+                waiting_count = self.devicesWaitingToConnect.get(device.id, -1)
+                if waiting_count > -1:
                     del self.devicesWaitingToConnect[device.id]
 
                 # Now that we're connected, gather receiver status information.
                 self.getReceiverStatus(device)
 
-            except Exception as e:
+            except Exception as err:
                 # If this was a connection refused error, report it.
-                if "(61," in str(e):
+                if "(61," in str(err):
                     self.errorLog(
                         f"Connection refused when trying to connect to {device.name}. Will try again in "
                         f"{float((CONNECTION_RETRY_DELAY / 10))} seconds."
                     )
                     # Increment the number of times we attempted to connect but reached this point because we were
                     # already trying to connect.
-                    waitingCount = self.devicesWaitingToConnect.get(device.id, -1)
-                    if waitingCount > -1:
+                    waiting_count = self.devicesWaitingToConnect.get(device.id, -1)
+                    if waiting_count > -1:
                         self.devicesWaitingToConnect[device.id] += 1
                     else:
                         self.devicesWaitingToConnect[device.id] = 1
                 else:
                     self.errorLog(
-                        f"Unable to establish a connection to {device.name}: {e}. Will try again in "
+                        f"Unable to establish a connection to {device.name}: {err}. Will try again in "
                         f"{float(CONNECTION_RETRY_DELAY / 10)} seconds."
                     )
                     # Increment the number of times we attempted to connect but reached this point because we were
                     # already trying to connect.
-                    waitingCount = self.devicesWaitingToConnect.get(device.id, -1)
-                    if waitingCount > -1:
+                    waiting_count = self.devicesWaitingToConnect.get(device.id, -1)
+                    if waiting_count > -1:
                         self.devicesWaitingToConnect[device.id] += 1
                     else:
                         self.devicesWaitingToConnect[device.id] = 1
@@ -436,8 +500,8 @@ class Plugin(indigo.PluginBase):
         elif not connected and connecting:
             # Increment the number of times we attempted to connect but reached this point because we were already
             # trying to connect.
-            waitingCount = self.devicesWaitingToConnect.get(device.id, -1)
-            if waitingCount > -1:
+            waiting_count = self.devicesWaitingToConnect.get(device.id, -1)
+            if waiting_count > -1:
                 self.devicesWaitingToConnect[device.id] += 1
             else:
                 self.devicesWaitingToConnect[device.id] = 1
@@ -445,11 +509,11 @@ class Plugin(indigo.PluginBase):
             # tryingToConnect property.
             if self.devicesWaitingToConnect.get(device.id, -1) > CONNECTION_RETRY_DELAY:
                 connecting = False
-                devProps['tryingToConnect'] = False
-                self.updateDeviceProps(device, devProps)
+                dev_props['tryingToConnect'] = False
+                self.updateDeviceProps(device, dev_props)
                 # Remove the device ID from the list of devices waiting to connect.
-                waitingCount = self.devicesWaitingToConnect.get(device.id, -1)
-                if waitingCount > -1:
+                waiting_count = self.devicesWaitingToConnect.get(device.id, -1)
+                if waiting_count > -1:
                     del self.devicesWaitingToConnect[device.id]
                     self.debugLog(
                         "connect: Re-connect wait period over. Will try to connect next time the connect method is "
@@ -468,11 +532,11 @@ class Plugin(indigo.PluginBase):
             connected = True
             # Update the device to reflect this.
             self.updateDeviceState(device, 'connected', True)
-            devProps['tryingToConnect'] = False
-            self.updateDeviceProps(device, devProps)
+            dev_props['tryingToConnect'] = False
+            self.updateDeviceProps(device, dev_props)
             # Remove the device ID from the list of devices waiting to connect.
-            waitingCount = self.devicesWaitingToConnect.get(device.id, -1)
-            if waitingCount > -1:
+            waiting_count = self.devicesWaitingToConnect.get(device.id, -1)
+            if waiting_count > -1:
                 del self.devicesWaitingToConnect[device.id]
 
         # Display wait count in debug log.
@@ -482,11 +546,16 @@ class Plugin(indigo.PluginBase):
     # Disconnect from a Receiver Device
     #########################################
     def disconnect(self, device):
+        """
+        Placeholder - fixme
+        :param device:
+        :return:
+        """
         self.debugLog("disconnect method called.")
 
         connected = device.states['connected']
-        devProps = device.pluginProps
-        connecting = devProps.get('tryingToConnect', False)
+        dev_props = device.pluginProps
+        connecting = dev_props.get('tryingToConnect', False)
 
         # Disconnect the telnet session.
         try:
@@ -496,57 +565,64 @@ class Plugin(indigo.PluginBase):
             # Update the "connected" state on the server as well.
             self.updateDeviceState(device, 'connected', False)
             # Make sure the tryingToConnect device property is not on.
-            devProps['tryingToConnect'] = False
-            self.updateDeviceProps(device, devProps)
+            dev_props['tryingToConnect'] = False
+            self.updateDeviceProps(device, dev_props)
             self.debugLog(f"disconnect: {device.name} telnet connection is now closed.")
             # Remove the device ID from the list of devices waiting to connect (if it's in there).
-            waitingCount = self.devicesWaitingToConnect.get(device.id, -1)
-            if waitingCount > -1:
+            waiting_count = self.devicesWaitingToConnect.get(device.id, -1)
+            if waiting_count > -1:
                 del self.devicesWaitingToConnect[device.id]
         except EOFError:
             self.debugLog(f"disconnect: Connection to {device.name} is already closed.")
             self.updateDeviceState(device, 'status', "disconnected")
             self.updateDeviceState(device, 'connected', False)
-            devProps['tryingToConnect'] = False
-            self.updateDeviceProps(device, devProps)
+            dev_props['tryingToConnect'] = False
+            self.updateDeviceProps(device, dev_props)
             self.debugLog(f"disconnect: {device.name} connection is already closed.")
             # Remove the device ID from the list of devices waiting to connect (if it's in there).
-            waitingCount = self.devicesWaitingToConnect.get(device.id, -1)
-            if waitingCount > -1:
+            waiting_count = self.devicesWaitingToConnect.get(device.id, -1)
+            if waiting_count > -1:
                 del self.devicesWaitingToConnect[device.id]
-        except Exception as e:
-            self.errorLog(f"disconnect: Error disconnecting from {device.name}: {e}")
+        except Exception as err:
+            self.errorLog(f"disconnect: Error disconnecting from {device.name}: {err}")
             self.updateDeviceState(device, 'status', "error")
             self.updateDeviceState(device, 'connected', False)
-            devProps['tryingToConnect'] = False
-            self.updateDeviceProps(device, devProps)
+            dev_props['tryingToConnect'] = False
+            self.updateDeviceProps(device, dev_props)
             self.debugLog(f"disconnect: {device.name} is now disconnected (error while disconnecting).")
             # Remove the device ID from the list of devices waiting to connect (if it's in there).
-            waitingCount = self.devicesWaitingToConnect.get(device.id, -1)
-            if waitingCount > -1:
+            waiting_count = self.devicesWaitingToConnect.get(device.id, -1)
+            if waiting_count > -1:
                 del self.devicesWaitingToConnect[device.id]
 
     #########################################
     # Send a Command
     #########################################
     def sendCommand(self, device, command):
+        """
+        Placeholder - fixme
+        :param device:
+        :param command:
+        :return:
+        """
         # Get the device type. Future versions of this plugin will support other receiver models.
-        devType = device.deviceTypeId
+        dev_type = device.deviceTypeId
 
         # Catch attempts to send a command to a Virtual Volume Controller device, which is not possible (but because
         # it's not currently possible to prevent the user from selecting it as a destination device in the Indigo UI,
         # we must check for it).
-        if devType == "virtualVolume":
-            self.errorLog(f"Device \"{device.name}\" is a Virtual Volume Controller, not a Pioneer receiver. Modify "
-                          f"the Indigo action to send the command \"{command}\" to a Pioneer receiver instead of this "
-                          f"device.")
+        if dev_type == "virtualVolume":
+            self.errorLog(
+                f"Device \"{device.name}\" is a Virtual Volume Controller, not a Pioneer receiver. Modify the Indigo "
+                f"action to send the command \"{command}\" to a Pioneer receiver instead of this  device."
+            )
             return None
 
         # Get the device current connection status.
         connected = device.states['connected']
         # Get the device properties.
-        devProps = device.pluginProps
-        connecting = devProps.get('tryingToConnect', False)
+        dev_props = device.pluginProps
+        connecting = dev_props.get('tryingToConnect', False)
 
         # Make sure the command is a string.
         command = str(command)
@@ -569,20 +645,18 @@ class Plugin(indigo.PluginBase):
                 self.tn[device.id].write(str.encode(command))
             except EOFError:
                 # Connection is closed. Update status and try to re-open.
-                self.errorLog(
-                    f"Connection to {device.name} lost while trying to send data. Will attempt to connect.")
+                self.errorLog(f"Connection to {device.name} lost while trying to send data. Will attempt to connect.")
                 self.updateDeviceState(device, 'status', "disconnected")
                 self.updateDeviceState(device, 'connected', False)
                 self.connect(device)
-            except Exception as e:
+            except Exception as err:
                 # Unknown error.
-                self.errorLog(f"Failed to send data to {device.name}: {e}")
+                self.errorLog(f"Failed to send data to {device.name}: {err}")
                 self.updateDeviceState(device, 'status', "error")
                 self.updateDeviceState(device, 'connected', False)
         elif not connected and not connecting:
             # Show an error and try to connect.
-            self.errorLog(
-                f"Unable to send command to {device.name}. It is not connected. Attempting to re-connect.")
+            self.errorLog(f"Unable to send command to {device.name}. It is not connected. Attempting to re-connect.")
             self.connect(device)
         elif not connected and connecting:
             # Show an error indicating that we're still trying to connect.
@@ -592,13 +666,18 @@ class Plugin(indigo.PluginBase):
     # Read Data from a Receiver Connection
     #########################################
     def readData(self, device):
+        """
+        Placeholder - fixme
 
+        :param device:
+        :return:
+        """
         response = ""
 
         # Get the device connection state and properties.
         connected = device.states['connected']
-        devProps = device.pluginProps
-        connecting = devProps.get('tryingToConnect', False)
+        dev_props = device.pluginProps
+        connecting = dev_props.get('tryingToConnect', False)
 
         # Only proceed if we're connected.
         if connected:
@@ -618,15 +697,14 @@ class Plugin(indigo.PluginBase):
                 self.updateDeviceState(device, 'status', "disconnected")
                 self.updateDeviceState(device, 'connected', False)
                 self.connect(device)
-            except Exception as e:
+            except Exception as err:
                 # Unknown error.
-                self.errorLog(f"Failed to receive data from {device.name}: {e}")
+                self.errorLog(f"Failed to receive data from {device.name}: {err}")
                 self.updateDeviceState(device, 'status', "error")
                 self.updateDeviceState(device, 'connected', False)
         elif not connected and not connecting:
             # Show an error and try to connect.
-            self.errorLog(
-                f"Unable to read data from {device.name}. It is not connected. Attempting to re-connect.")
+            self.errorLog(f"Unable to read data from {device.name}. It is not connected. Attempting to re-connect.")
             self.connect(device)
         elif not connected and connecting:
             # Show an error indicating that we're still trying to connect.
@@ -638,18 +716,25 @@ class Plugin(indigo.PluginBase):
     # Process a Command Response
     #########################################
     def processResponse(self, device, response):
+        """
+        Placeholder - fixme
+
+        :param device:
+        :param response:
+        :return:
+        """
         # Update the Indigo receiver device based on the response from the receiver.
         self.debugLog(f"processResponse: from: {device.name} response: {response}")
 
         # Get the type of device.  In the future, we'll support different receiver types.
-        devType = device.deviceTypeId
+        dev_type = device.deviceTypeId
 
         # Make a copy of the device properties, so we can change them if needed.
-        devProps = device.pluginProps
+        dev_props = device.pluginProps
 
         result = ""
         state = ""
-        newValue = ""
+        new_value = ""
 
         #
         # Test for each type of command response.
@@ -660,7 +745,7 @@ class Plugin(indigo.PluginBase):
         #
 
         state = "status"
-        newValue = "error"
+        new_value = "error"
         if response == "E02":
             self.errorLog(device.name + ": not available now.")
         elif response == "E03":
@@ -670,7 +755,7 @@ class Plugin(indigo.PluginBase):
         elif response == "E06":
             self.errorLog(device.name + ": parameter error.")
         elif response == "B00":
-            newValue = "busy"
+            new_value = "busy"
             self.errorLog(device.name + ": system busy.")
         #
         # General Acknowledgement Response
@@ -685,7 +770,7 @@ class Plugin(indigo.PluginBase):
             state = "zone1power"
             if response == "PWR0":
                 # Power (zone 1) is on.
-                newValue = True
+                new_value = True
                 # Only set a result message if this is a change from the current state.
                 if not device.states['zone1power']:
                     # Set the result to be logged.
@@ -700,7 +785,7 @@ class Plugin(indigo.PluginBase):
                     self.updateDeviceState(device, "status", "on (zone 1)")
             elif response == "PWR1":
                 # Power (zone 1) is off.
-                newValue = False
+                new_value = False
                 if device.states['zone1power']:
                     result = "power (zone 1): off"
                 # If zone 2 is on, make sure the status reflects that.
@@ -718,22 +803,22 @@ class Plugin(indigo.PluginBase):
                 #   Set "zone1sourceName to (no source)
                 self.updateDeviceState(device, "zone1sourceName", "")
                 #   Set all channel levels to 0.
-                for theChannel, theName in CHANNEL_VOLUMES.items():
-                    self.updateDeviceState(device, theName, 0)
+                for the_channel, the_name in CHANNEL_VOLUMES.items():
+                    self.updateDeviceState(device, the_name, 0)
                 #   Set MCACC Memory number to 0.
                 self.updateDeviceState(device, "mcaccMemory", 0)
                 #   Clear the MCACC memory name.
                 self.updateDeviceState(device, "mcaccMemoryName", "")
                 # Look for Virtual Volume Controllers that might need setting to zero.
-                for thisId in self.volumeDeviceList:
-                    virtualVolumeDevice = indigo.devices[thisId]
-                    controlDestination = virtualVolumeDevice.pluginProps.get('controlDestination', "")
-                    if (int(virtualVolumeDevice.pluginProps.get('receiverDeviceId', "")) == device.id
-                            and controlDestination == "zone1volume"):
-                        self.updateDeviceState(virtualVolumeDevice, 'brightnessLevel', 0)
+                for this_id in self.volume_device_list:
+                    virtual_volume_device = indigo.devices[this_id]
+                    control_destination = virtual_volume_device.pluginProps.get('controlDestination', "")
+                    if (int(virtual_volume_device.pluginProps.get('receiverDeviceId', "")) == device.id
+                            and control_destination == "zone1volume"):
+                        self.updateDeviceState(virtual_volume_device, 'brightnessLevel', 0)
             elif response == "PWR2":
                 # Power (zone 1) is off (network standby mode, only VSX-1022-K reports this).
-                newValue = False
+                new_value = False
                 if device.states['zone1power']:
                     result = "power (zone 1): off"
                 # If zone 2 is on, make sure the status reflects that.
@@ -751,98 +836,99 @@ class Plugin(indigo.PluginBase):
                 #   Set "zone1sourceName to (no source)
                 self.updateDeviceState(device, "zone1sourceName", "")
                 #   Set all channel levels to 0.
-                for theChannel, theName in CHANNEL_VOLUMES.items():
-                    self.updateDeviceState(device, theName, 0)
+                for the_channel, the_name in CHANNEL_VOLUMES.items():
+                    self.updateDeviceState(device, the_name, 0)
                 #   Set MCACC Memory number to 0.
                 self.updateDeviceState(device, "mcaccMemory", 0)
                 #   Clear the MCACC memory name.
                 self.updateDeviceState(device, "mcaccMemoryName", "")
                 # Look for Virtual Volume Controllers that might need setting to zero.
-                for thisId in self.volumeDeviceList:
-                    virtualVolumeDevice = indigo.devices[thisId]
-                    controlDestination = virtualVolumeDevice.pluginProps.get('controlDestination', "")
-                    if (int(virtualVolumeDevice.pluginProps.get('receiverDeviceId', "")) == device.id
-                            and controlDestination == "zone1volume"):
-                        self.updateDeviceState(virtualVolumeDevice, 'brightnessLevel', 0)
+                for this_id in self.volume_device_list:
+                    virtual_volume_device = indigo.devices[this_id]
+                    control_destination = virtual_volume_device.pluginProps.get('controlDestination', "")
+                    if (int(virtual_volume_device.pluginProps.get('receiverDeviceId', "")) == device.id
+                            and control_destination == "zone1volume"):
+                        self.updateDeviceState(virtual_volume_device, 'brightnessLevel', 0)
         elif response.startswith("MUT"):
             # Mute (zone 1) status.
             state = "zone1mute"
             if response == "MUT0":
                 # Mute is on.
-                newValue = True
+                new_value = True
                 if not device.states['zone1mute']:
                     result = "mute (zone 1): on"
                 # Look for Virtual Volume Controllers that might need updating.
-                for thisId in self.volumeDeviceList:
-                    virtualVolumeDevice = indigo.devices[thisId]
-                    controlDestination = virtualVolumeDevice.pluginProps.get('controlDestination', "")
-                    if (int(virtualVolumeDevice.pluginProps.get('receiverDeviceId', "")) == device.id
-                            and controlDestination == "zone1volume"):
-                        self.updateDeviceState(virtualVolumeDevice, 'brightnessLevel', 0)
+                for this_id in self.volume_device_list:
+                    virtual_volume_device = indigo.devices[this_id]
+                    control_destination = virtual_volume_device.pluginProps.get('controlDestination', "")
+                    if (int(virtual_volume_device.pluginProps.get('receiverDeviceId', "")) == device.id
+                            and control_destination == "zone1volume"):
+                        self.updateDeviceState(virtual_volume_device, 'brightnessLevel', 0)
             elif response == "MUT1":
                 # Mute is off.
-                newValue = False
+                new_value = False
                 if device.states['zone1mute']:
                     result = "mute (zone 1): off"
                 # Look for Virtual Volume Controllers that might need updating.
-                for thisId in self.volumeDeviceList:
-                    virtualVolumeDevice = indigo.devices[thisId]
-                    controlDestination = virtualVolumeDevice.pluginProps.get('controlDestination', "")
-                    if (int(virtualVolumeDevice.pluginProps.get('receiverDeviceId', "")) == device.id
-                            and controlDestination == "zone1volume"):
+                for this_id in self.volume_device_list:
+                    virtual_volume_device = indigo.devices[this_id]
+                    control_destination = virtual_volume_device.pluginProps.get('controlDestination', "")
+                    if (int(virtual_volume_device.pluginProps.get('receiverDeviceId', "")) == device.id
+                            and control_destination == "zone1volume"):
                         # Update the Virtual Volume Controller to match current volume. Get the receiver's volume.
-                        theVolume = float(device.states[controlDestination])
+                        the_volume = float(device.states[control_destination])
                         # Convert the current volume of the receiver to a percentage to be displayed as a brightness
                         # level. If the volume is less than -80.5, the receiver is off and the brightness should be 0.
-                        if float(theVolume) < -80.5:
-                            theVolume = -80.5
-                        theVolume = int(100 - round(theVolume / -80.5 * 100, 0))
-                        self.updateDeviceState(virtualVolumeDevice, 'brightnessLevel', theVolume)
+                        if float(the_volume) < -80.5:
+                            the_volume = -80.5
+                        the_volume = int(100 - round(the_volume / -80.5 * 100, 0))
+                        self.updateDeviceState(virtual_volume_device, 'brightnessLevel', the_volume)
         elif response.startswith("FN"):
             # Source/function (zone 1) status.
             state = "zone1source"
-            newValue = int(response[2:])
+            new_value = int(response[2:])
             # Check to see if zone 1 is already set to this input or if zone 1 power is off.  In either case, ignore
             # this update.
-            if device.states[state] == newValue or not device.states['zone1power']:
+            if device.states[state] == new_value or not device.states['zone1power']:
                 state = ""
-                newValue = ""
+                new_value = ""
         elif response.startswith("VOL"):
             # Volume (zone 1) status.
             state = "zone1volume"
             # Convert to dB.
-            newValue = float(response[3:]) * 1.0
-            newValue = -80.5 + 0.5 * newValue
+            new_value = float(response[3:]) * 1.0
+            new_value = -80.5 + 0.5 * new_value
             # Volume is at minimum or zone 1 power is off, volume is meaningless, so set it to minimum.
-            if (newValue < -80.0) or (not device.states['zone1power']):
-                newValue = -999.0
+            if (new_value < -80.0) or (not device.states['zone1power']):
+                new_value = -999.0
                 result = "volume (zone 1): minimum."
             else:
-                result = f"volume (zone 1): {newValue} dB"
+                result = f"volume (zone 1): {new_value} dB"
             # Look for Virtual Volume Controllers that might need updating.
             self.debugLog(
                 f"processResponse: Looking for connected Virtual Volume Controllers. volumeDeviceList: "
-                f"{self.volumeDeviceList}"
+                f"{self.volume_device_list}"
             )
-            for thisId in self.volumeDeviceList:
-                virtualVolumeDevice = indigo.devices[thisId]
-                self.debugLog(f"processResponse: Examining Virtual Volume Controller ID {thisId}")
-                self.debugLog(f"processResponse: {virtualVolumeDevice}")
-                controlDestination = virtualVolumeDevice.pluginProps.get('controlDestination', "")
-                if int(virtualVolumeDevice.pluginProps.get('receiverDeviceId', "")) == device.id \
-                        and controlDestination == "zone1volume":
-                    self.debugLog(f"processResponse: Virtual Volume Controller ID {thisId} is connected.")
+            for this_id in self.volume_device_list:
+                virtual_volume_device = indigo.devices[this_id]
+                self.debugLog(f"processResponse: Examining Virtual Volume Controller ID {this_id}")
+                self.debugLog(f"processResponse: {virtual_volume_device}")
+                control_destination = virtual_volume_device.pluginProps.get('controlDestination', "")
+                if int(virtual_volume_device.pluginProps.get('receiverDeviceId', "")) == device.id \
+                        and control_destination == "zone1volume":
+                    self.debugLog(f"processResponse: Virtual Volume Controller ID {this_id} is connected.")
                     # Update the Virtual Volume Controller to match new volume.
-                    theVolume = newValue
+                    the_volume = new_value
                     # Convert the current volume of the receiver to a percentage to be displayed as a brightness level.
                     # If the volume is less than -80.5, the receiver is off and the brightness should be 0.
-                    if theVolume < -80.0:
-                        theVolume = -80.5
-                    theVolume = int(100 - round(theVolume / -80.5 * 100, 0))
+                    if the_volume < -80.0:
+                        the_volume = -80.5
+                    the_volume = int(100 - round(the_volume / -80.5 * 100, 0))
                     self.debugLog(
-                        f"processResponse: updating Virtual Volume Device ID {thisId} brightness level to {theVolume}."
+                        f"processResponse: updating Virtual Volume Device ID {this_id} brightness level to "
+                        f"{the_volume}."
                     )
-                    self.updateDeviceState(virtualVolumeDevice, 'brightnessLevel', theVolume)
+                    self.updateDeviceState(virtual_volume_device, 'brightnessLevel', the_volume)
         #
         # Zone 2 Specific Items
         #
@@ -851,7 +937,7 @@ class Plugin(indigo.PluginBase):
             state = "zone2power"
             if response == "APR0":
                 # Power (zone 2) is on.
-                newValue = True
+                new_value = True
                 if not device.states['zone2power']:
                     result = "power (zone 2): on"
                 # Update the onOffState.
@@ -863,7 +949,7 @@ class Plugin(indigo.PluginBase):
                     self.updateDeviceState(device, "status", "on (zone 2)")
             elif response == "APR1":
                 # Power (zone 2) is off.
-                newValue = False
+                new_value = False
                 if device.states['zone2power']:
                     result = "power (zone 2): off"
                 # If main power (zone 1) is on, make sure the status reflects that.
@@ -887,21 +973,21 @@ class Plugin(indigo.PluginBase):
                     self.updateDeviceState(device, 'tunerFrequencyText', "")
                     self.updateDeviceState(device, 'tunerBand', "")
                 # Look for Virtual Volume Controllers that might need setting to zero.
-                for thisId in self.volumeDeviceList:
-                    virtualVolumeDevice = indigo.devices[thisId]
-                    controlDestination = virtualVolumeDevice.pluginProps.get('controlDestination', "")
-                    if (int(virtualVolumeDevice.pluginProps.get('receiverDeviceId', "")) == device.id
-                            and controlDestination == "zone2volume"):
-                        self.updateDeviceState(virtualVolumeDevice, 'brightnessLevel', 0)
+                for this_id in self.volume_device_list:
+                    virtual_volume_device = indigo.devices[this_id]
+                    control_destination = virtual_volume_device.pluginProps.get('controlDestination', "")
+                    if (int(virtual_volume_device.pluginProps.get('receiverDeviceId', "")) == device.id
+                            and control_destination == "zone2volume"):
+                        self.updateDeviceState(virtual_volume_device, 'brightnessLevel', 0)
         elif response.startswith("Z2F"):
             # Source/function (zone 2) status.
             state = "zone2source"
-            newValue = int(response[3:])
+            new_value = int(response[3:])
             # Check to see if zone 2 is already set to this input or if zone 2 power is off.  If either is the case,
             # ignore this update.
-            if device.states[state] == newValue or not device.states['zone2power']:
+            if device.states[state] == new_value or not device.states['zone2power']:
                 state = ""
-                newValue = ""
+                new_value = ""
         elif response.startswith("Z2MUT"):
             # Mute (zone 2) status.
             state = "zone2mute"
@@ -910,222 +996,222 @@ class Plugin(indigo.PluginBase):
             if device.states['speakerSystem'] == "A + Zone 2":
                 if response == "Z2MUT0":
                     # Mute is on.
-                    newValue = True
+                    new_value = True
                     result = "mute (zone 2): on"
                     # Look for Virtual Volume Controllers that might need updating.
-                    for thisId in self.volumeDeviceList:
-                        virtualVolumeDevice = indigo.devices[thisId]
-                        controlDestination = virtualVolumeDevice.pluginProps.get('controlDestination', "")
-                        if (int(virtualVolumeDevice.pluginProps.get('receiverDeviceId', "")) == device.id
-                                and controlDestination == "zone2volume"):
-                            self.updateDeviceState(virtualVolumeDevice, 'brightnessLevel', 0)
+                    for this_id in self.volume_device_list:
+                        virtual_volume_device = indigo.devices[this_id]
+                        control_destination = virtual_volume_device.pluginProps.get('controlDestination', "")
+                        if (int(virtual_volume_device.pluginProps.get('receiverDeviceId', "")) == device.id
+                                and control_destination == "zone2volume"):
+                            self.updateDeviceState(virtual_volume_device, 'brightnessLevel', 0)
                 elif response == "Z2MUT1":
                     # Mute is off.
-                    newValue = False
+                    new_value = False
                     result = "mute (zone 2): off"
                     # Look for Virtual Volume Controllers that might need updating.
-                    for thisId in self.volumeDeviceList:
-                        virtualVolumeDevice = indigo.devices[thisId]
-                        controlDestination = virtualVolumeDevice.pluginProps.get('controlDestination', "")
-                        if (int(virtualVolumeDevice.pluginProps.get('receiverDeviceId', "")) == device.id
-                                and controlDestination == "zone2volume"):
+                    for this_id in self.volume_device_list:
+                        virtual_volume_device = indigo.devices[this_id]
+                        control_destination = virtual_volume_device.pluginProps.get('controlDestination', "")
+                        if (int(virtual_volume_device.pluginProps.get('receiverDeviceId', "")) == device.id
+                                and control_destination == "zone2volume"):
                             # Update the Virtual Volume Controller to match current volume. Get the receiver's volume.
-                            theVolume = float(device.states[controlDestination])
+                            the_volume = float(device.states[control_destination])
                             # Convert the current volume of the receiver to a percentage to be displayed as a
                             # brightness level. If the volume is less than -80.5, the receiver is off and the
                             # brightness should be 0.
-                            if float(theVolume) < -81:
-                                theVolume = -81
-                            theVolume = int(100 - round(theVolume / -81 * 100, 0))
-                            self.updateDeviceState(virtualVolumeDevice, 'brightnessLevel', theVolume)
+                            if float(the_volume) < -81:
+                                the_volume = -81
+                            the_volume = int(100 - round(the_volume / -81 * 100, 0))
+                            self.updateDeviceState(virtual_volume_device, 'brightnessLevel', the_volume)
             else:
-                newValue = False
+                new_value = False
                 result = ""
                 # Zone 2 mute is meaningless when using the RCA line outputs, so look for Virtual Volume Controllers
                 # that might need updating. If zone 2 power is on, the zone 2 line output will always be at 100% volume.
                 if device.states['zone2power']:
-                    for thisId in self.volumeDeviceList:
-                        virtualVolumeDevice = indigo.devices[thisId]
-                        controlDestination = virtualVolumeDevice.pluginProps.get('controlDestination', "")
-                        if (int(virtualVolumeDevice.pluginProps.get('receiverDeviceId', "")) == device.id
-                                and controlDestination == "zone2volume"):
-                            self.updateDeviceState(virtualVolumeDevice, 'brightnessLevel', 100)
+                    for this_id in self.volume_device_list:
+                        virtual_volume_device = indigo.devices[this_id]
+                        control_destination = virtual_volume_device.pluginProps.get('controlDestination', "")
+                        if (int(virtual_volume_device.pluginProps.get('receiverDeviceId', "")) == device.id
+                                and control_destination == "zone2volume"):
+                            self.updateDeviceState(virtual_volume_device, 'brightnessLevel', 100)
                 else:
                     # If zone 2 power is off, the zone 2 line output will always be at 0% volume.
-                    for thisId in self.volumeDeviceList:
-                        virtualVolumeDevice = indigo.devices[thisId]
-                        controlDestination = virtualVolumeDevice.pluginProps.get('controlDestination', "")
-                        if (int(virtualVolumeDevice.pluginProps.get('receiverDeviceId', "")) == device.id
-                                and controlDestination == "zone2volume"):
-                            self.updateDeviceState(virtualVolumeDevice, 'brightnessLevel', 0)
+                    for this_id in self.volume_device_list:
+                        virtual_volume_device = indigo.devices[this_id]
+                        control_destination = virtual_volume_device.pluginProps.get('controlDestination', "")
+                        if (int(virtual_volume_device.pluginProps.get('receiverDeviceId', "")) == device.id
+                                and control_destination == "zone2volume"):
+                            self.updateDeviceState(virtual_volume_device, 'brightnessLevel', 0)
         elif response.startswith("ZV"):
             # Volume (zone 2) status.
             state = "zone2volume"
             # Convert to dB.
-            newValue = int(response[2:])
-            # newValue = -81 + newValue
-            newValue += -81
-            if newValue < -80 or not device.states['zone2power']:
-                newValue = -999
+            new_value = int(response[2:])
+            # new_value = -81 + new_value
+            new_value += -81
+            if new_value < -80 or not device.states['zone2power']:
+                new_value = -999
                 result = "volume (zone 2): minimum."
             else:
-                result = f"volume (zone 2): {newValue} dB"
+                result = f"volume (zone 2): {new_value} dB"
             # If the speaker system arrangement is not set to A + Zone 2, zone mute and volume settings returned by the
             # receiver are meaningless. Set the state on the server to properly reflect this.
             if device.states['speakerSystem'] == "A + Zone 2":
                 # Look for Virtual Volume Controllers that might need updating.
                 self.debugLog(
                     f"processResponse: Looking for zone 2 connected Virtual Volume Controllers. volumeDeviceList: "
-                    f"{self.volumeDeviceList}"
+                    f"{self.volume_device_list}"
                 )
-                for thisId in self.volumeDeviceList:
-                    virtualVolumeDevice = indigo.devices[thisId]
-                    self.debugLog(f"processResponse: Examining Virtual Volume Controller ID {thisId}")
-                    self.debugLog(f"processResponse: {virtualVolumeDevice}")
-                    controlDestination = virtualVolumeDevice.pluginProps.get('controlDestination', "")
-                    if (int(virtualVolumeDevice.pluginProps.get('receiverDeviceId', "")) == device.id
-                            and controlDestination == "zone2volume"):
+                for this_id in self.volume_device_list:
+                    virtual_volume_device = indigo.devices[this_id]
+                    self.debugLog(f"processResponse: Examining Virtual Volume Controller ID {this_id}")
+                    self.debugLog(f"processResponse: {virtual_volume_device}")
+                    control_destination = virtual_volume_device.pluginProps.get('controlDestination', "")
+                    if (int(virtual_volume_device.pluginProps.get('receiverDeviceId', "")) == device.id
+                            and control_destination == "zone2volume"):
                         self.debugLog(
-                            f"processResponse: Virtual Volume Controller ID {thisId} is connected to zone 2 volume."
+                            f"processResponse: Virtual Volume Controller ID {this_id} is connected to zone 2 volume."
                         )
                         # Update the Virtual Volume Controller to match current volume. Get the receiver's volume.
-                        theVolume = newValue
+                        the_volume = new_value
                         # Convert the current volume of the receiver to a percentage to be displayed as a brightness
                         # level. If the volume is less than -81, the receiver is off and the brightness should be 0.
-                        if theVolume < -81:
-                            theVolume = -81
-                        theVolume = 100 - int(round(theVolume / -81.0 * 100, 0))
+                        if the_volume < -81:
+                            the_volume = -81
+                        the_volume = 100 - int(round(the_volume / -81.0 * 100, 0))
                         # If zone 2 power is on, use theVolume. If not, use zero.
                         if device.states['zone2power']:
                             self.debugLog(
-                                f"processResponse: updating Virtual Volume Device ID {thisId} brightness level to "
-                                f"{theVolume}"
+                                f"processResponse: updating Virtual Volume Device ID {this_id} brightness level to "
+                                f"{the_volume}"
                             )
-                            self.updateDeviceState(virtualVolumeDevice, 'brightnessLevel', theVolume)
+                            self.updateDeviceState(virtual_volume_device, 'brightnessLevel', the_volume)
                         else:
                             self.debugLog(
-                                f"processResponse: updating Virtual Volume Device ID {thisId} brightness level to 0"
+                                f"processResponse: updating Virtual Volume Device ID {this_id} brightness level to 0"
                             )
-                            self.updateDeviceState(virtualVolumeDevice, 'brightnessLevel', 0)
+                            self.updateDeviceState(virtual_volume_device, 'brightnessLevel', 0)
             else:
-                newValue = 0
+                new_value = 0
                 result = ""
                 # Zone 2 volume is meaningless when using the RCA line outputs, so look for Virtual Volume Controllers
                 # that might need updating. If zone 2 power is on, the zone 2 line output will always be at 100% volume.
                 if device.states['zone2power']:
-                    for thisId in self.volumeDeviceList:
-                        virtualVolumeDevice = indigo.devices[thisId]
-                        controlDestination = virtualVolumeDevice.pluginProps.get('controlDestination', "")
-                        if (int(virtualVolumeDevice.pluginProps.get('receiverDeviceId', "")) == device.id
-                                and controlDestination == "zone2volume"):
-                            self.updateDeviceState(virtualVolumeDevice, 'brightnessLevel', 100)
+                    for this_id in self.volume_device_list:
+                        virtual_volume_device = indigo.devices[this_id]
+                        control_destination = virtual_volume_device.pluginProps.get('controlDestination', "")
+                        if (int(virtual_volume_device.pluginProps.get('receiverDeviceId', "")) == device.id
+                                and control_destination == "zone2volume"):
+                            self.updateDeviceState(virtual_volume_device, 'brightnessLevel', 100)
                 else:
                     # If zone 2 power is off, the zone 2 line output will always be at 0% volume.
-                    for thisId in self.volumeDeviceList:
-                        virtualVolumeDevice = indigo.devices[thisId]
-                        controlDestination = virtualVolumeDevice.pluginProps.get('controlDestination', "")
-                        if (int(virtualVolumeDevice.pluginProps.get('receiverDeviceId', "")) == device.id
-                                and controlDestination == "zone2volume"):
-                            self.updateDeviceState(virtualVolumeDevice, 'brightnessLevel', 0)
+                    for this_id in self.volume_device_list:
+                        virtual_volume_device = indigo.devices[this_id]
+                        control_destination = virtual_volume_device.pluginProps.get('controlDestination', "")
+                        if (int(virtual_volume_device.pluginProps.get('receiverDeviceId', "")) == device.id
+                                and control_destination == "zone2volume"):
+                            self.updateDeviceState(virtual_volume_device, 'brightnessLevel', 0)
         #
         # System-Wide Items
         #
         elif response.startswith("RGB"):
             # Source name update.
-            newValue = response[6:]
+            new_value = response[6:]
             # Define the device property to update and make the change to the local copy.
-            propName = f"source{response[3:5]}label"
-            devProps[propName] = newValue
+            prop_name = f"source{response[3:5]}label"
+            dev_props[prop_name] = new_value
             # Update the source name in the device properties on the server.
-            self.updateDeviceProps(device, devProps)
+            self.updateDeviceProps(device, dev_props)
             # If the input source name update is for the currently selected zone 1 input source or zone 2 input source,
             # change the appropriate state in the device.
             if device.states['zone1source'] == int(response[3:5]):
                 state = "zone1sourceName"
-                result = f"input source (zone 1): {newValue}"
-                self.updateDeviceState(device, state, newValue)
+                result = f"input source (zone 1): {new_value}"
+                self.updateDeviceState(device, state, new_value)
             if device.states['zone2source'] == int(response[3:5]):
                 state = "zone2sourceName"
-                result = f"input source (zone 2): {newValue}"
-                self.updateDeviceState(device, state, newValue)
+                result = f"input source (zone 2): {new_value}"
+                self.updateDeviceState(device, state, new_value)
         elif response.startswith("FL"):
             # Display update.
             state = "display"
-            newValue = ""
+            new_value = ""
             # All characters after character 4 are ASCII representations of HEX numbers that represent ASCII characters
             # (!?)
-            theString = response[4:]
+            the_string = response[4:]
             index = 0
             while index < 28:
                 # Convert the 2-character HEX representations to actual ASCII values.
                 #   -- Add "0x" to the front of the 2-character representation to indicate that it should be a HEX
                 #      number.
                 #   -- Use the "int" builtin to convert from ASCII base 16 to an integer.
-                asciiVal = int(f"0x{theString[index:index + 2]}", 16)
+                ascii_val = int(f"0x{the_string[index:index + 2]}", 16)
                 # Check for special characters.
-                if asciiVal < 32 or asciiVal > 126:
-                    # Add the special character to the newValue string from the character map dictionary defined at the
+                if ascii_val < 32 or ascii_val > 126:
+                    # Add the special character to the new_value string from the character map dictionary defined at the
                     # top.
-                    newValue += CHARACTER_MAP[asciiVal]
+                    new_value += CHARACTER_MAP[ascii_val]
                 else:
                     # Use the "chr" builtin to convert from integer to an ASCII character then add that to the existing
-                    # newValue string.
-                    # newValue += unicode(str(chr(asciiVal)))
-                    newValue += f"{chr(asciiVal)}"
+                    # new_value string.
+                    # new_value += unicode(str(chr(asciiVal)))
+                    new_value += f"{chr(ascii_val)}"
                 # Increment the index by 2
                 index += 2
         elif response.startswith("MC"):
             # MCACC Memory update.
             state = "mcaccMemory"
-            newValue = int(response[2:])
-            propName = f'mcaccMemory{newValue}label'
-            mcaccName = devProps.get(propName, "")
-            result = f"MCACC memory: {newValue}: {mcaccName}"
+            new_value = int(response[2:])
+            prop_name = f'mcaccMemory{new_value}label'
+            mcacc_name = dev_props.get(prop_name, "")
+            result = f"MCACC memory: {new_value}: {mcacc_name}"
         elif response.startswith("IS"):
             # Phase Control update.
             state = "phaseControl"
             if response == "IS0":
                 # Phase Control Off.
-                newValue = "off"
+                new_value = "off"
             elif response == "IS1":
                 # Phase Control On.
-                newValue = "on"
+                new_value = "on"
             elif response == "IS2":
                 # Full Band Phase Control On.
-                newValue = "on - full band"
-            result = f"Phase Control: {newValue}"
+                new_value = "on - full band"
+            result = f"Phase Control: {new_value}"
         elif response.startswith("VSP"):
             # Virtual Speakers.
             state = "vsp"
             if response == "VSP0":
                 # Virtual Speakers Auto.
-                newValue = "auto"
+                new_value = "auto"
                 result = "Virtual Speakers: auto"
             elif response == "VSP1":
                 # Virtual Speakers Manual.
-                newValue = "manual"
+                new_value = "manual"
                 result = "Virtual Speakers: manual"
         elif response.startswith("VSB"):
             # Virtual Surround Back update.
             state = "vsb"
             if response == "VSB0":
                 # Virtual Surround Back Off.
-                newValue = False
+                new_value = False
                 result = "Virtual Surround Back: off"
             elif response == "VSB1":
                 # Virtual Surround Back On.
-                newValue = True
+                new_value = True
                 result = "Virtual Surround Back: on"
         elif response.startswith("VHT"):
             # Virtual Surround Height update.
             state = "vht"
             if response == "VHT0":
                 # Virtual Surround Height Off.
-                newValue = False
+                new_value = False
                 result = "Virtual Surround Height: off"
             elif response == "VSB1":
                 # Virtual Surround Height On.
-                newValue = True
+                new_value = True
                 result = "Virtual Surround Height: on"
         elif response.startswith("CLV"):
             # Channel Volume Level update.
@@ -1134,127 +1220,127 @@ class Plugin(indigo.PluginBase):
             state = CHANNEL_VOLUMES[channel]
             level = float(response[6:]) * 1.0
             # convert the level to decibels.
-            newValue = -12 + 0.5 * (level - 26.0)
-            result = f"{channel.strip('_')} channel level: {newValue} dB."
+            new_value = -12 + 0.5 * (level - 26.0)
+            result = f"{channel.strip('_')} channel level: {new_value} dB."
         elif response.startswith("SPK"):
             # Speaker mode update.
             state = "speakers"
             if response == "SPK0":
                 # Speakers off.
-                newValue = "off"
+                new_value = "off"
             elif response == "SPK1":
                 # Speaker group A on.
-                newValue = "on - A"
+                new_value = "on - A"
             elif response == "SPK2":
                 # Speaker group B on.
-                newValue = "on - B"
+                new_value = "on - B"
             elif response == "SPK3":
                 # Both speaker groups A and B on.
-                newValue = "on - A+B"
-            result = f"speaker mode: {newValue}"
+                new_value = "on - A+B"
+            result = f"speaker mode: {new_value}"
         elif response.startswith("HA"):
             # HDMI Audio Pass-through update.
             state = "hdmiAudio"
             if response == "HA0":
                 # HDMI Audio processed by amp.
-                newValue = False
+                new_value = False
                 result = "HDMI Audio Pass-Through: off"
             elif response == "HA1":
                 # HDMI Audio passed through unaltered.
-                newValue = True
+                new_value = True
                 result = "HDMI Audio Pass-Through: on"
         elif response.startswith("PQ"):
             # PQLS status update.
             state = "pqls"
             if response == "PQ0":
                 # PQLS off.
-                newValue = False
+                new_value = False
                 result = "PQLS: off"
             elif response == "PQ1":
                 # PQLS auto.
-                newValue = True
+                new_value = True
                 result = "PQLS: on"
         elif response.startswith("SSA"):
             # Operating Mode.
             state = "operatingMode"
             if response == "SSA0":
                 # Expert Mode.
-                newValue = "Expert"
+                new_value = "Expert"
             elif response == "SSA1":
                 # reserved mode.
-                newValue = "(factory reserved)"
+                new_value = "(factory reserved)"
             elif response == "SSA2":
                 # Basic Mode.
-                newValue = "Basic"
-            result = f"operating mode: {newValue}"
+                new_value = "Basic"
+            result = f"operating mode: {new_value}"
         elif response.startswith("SSE"):
             # OSD Language setting.
             if response == "SSE00":
-                newValue = "English"
+                new_value = "English"
             else:
-                newValue = "non-English"
+                new_value = "non-English"
             # Define the device property to update and make the change to the local copy.
-            propName = 'osdLanguage'
-            devProps[propName] = newValue
+            prop_name = 'osdLanguage'
+            dev_props[prop_name] = new_value
             # Update the source name in the device properties on the server.
-            self.updateDeviceProps(device, devProps)
+            self.updateDeviceProps(device, dev_props)
         elif response.startswith("SSF"):
             # Speaker System status.
             state = "speakerSystem"
             if response == "SSF00":
-                newValue = "A + Surround Height"
+                new_value = "A + Surround Height"
             if response == "SSF01":
-                newValue = "A + Surround Width"
+                new_value = "A + Surround Width"
             if response == "SSF02":
-                newValue = "A Bi-Amped"
+                new_value = "A Bi-Amped"
             if response == "SSF03":
-                newValue = "A + B 2-Channel"
+                new_value = "A + B 2-Channel"
             if response == "SSF04":
-                newValue = "A + Zone 2"
-            result = f"speaker system layout: {newValue}"
+                new_value = "A + Zone 2"
+            result = f"speaker system layout: {new_value}"
         elif response.startswith("SAA"):
             # Dimmer Brightness change.
             if response == "SAA0":
-                newValue = "bright"
+                new_value = "bright"
             elif response == "SAA1":
-                newValue = "medium"
+                new_value = "medium"
             elif response == "SAA2":
-                newValue = "dim"
+                new_value = "dim"
             elif response == "SAA3":
-                newValue = "off"
+                new_value = "off"
         elif response.startswith("SAB"):
             # Sleep Timer time remaining.
             state = "sleepTime"
-            newValue = int(response[3:])
-            if newValue == 0:
+            new_value = int(response[3:])
+            if new_value == 0:
                 # Sleep timer is off
                 self.updateDeviceState(device, "sleepMode", False)
                 result = "sleep timer: off"
             else:
                 # Sleep timer is on
                 self.updateDeviceState(device, "sleepMode", True)
-                result = f"sleep timer: {newValue} minutes remaining."
+                result = f"sleep timer: {new_value} minutes remaining."
         elif response.startswith("PKL"):
             # Panel Key Lock status.
             state = "panelKeyLockMode"
             if response == "PKL0":
                 # Unlocked.
-                newValue = "off"
+                new_value = "off"
             elif response == "PKL1":
                 # Panel locked.
-                newValue = "on - panel"
+                new_value = "on - panel"
             elif response == "PKL2":
                 # Panel and volume locked.
-                newValue = "on - panel+volume"
-            result = f"front panel lock: {newValue}"
+                new_value = "on - panel+volume"
+            result = f"front panel lock: {new_value}"
         elif response.startswith("RML"):
             # Remote Lock Mode status.
             state = "remoteLock"
             if response == "RML0":
-                newValue = False
+                new_value = False
                 result = "remote control lock: off"
             elif response == "RML1":
-                newValue = True
+                new_value = True
                 result = "remote control lock: on"
         elif response.startswith("FR"):
             # Tuner Frequency update. Only update the state if either zone 1 or 2 is actually using the Tuner.
@@ -1266,223 +1352,223 @@ class Plugin(indigo.PluginBase):
                 self.updateDeviceState(device, "tunerBand", str(band))
                 # Extract the frequency.
                 frequency = response[3:]
-                frequencyText = frequency
+                frequency_text = frequency
                 if band == "FM":
                     # If the band is FM, put the decimal in the right place.
-                    frequencyText = f"{frequency[0:3]}.{frequency[3:]} MHz"
-                    frequencyText = frequencyText.lstrip("0")  # Eliminate leading zeros.
+                    frequency_text = f"{frequency[0:3]}.{frequency[3:]} MHz"
+                    frequency_text = frequency_text.lstrip("0")  # Eliminate leading zeros.
                     frequency = float(f"{frequency[0:3]}.{frequency[3:]}")
                 elif band == "AM":
                     # If the band is AM, convert the text to an integer.
                     frequency = int(frequency)  # Eliminates leading zeros.
-                    frequencyText = f"{frequency} kHz"
+                    frequency_text = f"{frequency} kHz"
                 # Only log the change if the frequency is actually different.
                 if frequency != device.states['tunerFrequency'] or band != device.states['tunerBand']:
-                    result = f"tuner frequency: {frequencyText} {band}"
+                    result = f"tuner frequency: {frequency_text} {band}"
                 # Set the tuner frequency on the server
-                newValue = frequency
+                new_value = frequency
         elif response.startswith("PR"):
             # Tuner Preset update. Only update the state if either zone 1 or 2 is actually using the Tuner.
             if device.states['zone1source'] == 2 or device.states['zone2source'] == 2:
                 state = "tunerPreset"
                 # Get the preset letter plus the non-leading-zero number.
-                newValue = response[2:3] + str(int(response[3:]))
+                new_value = response[2:3] + str(int(response[3:]))
                 # Now add the custom name (if set) for the preset.
-                propName = f"tunerPreset{newValue}label"
-                newValue += f": {device.pluginProps[propName]}"
+                prop_name = f"tunerPreset{new_value}label"
+                new_value += f": {device.pluginProps[prop_name]}"
                 # Ignore this information if the state is already set to this setting.
-                if device.states[state] == newValue:
+                if device.states[state] == new_value:
                     state = ""
-                    newValue = ""
+                    new_value = ""
                 else:
-                    result = f"tuner preset: {newValue}"
+                    result = f"tuner preset: {new_value}"
         elif response.startswith("TQ"):
             # Tuner Preset Label update.
-            newValue = response[4:]  # Strip off the "TQ"
-            newValue = newValue.strip('"')  # Remove the enclosing quotes.
-            newValue = newValue.strip()  # Remove the white space.
+            new_value = response[4:]  # Strip off the "TQ"
+            new_value = new_value.strip('"')  # Remove the enclosing quotes.
+            new_value = new_value.strip()  # Remove the white space.
             # Define the device property to update and make the change to the local copy.
-            propName = f"tunerPreset{response[2:4]}label"
-            devProps[propName] = newValue
+            prop_name = f"tunerPreset{response[2:4]}label"
+            dev_props[prop_name] = new_value
             # Update the source name in the device properties on the server.
-            self.updateDeviceProps(device, devProps)
+            self.updateDeviceProps(device, dev_props)
         elif response.startswith("SR"):
             # Listening Mode update.
             state = "listeningMode"
-            newValue = LISTENING_MODES[response[2:]]
+            new_value = LISTENING_MODES[response[2:]]
             # Ignore this information if the state is already set to this setting.
-            if device.states[state] == newValue:
+            if device.states[state] == new_value:
                 state = ""
-                newValue = ""
+                new_value = ""
             else:
-                result = f"listening mode: {newValue}"
+                result = f"listening mode: {new_value}"
         elif response.startswith("LM"):
             # Playback Listening Mode update.
             state = "displayListeningMode"
-            newValue = DISPLAY_LISTENING_MODES[response[2:]]
+            new_value = DISPLAY_LISTENING_MODES[response[2:]]
             # Ignore this information if the state is already set to this setting.
-            if device.states[state] == newValue:
+            if device.states[state] == new_value:
                 state = ""
-                newValue = ""
+                new_value = ""
             else:
-                result = f"displayed listening mode: {newValue}"
+                result = f"displayed listening mode: {new_value}"
         elif response.startswith("TO"):
             # Tone Control on/off change.
             state = "toneControl"
             if response == "TO0":
-                newValue = False
+                new_value = False
                 result = "tone control: off"
             elif response == "TO1":
-                newValue = True
+                new_value = True
                 result = "tone control: on"
         elif response.startswith("BA"):
             # Bass Tone Control change.
             state = "toneBass"
-            newValue = (6 - int(response[2:]))
-            result = f"bass tone level: {newValue} dB"
+            new_value = (6 - int(response[2:]))
+            result = f"bass tone level: {new_value} dB"
         elif response.startswith("TR"):
             # Treble Tone Control change.
             state = "toneTreble"
-            newValue = (6 - int(response[2:]))
-            result = f"bass tone level: {newValue} dB"
+            new_value = (6 - int(response[2:]))
+            result = f"bass tone level: {new_value} dB"
         elif response.startswith("ATA"):
             # Sound Retriever status change.
             state = "soundRetriever"
             if response == "ATA0":
-                newValue = False
+                new_value = False
                 result = "Sound Retriever: off"
             elif response == "ATA1":
-                newValue = True
+                new_value = True
                 result = "Sound Retriever: on"
         elif response.startswith("SDA"):
             # Signal Source selection.
             state = "signalSource"
             if response == "SDA0":
-                newValue = "AUTO"
+                new_value = "AUTO"
             elif response == "SDA1":
-                newValue = "ANALOG"
+                new_value = "ANALOG"
             elif response == "SDA2":
-                newValue = "DIGITAL"
+                new_value = "DIGITAL"
             elif response == "SDA3":
-                newValue = "HDMI"
-            result = f"audio signal source: {newValue}"
+                new_value = "HDMI"
+            result = f"audio signal source: {new_value}"
         elif response.startswith("SDB"):
             # Analog Input Attenuator status.
             state = "analogInputAttenuator"
             if response == "SDB0":
-                newValue = False
+                new_value = False
                 result = "analog input attenuator: off"
             elif response == "SDB1":
-                newValue = True
+                new_value = True
                 result = "analog input attenuator: on"
         elif response.startswith("ATC"):
             # Equalizer status.
             state = "equalizer"
             if response == "ATC0":
-                newValue = False
+                new_value = False
                 result = "equalizer: off"
             elif response == "ATC1":
-                newValue = True
+                new_value = True
                 result = "equalizer: on"
             # Don't update the state if it's the same.
-            if device.states[state] == newValue:
+            if device.states[state] == new_value:
                 state = ""
-                newValue = ""
+                new_value = ""
                 result = ""
         elif response.startswith("ATD"):
             # Standing Wave compensation status.
             state = "standingWave"
             if response == "ATD0":
-                newValue = False
+                new_value = False
                 result = "standing wave compensation: off"
             elif response == "ATD1":
-                newValue = True
+                new_value = True
                 result = "standing wave compensation: on"
             # Don't update the state if it's the same.
-            if device.states[state] == newValue:
+            if device.states[state] == new_value:
                 state = ""
-                newValue = ""
+                new_value = ""
                 result = ""
         elif response.startswith("ATE"):
             # Phase Control Plus delay time (ms) change.
             state = "phaseControlPlusTime"
-            newValue = int(response[3:])
-            result = f"Phase Control Plus time: {newValue} ms"
+            new_value = int(response[3:])
+            result = f"Phase Control Plus time: {new_value} ms"
         elif response.startswith("ATF"):
             # Sound Delay time (fractional sample frames) change.
             state = "soundDelay"
-            newValue = (float(response[3:]) / 10.0)
-            result = f"sound delay: {newValue} sample frames"
+            new_value = (float(response[3:]) / 10.0)
+            result = f"sound delay: {new_value} sample frames"
         elif response.startswith("ATG"):
             # Digital Noise Reduction status.
             state = "digitalNR"
             if response == "ATG0":
-                newValue = False
+                new_value = False
                 result = "Digital Noise Reduction: off"
             elif response == "ATG1":
-                newValue = True
+                new_value = True
                 result = "Digital Noise Reduction: on"
         elif response.startswith("ATH"):
             # Dialog Enhancement change.
             state = "dialogEnhancement"
             if response == "ATH0":
-                newValue = "off"
+                new_value = "off"
             elif response == "ATH1":
-                newValue = "flat"
+                new_value = "flat"
             elif response == "ATH2":
-                newValue = "up1"
+                new_value = "up1"
             elif response == "ATH3":
-                newValue = "up2"
+                new_value = "up2"
             elif response == "ATH4":
-                newValue = "up3"
+                new_value = "up3"
             elif response == "AHT5":
-                newValue = "up4"
-            result = f"Dialog Enhancement mode: {newValue}"
+                new_value = "up4"
+            result = f"Dialog Enhancement mode: {new_value}"
         elif response.startswith("ATI"):
             # Hi-bit 24 status.
             state = "hiBit24"
             if response == "ATI0":
-                newValue = False
+                new_value = False
                 result = "Hi-bit 24: off"
             elif response == "ATI1":
-                newValue = True
+                new_value = True
                 result = "Hi-bit 24: on"
         elif response.startswith("ATJ"):
             # Dual Mono processing change.
             state = "dualMono"
             if response == "ATJ0":
-                newValue = False
+                new_value = False
                 result = "Dual Mono sound processing: off"
             elif response == "ATJ1":
-                newValue = True
+                new_value = True
                 result = "Dual Mono sound processing: on"
         elif response.startswith("ATK"):
             # Fixed PCM rate processing change.
             state = "fixedPCM"
             if response == "ATK0":
-                newValue = False
+                new_value = False
                 result = "fixed rate PCM: off"
             elif response == "ATK1":
-                newValue = True
+                new_value = True
                 result = "fixed rate PCM: on"
         elif response.startswith("ATL"):
             # Dynamic Range Compression mode change.
             state = "dynamicRangeCompression"
             if response == "ATL0":
-                newValue = "off"
+                new_value = "off"
             elif response == "ATL1":
-                newValue = "auto"
+                new_value = "auto"
             elif response == "ATL2":
-                newValue = "mid"
+                new_value = "mid"
             elif response == "ATL3":
-                newValue = "max"
-            result = f"Dynamic Range Compression: {newValue}"
+                new_value = "max"
+            result = f"Dynamic Range Compression: {new_value}"
         elif response.startswith("ATM"):
             # LFE Attenuation change.
             state = "lfeAttenuatorAmount"
-            newValue = (-5 * int(response[3:]))
-            result = f"LFE attenuation amount: {newValue} dB"
-            if newValue < -20:
+            new_value = (-5 * int(response[3:]))
+            result = f"LFE attenuation amount: {new_value} dB"
+            if new_value < -20:
                 # A response of ATM5 translates to the attenuator being turned off.
                 self.updateDeviceState(device, "lfeAttenuator", False)
                 result = "LFE attenuation: off"
@@ -1492,441 +1578,443 @@ class Plugin(indigo.PluginBase):
             # SACD Gain change.
             state = "sacdGain"
             if response == "ATN0":
-                newValue = 0
+                new_value = 0
             elif response == "ATN1":
-                newValue = 6
-            result = f"SACD gain: {newValue} dB"
+                new_value = 6
+            result = f"SACD gain: {new_value} dB"
         elif response.startswith("ATO"):
             # Auto Sound Delay status update.
             state = "autoDelay"
             if response == "ATO0":
-                newValue = False
+                new_value = False
                 result = "Auto Sound Delay: off"
             elif response == "ATO1":
-                newValue = True
+                new_value = True
                 result = "Auto Sound Delay: on"
         elif response.startswith("ATP"):
             # Dolby Pro Logic II Music Center Width change.
             state = "pl2musicCenterWidth"
-            newValue = int(response[3:])
-            result = f"Dolby Pro Logic II Music center width: {newValue}"
+            new_value = int(response[3:])
+            result = f"Dolby Pro Logic II Music center width: {new_value}"
         elif response.startswith("ATQ"):
             # Dolby Pro Logic II Music Panorama status.
             state = "pl2musicPanorama"
             if response == "ATQ0":
-                newValue = False
+                new_value = False
                 result = "Dolby Pro Logic II Music panorama: off"
             elif response == "ATQ1":
-                newValue = True
+                new_value = True
                 result = "Dolby Pro Logic II Music panorama: on"
         elif response.startswith("ATR"):
             # Dolby Pro Logic II Music Dimension level change.
             state = "pl2musicDimension"
-            newValue = (int(response[3:]) - 50)
-            result = f"Dolby Pro Logic II Music dimension: {newValue}"
+            new_value = (int(response[3:]) - 50)
+            result = f"Dolby Pro Logic II Music dimension: {new_value}"
         elif response.startswith("ATS"):
             # Neo:6 Center Image change.
             state = "neo6centerImage"
-            newValue = (float(response[3:]) / 10.0)
-            result = f"Neo:6 center image: {newValue}"
+            new_value = (float(response[3:]) / 10.0)
+            result = f"Neo:6 center image: {new_value}"
         elif response.startswith("ATT"):
             # Effect amount change.
             state = "effectAmount"
-            newValue = (int(response[3:]) * 10)
-            result = f"effect level: {newValue}"
+            new_value = (int(response[3:]) * 10)
+            result = f"effect level: {new_value}"
         elif response.startswith("ATU"):
             # Dolby Pro Logic IIz Height Gain change.
             state = "pl2zHeightGain"
             if response == "ATU0":
-                newValue = "LOW"
+                new_value = "LOW"
             elif response == "ATU1":
-                newValue = "MID"
+                new_value = "MID"
             elif response == "ATU2":
-                newValue = "HIGH"
-            result = f"Dolby Pro Logic IIz height gain: {newValue}"
+                new_value = "HIGH"
+            result = f"Dolby Pro Logic IIz height gain: {new_value}"
         elif response.startswith("VTB"):
             # Video Converter update.
             state = "videoConverter"
             if response == "VTB0":
                 # Video Converter Off.
-                newValue = False
+                new_value = False
                 result = "video converter: off"
             elif response == "VTB1":
                 # Video Converter On.
-                newValue = True
+                new_value = True
                 result = "video converter: on"
         elif response.startswith("VTC"):
             # Video Resolution update.
             state = "videoResolution"
-            newValue = VIDEO_RESOLUTION_PREFS[response[3:]]
-            result = f"preferred video resolution: {newValue}"
+            new_value = VIDEO_RESOLUTION_PREFS[response[3:]]
+            result = f"preferred video resolution: {new_value}"
         elif response.startswith("VTD"):
             # Video Pure Cinema mode update.
             state = "videoPureCinema"
             if response == "VTD0":
                 # Pure Cinema Auto.
-                newValue = "auto"
+                new_value = "auto"
             elif response == "VTD1":
                 # Pure Cinema On.
-                newValue = "on"
+                new_value = "on"
             elif response == "VTD2":
                 # Pure Cinema Off.
-                newValue = "off"
-            result = f"Pure Cinema mode: {newValue}"
+                new_value = "off"
+            result = f"Pure Cinema mode: {new_value}"
         elif response.startswith("VTE"):
             # Video Progressive Motion Quality update.
             state = "videoProgressiveQuality"
-            newValue = -4 + (int(response[3:]) - 46)
-            result = f"video progressive scan motion quality: {newValue}"
+            new_value = -4 + (int(response[3:]) - 46)
+            result = f"video progressive scan motion quality: {new_value}"
         elif response.startswith("VTG"):
             # Video Advanced Adjustment update.
             state = "videoAdvancedAdjust"
             if response == "VTG0":
                 # PDP (Plasma Display Panel)
-                newValue = "PDP (Plasma)"
+                new_value = "PDP (Plasma)"
             elif response == "VTG1":
                 # LCD (Liquid Crystal Display)
-                newValue = "LCD"
+                new_value = "LCD"
             elif response == "VTG2":
                 # FPJ (Front Projection)
-                newValue = "FPJ (Front Projection)"
+                new_value = "FPJ (Front Projection)"
             elif response == "VTG3":
                 # Professional
-                newValue = "Professional"
+                new_value = "Professional"
             elif response == "VTG4":
                 # Memory
-                newValue = "Memory"
-            result = f"Advanced Video Adjustment: {newValue}"
+                new_value = "Memory"
+            result = f"Advanced Video Adjustment: {new_value}"
         elif response.startswith("VTH"):
             # Video YNR (Luminance Noise Reduction) update.
             state = "videoYNR"
-            newValue = int(response[3:]) - 50
-            result = f"video YNR: {newValue}"
+            new_value = int(response[3:]) - 50
+            result = f"video YNR: {new_value}"
         elif response.startswith("VTL"):
             # Video Detail Adjustment update.
             state = "videoDetail"
-            newValue = 50 - int(response[3:])
-            result = f"video detail amount: {newValue}"
+            new_value = 50 - int(response[3:])
+            result = f"video detail amount: {new_value}"
         elif response.startswith("AST"):
             # Audio Status information update. Multiple data are provided in this response (43 bytes, or 55 for
             # VSX-1123-K).
             state = ""
-            newValue = ""
+            new_value = ""
             data = response[3:]  # strip the AST text.
 
             # == Data Common to All Models ==
-            audioInputFormat = data[0:2]  # 2-byte signal format code.
+            audio_input_format = data[0:2]  # 2-byte signal format code.
             # Convert signal format code to a named format.
-            audioInputFormat = AUDIO_INPUT_FORMATS[audioInputFormat]
+            audio_input_format = AUDIO_INPUT_FORMATS[audio_input_format]
             state = "audioInputFormat"
-            newValue = audioInputFormat
-            self.updateDeviceState(device, state, newValue)
+            new_value = audio_input_format
+            self.updateDeviceState(device, state, new_value)
 
-            audioInputFrequency = data[2:4]  # 2-byte sample frequency code.
+            audio_input_frequency = data[2:4]  # 2-byte sample frequency code.
             # Convert sample frequency code to a value.
-            audioInputFrequency = AUDIO_INPUT_FREQUENCIES[audioInputFrequency]
+            audio_input_frequency = AUDIO_INPUT_FREQUENCIES[audio_input_frequency]
             state = "audioInputFrequency"
-            newValue = audioInputFrequency
-            self.updateDeviceState(device, state, newValue)
+            new_value = audio_input_frequency
+            self.updateDeviceState(device, state, new_value)
 
             state = "inputChannels"
-            newValue = ""
+            new_value = ""
             # Convert data bytes 5-25 into an input channel format string. Loop through data bytes and add channels
             # that are enabled.
             state = "inputChannels"
-            newValue = ""
+            new_value = ""
             for i in range(5, 26):
                 if data[(i - 1):i] == "1":
                     # Add a comma if this is not the first item.
-                    if newValue is not "":
-                        newValue += ", "
-                    newValue += AUDIO_CHANNELS[(i - 5)]
-            self.updateDeviceState(device, state, newValue)
+                    # if new_value is not "": fixme
+                    if new_value != "":
+                        new_value += ", "
+                    new_value += AUDIO_CHANNELS[(i - 5)]
+            self.updateDeviceState(device, state, new_value)
 
             # Convert data bytes 26-43 into an output channel format string. Loop through data bytes and add channels
             # that are enabled.
             state = "outputChannels"
-            newValue = ""
+            new_value = ""
             for i in range(26, 44):
                 if data[(i - 1):i] == "1":
                     # Add a comma if this is not the first item.
-                    if newValue is not "":
-                        newValue += ", "
-                    newValue += AUDIO_CHANNELS[(i - 26)]
-            self.updateDeviceState(device, state, newValue)
+                    # if new_value is not "": fixme
+                    if new_value != "":
+                        new_value += ", "
+                    new_value += AUDIO_CHANNELS[(i - 26)]
+            self.updateDeviceState(device, state, new_value)
 
             # The VSX-1123-K responds with a 55 instead of 43 characters. These extra data represent features found
             # only in this and other 2014 models.
             if device.deviceTypeId == "vsx1123k":
-                audioOutputFrequency = data[43:45]  # 2-byte sample frequency code.
+                audio_output_frequency = data[43:45]  # 2-byte sample frequency code.
                 # Convert sample frequency code to a value.
-                audioOutputFrequency = AUDIO_OUTPUT_FREQUENCIES[audioOutputFrequency]
+                audio_output_frequency = AUDIO_OUTPUT_FREQUENCIES[audio_output_frequency]
                 state = "audioOutputFrequency"
-                newValue = audioOutputFrequency
-                self.updateDeviceState(device, state, newValue)
+                new_value = audio_output_frequency
+                self.updateDeviceState(device, state, new_value)
 
-                audioOutputBitDepth = data[45:47]  # 2-byte sample bit depth value.
+                audio_output_bit_depth = data[45:47]  # 2-byte sample bit depth value.
                 # Convert sample bit depth from a string to a number.
-                audioOutputBitDepth = int(audioOutputBitDepth)
+                audio_output_bit_depth = int(audio_output_bit_depth)
                 state = "audioOutputBitDepth"
-                newValue = audioOutputBitDepth
-                self.updateDeviceState(device, state, newValue)
+                new_value = audio_output_bit_depth
+                self.updateDeviceState(device, state, new_value)
 
                 # Bytes 48 through 51 are reserved.
 
-                pqlsMode = data[51:52]  # 1-byte PQLS working mode code.
+                pqls_mode = data[51:52]  # 1-byte PQLS working mode code.
                 # Convert PQLS code to working state.
-                if pqlsMode == "0":
-                    pqlsMode = "off"
-                elif pqlsMode == "1":
-                    pqlsMode = "2-channel"
-                elif pqlsMode == "2":
-                    pqlsMode = "multi-channel"
-                elif pqlsMode == "3":
-                    pqlsMode = "bitstream"
+                if pqls_mode == "0":
+                    pqls_mode = "off"
+                elif pqls_mode == "1":
+                    pqls_mode = "2-channel"
+                elif pqls_mode == "2":
+                    pqls_mode = "multi-channel"
+                elif pqls_mode == "3":
+                    pqls_mode = "bitstream"
                 state = "pqlsMode"
-                newValue = pqlsMode
-                self.updateDeviceState(device, state, newValue)
+                new_value = pqls_mode
+                self.updateDeviceState(device, state, new_value)
 
-                phaseControlPlusWorkingDelay = data[52:54]  # 2-byte Phase Control Plus working delay (ms).
+                phase_control_plus_working_delay = data[52:54]  # 2-byte Phase Control Plus working delay (ms).
                 # Convert Phase Control Plus string to number.
-                phaseControlPlusWorkingDelay = int(phaseControlPlusWorkingDelay)
+                phase_control_plus_working_delay = int(phase_control_plus_working_delay)
                 state = "phaseControlPlusWorkingTime"
-                newValue = phaseControlPlusWorkingDelay
-                self.updateDeviceState(device, state, newValue)
+                new_value = phase_control_plus_working_delay
+                self.updateDeviceState(device, state, new_value)
 
-                phaseControlPlusReversed = data[54:55]  # 1-byte Phase Control Plus reversed phase.
+                phase_control_plus_reversed = data[54:55]  # 1-byte Phase Control Plus reversed phase.
                 # Translate Phase Control Plus reversed state.
-                if phaseControlPlusReversed == "0":
-                    phaseControlPlusReversed = True
-                elif phaseControlPlusReversed == "1":
-                    phaseControlPlusReversed = False
+                if phase_control_plus_reversed == "0":
+                    phase_control_plus_reversed = True
+                elif phase_control_plus_reversed == "1":
+                    phase_control_plus_reversed = False
                 state = "phaseControlPlusReversed"
-                newValue = phaseControlPlusReversed
-                self.updateDeviceState(device, state, newValue)
+                new_value = phase_control_plus_reversed
+                self.updateDeviceState(device, state, new_value)
 
             result = "audio input/output information updated"
 
         elif response.startswith("VST"):
             # Video Status information update. Multiple data are provided in this response.
             state = ""
-            newValue = ""
+            new_value = ""
             data = response[3:]  # Strip off the leading "VST".
 
             # Video Input Terminal
             state = "videoInputTerminal"
-            newValue = int(data[0:1])
-            if newValue == 0:
-                newValue = ""
-            elif newValue == 1:
-                newValue = "Video"
-            elif newValue == 2:
-                newValue = "S-Video"
-            elif newValue == 3:
-                newValue = "Component"
-            elif newValue == 4:
-                newValue = "HDMI"
-            elif newValue == 5:
-                newValue = "Self (OSD/JPEG)"
-            self.updateDeviceState(device, state, newValue)
+            new_value = int(data[0:1])
+            if new_value == 0:
+                new_value = ""
+            elif new_value == 1:
+                new_value = "Video"
+            elif new_value == 2:
+                new_value = "S-Video"
+            elif new_value == 3:
+                new_value = "Component"
+            elif new_value == 4:
+                new_value = "HDMI"
+            elif new_value == 5:
+                new_value = "Self (OSD/JPEG)"
+            self.updateDeviceState(device, state, new_value)
 
             # Video Input Resolution
             state = "videoInputResolution"
-            newValue = VIDEO_RESOLUTIONS[data[1:3]]
-            self.updateDeviceState(device, state, newValue)
+            new_value = VIDEO_RESOLUTIONS[data[1:3]]
+            self.updateDeviceState(device, state, new_value)
 
             # Video Input Aspect Ratio
             state = "videoInputAspect"
-            newValue = int(data[3:4])
-            if newValue == 0:
-                newValue = ""
-            elif newValue == 1:
-                newValue = "4:3"
-            elif newValue == 2:
-                newValue = "16:9"
-            elif newValue == 3:
-                newValue = "14:9"
-            self.updateDeviceState(device, state, newValue)
+            new_value = int(data[3:4])
+            if new_value == 0:
+                new_value = ""
+            elif new_value == 1:
+                new_value = "4:3"
+            elif new_value == 2:
+                new_value = "16:9"
+            elif new_value == 3:
+                new_value = "14:9"
+            self.updateDeviceState(device, state, new_value)
 
             # Video Input Color Format
             state = "videoInputColorFormat"
-            newValue = int(data[4:5])
-            if newValue == 0:
-                newValue = ""
-            elif newValue == 1:
-                newValue = "RGB Limited"
-            elif newValue == 2:
-                newValue = "RGB Full"
-            elif newValue == 3:
-                newValue = "YCbCr 4:4:4"
-            elif newValue == 4:
-                newValue = "YCbCr 4:2:2"
-            self.updateDeviceState(device, state, newValue)
+            new_value = int(data[4:5])
+            if new_value == 0:
+                new_value = ""
+            elif new_value == 1:
+                new_value = "RGB Limited"
+            elif new_value == 2:
+                new_value = "RGB Full"
+            elif new_value == 3:
+                new_value = "YCbCr 4:4:4"
+            elif new_value == 4:
+                new_value = "YCbCr 4:2:2"
+            self.updateDeviceState(device, state, new_value)
 
             # Video Input Bit Depth
             state = "videoInputBitDepth"
-            newValue = int(data[5:6])
-            if newValue == 0:
-                newValue = ""
-            elif newValue == 1:
-                newValue = "24-bit (8-bit per pixel)"
-            elif newValue == 2:
-                newValue = "30-bit (10-bit per pixel)"
-            elif newValue == 3:
-                newValue = "36-bit (12-bit per pixel)"
-            elif newValue == 4:
-                newValue = "48-bit (16-bit per pixel)"
-            self.updateDeviceState(device, state, newValue)
+            new_value = int(data[5:6])
+            if new_value == 0:
+                new_value = ""
+            elif new_value == 1:
+                new_value = "24-bit (8-bit per pixel)"
+            elif new_value == 2:
+                new_value = "30-bit (10-bit per pixel)"
+            elif new_value == 3:
+                new_value = "36-bit (12-bit per pixel)"
+            elif new_value == 4:
+                new_value = "48-bit (16-bit per pixel)"
+            self.updateDeviceState(device, state, new_value)
 
             # Video Input Color Space
             state = "videoInputColorSpace"
-            newValue = int(data[6:7])
-            if newValue == 0:
-                newValue = ""
-            elif newValue == 1:
-                newValue = "Standard"
-            elif newValue == 2:
-                newValue = "xv.Color YCC 601"
-            elif newValue == 3:
-                newValue = "xv.Color YCC 709"
-            elif newValue == 4:
-                newValue = "sYCC"
-            elif newValue == 5:
-                newValue = "Adobe YCC 601"
-            elif newValue == 6:
-                newValue = "Adobe RGB"
-            self.updateDeviceState(device, state, newValue)
+            new_value = int(data[6:7])
+            if new_value == 0:
+                new_value = ""
+            elif new_value == 1:
+                new_value = "Standard"
+            elif new_value == 2:
+                new_value = "xv.Color YCC 601"
+            elif new_value == 3:
+                new_value = "xv.Color YCC 709"
+            elif new_value == 4:
+                new_value = "sYCC"
+            elif new_value == 5:
+                new_value = "Adobe YCC 601"
+            elif new_value == 6:
+                new_value = "Adobe RGB"
+            self.updateDeviceState(device, state, new_value)
 
             # Video Output Resolution
             state = "videoOutputResolution"
-            newValue = VIDEO_RESOLUTIONS[data[7:9]]
-            self.updateDeviceState(device, state, newValue)
+            new_value = VIDEO_RESOLUTIONS[data[7:9]]
+            self.updateDeviceState(device, state, new_value)
 
             # Video Output Aspect Ratio
             state = "videoOutputAspect"
-            newValue = int(data[9:10])
-            if newValue == 0:
-                newValue = ""
-            elif newValue == 1:
-                newValue = "4:3"
-            elif newValue == 2:
-                newValue = "16:9"
-            elif newValue == 3:
-                newValue = "14:9"
-            self.updateDeviceState(device, state, newValue)
+            new_value = int(data[9:10])
+            if new_value == 0:
+                new_value = ""
+            elif new_value == 1:
+                new_value = "4:3"
+            elif new_value == 2:
+                new_value = "16:9"
+            elif new_value == 3:
+                new_value = "14:9"
+            self.updateDeviceState(device, state, new_value)
 
             # Video Output Color Format
             state = "videoOutputColorFormat"
-            newValue = int(data[10:11])
-            if newValue == 0:
-                newValue = ""
-            elif newValue == 1:
-                newValue = "RGB Limited"
-            elif newValue == 2:
-                newValue = "RGB Full"
-            elif newValue == 3:
-                newValue = "YCbCr 4:4:4"
-            elif newValue == 4:
-                newValue = "YCbCr 4:2:2"
-            self.updateDeviceState(device, state, newValue)
+            new_value = int(data[10:11])
+            if new_value == 0:
+                new_value = ""
+            elif new_value == 1:
+                new_value = "RGB Limited"
+            elif new_value == 2:
+                new_value = "RGB Full"
+            elif new_value == 3:
+                new_value = "YCbCr 4:4:4"
+            elif new_value == 4:
+                new_value = "YCbCr 4:2:2"
+            self.updateDeviceState(device, state, new_value)
 
             # Video Output Bit Depth
             state = "videoOutputBitDepth"
-            newValue = int(data[11:12])
-            if newValue == 0:
-                newValue = ""
-            elif newValue == 1:
-                newValue = "24-bit (8-bit per pixel)"
-            elif newValue == 2:
-                newValue = "30-bit (10-bit per pixel)"
-            elif newValue == 3:
-                newValue = "36-bit (12-bit per pixel)"
-            elif newValue == 4:
-                newValue = "48-bit (16-bit per pixel)"
-            self.updateDeviceState(device, state, newValue)
+            new_value = int(data[11:12])
+            if new_value == 0:
+                new_value = ""
+            elif new_value == 1:
+                new_value = "24-bit (8-bit per pixel)"
+            elif new_value == 2:
+                new_value = "30-bit (10-bit per pixel)"
+            elif new_value == 3:
+                new_value = "36-bit (12-bit per pixel)"
+            elif new_value == 4:
+                new_value = "48-bit (16-bit per pixel)"
+            self.updateDeviceState(device, state, new_value)
 
             # Video Output Color Space
             state = "videoOutputColorSpace"
-            newValue = int(data[12:13])
-            if newValue == 0:
-                newValue = ""
-            elif newValue == 1:
-                newValue = "Standard"
-            elif newValue == 2:
-                newValue = "xv.Color YCC 601"
-            elif newValue == 3:
-                newValue = "xv.Color YCC 709"
-            elif newValue == 4:
-                newValue = "sYCC"
-            elif newValue == 5:
-                newValue = "Adobe YCC 601"
-            elif newValue == 6:
-                newValue = "Adobe RGB"
-            self.updateDeviceState(device, state, newValue)
+            new_value = int(data[12:13])
+            if new_value == 0:
+                new_value = ""
+            elif new_value == 1:
+                new_value = "Standard"
+            elif new_value == 2:
+                new_value = "xv.Color YCC 601"
+            elif new_value == 3:
+                new_value = "xv.Color YCC 709"
+            elif new_value == 4:
+                new_value = "sYCC"
+            elif new_value == 5:
+                new_value = "Adobe YCC 601"
+            elif new_value == 6:
+                new_value = "Adobe RGB"
+            self.updateDeviceState(device, state, new_value)
 
             # Monitor Recommended Resolution (HDMI 1)
             state = "monitorRecommendedResolution"
-            newValue = VIDEO_RESOLUTIONS[data[13:15]]
-            self.updateDeviceState(device, state, newValue)
+            new_value = VIDEO_RESOLUTIONS[data[13:15]]
+            self.updateDeviceState(device, state, new_value)
 
             # Monitor Bit Depth Support
             state = "monitorBitDepth"
-            newValue = int(data[15:16])
-            if newValue == 0:
-                newValue = ""
-            elif newValue == 1:
-                newValue = "24-bit (8-bit per pixel)"
-            elif newValue == 2:
-                newValue = "30-bit (10-bit per pixel)"
-            elif newValue == 3:
-                newValue = "36-bit (12-bit per pixel)"
-            elif newValue == 4:
-                newValue = "48-bit (16-bit per pixel)"
-            self.updateDeviceState(device, state, newValue)
+            new_value = int(data[15:16])
+            if new_value == 0:
+                new_value = ""
+            elif new_value == 1:
+                new_value = "24-bit (8-bit per pixel)"
+            elif new_value == 2:
+                new_value = "30-bit (10-bit per pixel)"
+            elif new_value == 3:
+                new_value = "36-bit (12-bit per pixel)"
+            elif new_value == 4:
+                new_value = "48-bit (16-bit per pixel)"
+            self.updateDeviceState(device, state, new_value)
 
             # Monitor Supported Color Spaces (HDMI 1)
             state = "monitorColorSpaces"
-            newValue = ""
-            colorSpaces = data[16:21]
-            if colorSpaces[0:1] == "1":
-                newValue += "xv.Color YCC 601"
-            if colorSpaces[1:2] == "1":
-                if len(newValue) > 0:
-                    newValue += ", "
-                newValue += "xv.Color YCC 709"
-            if colorSpaces[2:3] == "1":
-                if len(newValue) > 0:
-                    newValue += ", "
-                newValue += "xYCC"
-            if colorSpaces[3:4] == "1":
-                if len(newValue) > 0:
-                    newValue += ", "
-                newValue += "Adobe YCC 601"
-            if colorSpaces[4:5] == "1":
-                if len(newValue) > 0:
-                    newValue += ", "
-                newValue += "Adobe RGB"
-            self.updateDeviceState(device, state, newValue)
+            new_value = ""
+            color_spaces = data[16:21]
+            if color_spaces[0:1] == "1":
+                new_value += "xv.Color YCC 601"
+            if color_spaces[1:2] == "1":
+                if len(new_value) > 0:
+                    new_value += ", "
+                new_value += "xv.Color YCC 709"
+            if color_spaces[2:3] == "1":
+                if len(new_value) > 0:
+                    new_value += ", "
+                new_value += "xYCC"
+            if color_spaces[3:4] == "1":
+                if len(new_value) > 0:
+                    new_value += ", "
+                new_value += "Adobe YCC 601"
+            if color_spaces[4:5] == "1":
+                if len(new_value) > 0:
+                    new_value += ", "
+                new_value += "Adobe RGB"
+            self.updateDeviceState(device, state, new_value)
 
             result = "video input/output information updated"
 
         else:
             # Unrecognized response received.
             self.debugLog(f"Unrecognized response received from {device.name}: {response}")
-            newValue = "unknown"
+            new_value = "unknown"
 
-        getStatusUpdate = False  # Should we perform a full status update?
+        get_status_update = False  # Should we perform a full status update?
 
         # Only update the device if the state is not blank.
         if state != "":
             # If this is a zone power state change to True and the current zone power state is False, get more status
             # information.
-            if (state == "zone1power" and newValue and not device.states['zone1power']) or (
-                    state == "zone2power" and newValue and not device.states['zone2power']):
-                getStatusUpdate = True
+            if (state == "zone1power" and new_value and not device.states['zone1power']) or (
+                    state == "zone2power" and new_value and not device.states['zone2power']):
+                get_status_update = True
 
             # Update the state on the server.
-            self.updateDeviceState(device, state, newValue)
+            self.updateDeviceState(device, state, new_value)
 
         #
         # CHECK IF ADDITIONAL PROCESSING IS NEEDED
@@ -1978,12 +2066,12 @@ class Plugin(indigo.PluginBase):
         elif state == "mcaccMemory":
             # MCACC Memory change. Set the mcaccMemory#label value.
             # TODO: 'mcaccName' might be referenced before assignment
-            self.updateDeviceState(device, 'mcaccMemoryName', mcaccName)
+            self.updateDeviceState(device, 'mcaccMemoryName', mcacc_name)
 
         elif state == "tunerFrequency":
             # Also set the tunerFrequencyText.
             # TODO: 'frequencyText' might be referenced before assignment
-            self.updateDeviceState(device, 'tunerFrequencyText', frequencyText)
+            self.updateDeviceState(device, 'tunerFrequencyText', frequency_text)
 
         # If both zones are off, clear some states that should have no value when the unit is off.
         if not device.states['zone1power'] and not device.states['zone2power']:
@@ -2014,7 +2102,7 @@ class Plugin(indigo.PluginBase):
             self.updateDeviceState(device, "videoOutputResolution", "")
 
         # Now get the additional status info if needed.
-        if getStatusUpdate:
+        if get_status_update:
             self.getReceiverStatus(device)
 
         return result
@@ -2026,13 +2114,18 @@ class Plugin(indigo.PluginBase):
     # Current Display Content
     #
     def getDisplayContent(self, device):
+        """
+        Placeholder - fixme
+        :param device:
+        :return:
+        """
         self.debugLog(f"getDisplayContent: Getting {device.name} display content.")
 
         # Get th device type. Future versions of this plugin will support other receiver models.
-        devType = device.deviceTypeId
+        dev_type = device.deviceTypeId
 
         # Make sure it's not a virtual volume device.
-        if devType != "virtualVolume":
+        if dev_type != "virtualVolume":
             self.sendCommand(device, "?FL")  # Display Content Query.
             self.sleep(0.1)  # Wait for responses to be processed.
 
@@ -2040,13 +2133,19 @@ class Plugin(indigo.PluginBase):
     # Power Status
     #
     def getPowerStatus(self, device):
+        """
+        Placeholder - fixme
+
+        :param device:
+        :return:
+        """
         self.debugLog(f"getPowerStatus: Getting {device.name} power status.")
 
         # Get th device type. Future versions of this plugin will support other receiver models.
-        devType = device.deviceTypeId
+        dev_type = device.deviceTypeId
 
         # Make sure it's not a virtual volume device.
-        if devType != "virtualVolume":
+        if dev_type != "virtualVolume":
             self.sendCommand(device, "?P")  # Power Query (Zone 1).
             self.sleep(0.1)  # Wait for responses to be processed.
             self.sendCommand(device, "?AP")  # Power Query (Zone 2).
@@ -2055,8 +2154,8 @@ class Plugin(indigo.PluginBase):
             # It's important that we get the result of this status request before proceeding.
             response = self.readData(device)
             response = response.rstrip("\r\n")
-            for responseLine in response.splitlines():
-                result = self.processResponse(device, responseLine)
+            for response_line in response.splitlines():
+                result = self.processResponse(device, response_line)
                 if result != "":
                     indigo.server.log(result, device.name)
 
@@ -2064,51 +2163,68 @@ class Plugin(indigo.PluginBase):
     # Input Source Names
     #
     def getInputSourceNames(self, device):
+        """
+        Placeholder - fixme
+
+        :param device:
+        :return:
+        """
         self.debugLog(f"getInputSourceNames: Getting {device.name} input source names.")
 
-        devType = device.deviceTypeId
+        dev_type = device.deviceTypeId
 
         # Make sure it's not a virtual volume device.
-        if devType != "virtualVolume":
+        if dev_type != "virtualVolume":
             # Get the names of all the input sources.
-            for theNumber, theName in SOURCE_NAMES.items():
+            for the_number, the_name in SOURCE_NAMES.items():
                 # Only ask for information on sources recognized by the device type.
                 #   VSX-1021-K
-                if devType is "vsk1021k":
-                    if theNumber not in VSX1021k_SOURCE_MASK:
-                        self.sendCommand(device, f"?RGB{theNumber}")
+                # if dev_type is "vsk1021k": fixme
+                if dev_type == "vsk1021k":
+                    if the_number not in VSX1021k_SOURCE_MASK:
+                        self.sendCommand(device, f"?RGB{the_number}")
                         self.sleep(0.1)  # Wait for responses to be processed.
                 #   VSX-1022-K
-                if devType is "vsk1022k":
-                    if theNumber not in VSX1022K_SOURCE_MASK:
-                        self.sendCommand(device, f"?RGB{theNumber}")
+                # if dev_type is "vsk1022k": fixme
+                if dev_type == "vsk1022k":
+                    if the_number not in VSX1022K_SOURCE_MASK:
+                        self.sendCommand(device, f"?RGB{the_number}")
                         self.sleep(0.1)  # Wait for responses to be processed.
                 #   VSX-1122-K
-                if devType is "vsk1122k":
-                    if theNumber not in VSX1122K_SOURCE_MASK:
-                        self.sendCommand(device, f"?RGB{theNumber}")
+                # if dev_type is "vsk1122k": fixme
+                if dev_type == "vsk1122k":
+                    if the_number not in VSX1122K_SOURCE_MASK:
+                        self.sendCommand(device, f"?RGB{the_number}")
                         self.sleep(0.1)  # Wait for responses to be processed.
                 #   VSX-1123-K
-                if devType is "vsk1123k":
-                    if theNumber not in VSX1123K_SOURCE_MASK:
-                        self.sendCommand(device, f"?RGB{theNumber}")
+                # if dev_type is "vsk1123k": fixme
+                if dev_type == "vsk1123k":
+                    if the_number not in VSX1123K_SOURCE_MASK:
+                        self.sendCommand(device, f"?RGB{the_number}")
                         self.sleep(0.1)  # Wait for responses to be processed.
                 #   SC-75
-                if devType is "sc75":
-                    if theNumber not in SC75_SOURCE_MASK:
-                        self.sendCommand(device, f"?RGB{theNumber}")
+                # if dev_type is "sc75": fixme
+                if dev_type == "sc75":
+                    if the_number not in SC75_SOURCE_MASK:
+                        self.sendCommand(device, f"?RGB{the_number}")
                         self.sleep(0.1)  # Wait for responses to be processed.
 
     #
     # Tuner Preset Names
     #
     def getTunerPresetNames(self, device):
+        """
+        Placeholder - fixme
+
+        :param device:
+        :return:
+        """
         self.debugLog(f"getTunerPresetNames: Getting {device.name} tuner preset station names.")
 
-        devType = device.deviceTypeId
+        dev_type = device.deviceTypeId
 
         # Make sure it's not a virtual volume device.
-        if devType != "virtualVolume":
+        if dev_type != "virtualVolume":
             self.sendCommand(device, "?TQ")  # Tuner Preset label query.
             self.sleep(0.2)
 
@@ -2116,12 +2232,18 @@ class Plugin(indigo.PluginBase):
     # Tuner Band and Frequency
     #
     def getTunerFrequency(self, device):
+        """
+        Placeholder - fixme
+
+        :param device:
+        :return:
+        """
         self.debugLog(f"getTunerFrequency: Getting {device.name} tuner band and frequency.")
 
-        devType = device.deviceTypeId
+        dev_type = device.deviceTypeId
 
         # Make sure it's not a virtual volume device.
-        if devType != "virtualVolume":
+        if dev_type != "virtualVolume":
             self.sendCommand(device, "?FR")
             self.sleep(0.1)
 
@@ -2129,12 +2251,18 @@ class Plugin(indigo.PluginBase):
     # Tuner Preset Status
     #
     def getTunerPresetStatus(self, device):
+        """
+        Placeholder - fixme
+
+        :param device:
+        :return:
+        """
         self.debugLog(f"getTunerPresetStatus: Getting {device.name} tuner preset status.")
 
-        devType = device.deviceTypeId
+        dev_type = device.deviceTypeId
 
         # Make sure it's not a virtual volume device.
-        if devType != "virtualVolume":
+        if dev_type != "virtualVolume":
             self.sendCommand(device, "?PR")
             self.sleep(0.1)
 
@@ -2142,12 +2270,18 @@ class Plugin(indigo.PluginBase):
     # Volume Status (Zones 1 and 2)
     #
     def getVolumeStatus(self, device):
+        """
+        Placeholder - fixme
+
+        :param device:
+        :return:
+        """
         self.debugLog(f"getVolumeStatus: Getting {device.name} volume status.")
 
-        devType = device.deviceTypeId
+        dev_type = device.deviceTypeId
 
         # Make sure it's not a virtual volume device.
-        if devType != "virtualVolume":
+        if dev_type != "virtualVolume":
             self.sendCommand(device, "?V")  # Volume Query (Zone 1)
             self.sleep(0.1)
             self.sendCommand(device, "?ZV")  # Volume Query (Zone 2)
@@ -2157,12 +2291,18 @@ class Plugin(indigo.PluginBase):
     # Mute Status (Zones 1 and 2)
     #
     def getMuteStatus(self, device):
+        """
+        Placeholder - fixme
+
+        :param device:
+        :return:
+        """
         self.debugLog(f"getMuteStatus: Getting {device.name} mute status.")
 
-        devType = device.deviceTypeId
+        dev_type = device.deviceTypeId
 
         # Make sure it's not a virtual volume device.
-        if devType != "virtualVolume":
+        if dev_type != "virtualVolume":
             self.sendCommand(device, "?M")  # Mute Query (Zone 1)
             self.sleep(0.1)
             self.sendCommand(device, "?Z2M")  # Mute Query (Zone 2)
@@ -2172,12 +2312,18 @@ class Plugin(indigo.PluginBase):
     # Input Source Status (Zones 1 and 2)
     #
     def getInputSourceStatus(self, device):
+        """
+        Placeholder - fixme
+
+        :param device:
+        :return:
+        """
         self.debugLog(f"getInputSourceStatus: Getting {device.name} input source status.")
 
-        devType = device.deviceTypeId
+        dev_type = device.deviceTypeId
 
         # Make sure it's not a virtual volume device.
-        if devType != "virtualVolume":
+        if dev_type != "virtualVolume":
             self.sendCommand(device, "?F")  # Input Source Query (Zone 1)
             self.sleep(0.1)
             self.sendCommand(device, "?ZS")  # Input Source Query (Zone 2)
@@ -2187,26 +2333,38 @@ class Plugin(indigo.PluginBase):
     # Channel Volume Levels
     #
     def getChannelVolumeLevels(self, device):
+        """
+        Placeholder - fixme
+
+        :param device:
+        :return:
+        """
         self.debugLog(f"getChannelVolumeLevels: Getting {device.name} individual channel volume levels.")
 
-        devType = device.deviceTypeId
+        dev_type = device.deviceTypeId
 
         # Make sure it's not a virtual volume device.
-        if devType != "virtualVolume":
-            for theChannel, theState in CHANNEL_VOLUMES.items():
-                self.sendCommand(device, f"?{theChannel}CLV")
+        if dev_type != "virtualVolume":
+            for the_channel, the_state in CHANNEL_VOLUMES.items():
+                self.sendCommand(device, f"?{the_channel}CLV")
                 self.sleep(0.1)
 
     #
     # System Setup Status
     #
     def getSystemSetupStatus(self, device):
+        """
+        Placeholder - fixme
+
+        :param device:
+        :return:
+        """
         self.debugLog(f"getSystemSetupStatus: Getting {device.name} system settings.")
 
-        devType = device.deviceTypeId
+        dev_type = device.deviceTypeId
 
         # Make sure it's not a virtual volume device.
-        if devType != "virtualVolume":
+        if dev_type != "virtualVolume":
             self.sendCommand(device, "?SPK")  # Amp speaker setting.
             self.sleep(0.1)
             self.sendCommand(device, "?PKL")  # Panel Key Lock status.
@@ -2226,12 +2384,18 @@ class Plugin(indigo.PluginBase):
     # Audio DSP Settings
     #
     def getAudioDspSettings(self, device):
+        """
+        Placeholder - fixme
+
+        :param device:
+        :return:
+        """
         self.debugLog(f"getAudioDspSettings: Getting {device.name} audio DSP settings.")
 
-        devType = device.deviceTypeId
+        dev_type = device.deviceTypeId
 
         # Make sure it's not a virtual volume device.
-        if devType != "virtualVolume":
+        if dev_type != "virtualVolume":
             self.sendCommand(device, "?TO")  # Tone Control status.
             self.sleep(0.1)
             self.sendCommand(device, "?BA")  # Bass Tone Control level.
@@ -2301,12 +2465,18 @@ class Plugin(indigo.PluginBase):
     # Video DSP Settings
     #
     def getVideoDspSettings(self, device):
+        """
+        Placeholder - fixme
+
+        :param device:
+        :return:
+        """
         self.debugLog(f"getVideoDspSettings: Getting {device.name} video DSP settings.")
 
-        devType = device.deviceTypeId
+        dev_type = device.deviceTypeId
 
         # Make sure it's not a virtual volume device.
-        if devType != "virtualVolume":
+        if dev_type != "virtualVolume":
             self.sendCommand(device, "?VTB")  # Video Converter status.
             self.sleep(0.1)
             self.sendCommand(device, "?VTC")  # Resolution Preferences status.
@@ -2326,12 +2496,18 @@ class Plugin(indigo.PluginBase):
     # Audio I/O Status
     #
     def getAudioInOutStatus(self, device):
+        """
+        Placeholder - fixme
+
+        :param device:
+        :return:
+        """
         self.debugLog(f"getAudioInOutStatus: Getting {device.name} audio I/O status.")
 
-        devType = device.deviceTypeId
+        dev_type = device.deviceTypeId
 
         # Make sure it's not a virtual volume device.
-        if devType != "virtualVolume":
+        if dev_type != "virtualVolume":
             # Since this method is called just after an input source change, wait a bit for the system to finalize the
             # change.
             self.sleep(1)
@@ -2341,12 +2517,18 @@ class Plugin(indigo.PluginBase):
     # Video I/O Status
     #
     def getVideoInOutStatus(self, device):
+        """
+        Placeholder - fixme
+
+        :param device:
+        :return:
+        """
         self.debugLog(f"getVideoInOutStatus: Getting {device.name} video I/O status.")
 
-        devType = device.deviceTypeId
+        dev_type = device.deviceTypeId
 
         # Make sure it's not a virtual volume device.
-        if devType != "virtualVolume":
+        if dev_type != "virtualVolume":
             # Since this method is called just after an input source change, wait half a second for the system to
             # finalize the change.
             self.sleep(0.5)
@@ -2356,6 +2538,12 @@ class Plugin(indigo.PluginBase):
     # All Status Information
     #
     def getReceiverStatus(self, device):
+        """
+        Placeholder - fixme
+
+        :param device:
+        :return:
+        """
         self.debugLog(f"getReceiverStatus: Getting all information for{device.name}.")
         self.debugLog(f"getReceiverStatus: List of device IDs being updated: {self.devicesBeingUpdated}")
 
@@ -2366,13 +2554,13 @@ class Plugin(indigo.PluginBase):
 
             # Now gather all receiver data.
 
-            devType = device.deviceTypeId
+            dev_type = device.deviceTypeId
 
             # Indicate in the log that we're going to be gathering all kinds of information.
             indigo.server.log("Gathering receiver system information.", device.name)
 
             # Make sure it's not a virtual volume device.
-            if devType != "virtualVolume":
+            if dev_type != "virtualVolume":
                 # Get this information regardless of whether the receiver is on or off.
                 self.getDisplayContent(device)  # Display Content Query.
                 self.getPowerStatus(device)  # Power Status.
@@ -2387,7 +2575,7 @@ class Plugin(indigo.PluginBase):
                     self.getVideoInOutStatus(device)  # Video I/O Status.
                     self.getTunerPresetNames(device)  # Tuner Preset Names.
                     self.getTunerPresetStatus(device)  # Tuner Preset Status.
-                    # self.getTunerFrequency(device)        # Tuner Band and Frequency.
+                    # self.getTunerFrequency(device)  # Tuner Band and Frequency.
                     self.getSystemSetupStatus(device)  # System Setup Status.
 
                 # Information relevant only to the main zone (1)...
@@ -2408,6 +2596,12 @@ class Plugin(indigo.PluginBase):
     # Power On (Zone 1)
     #
     def zone1powerOn(self, action):
+        """
+        Placeholder - fixme
+
+        :param action:
+        :return:
+        """
         # Turn on power (zone 1) for a device.
         device = indigo.devices[action.deviceId]
         self.debugLog(f"Turning on power (zone 1) for {device.name}")
@@ -2429,10 +2623,12 @@ class Plugin(indigo.PluginBase):
             self.sleep(0.1)
 
         # For VSX-1022-K and later.
-        if (device.deviceTypeId == "vsx1022k"
-                or device.deviceTypeId == "vsx1122k"
-                or device.deviceTypeId == "vsx1123k"
-                or device.deviceTypeId == "sc75"):
+        if device.deviceTypeId in ["vsx1022k", "vsx1122k", "vsx1123k", "sc75"]:
+            # Delete extra lines if valid - fixme
+            # if (device.deviceTypeId == "vsx1022k"
+            #         or device.deviceTypeId == "vsx1122k"
+            #         or device.deviceTypeId == "vsx1123k"
+            #         or device.deviceTypeId == "sc75"):
             command = "PO"  # Power On
             self.sendCommand(device, command)
             self.sleep(0.1)
@@ -2445,6 +2641,12 @@ class Plugin(indigo.PluginBase):
     # Power Off (Zone 1)
     #
     def zone1powerOff(self, action):
+        """
+        Placeholder - fixme
+
+        :param action:
+        :return:
+        """
         # Turn off power (zone 1) for a device.
         device = indigo.devices[action.deviceId]
         self.debugLog(f"Turning off power (zone 1) for {device.name}")
@@ -2469,6 +2671,12 @@ class Plugin(indigo.PluginBase):
     # Power Toggle (Zone 1)
     #
     def zone1powerToggle(self, action):
+        """
+        Placeholder - fixme
+
+        :param action:
+        :return:
+        """
         # Toggle power (zone 1) for a device.
         device = indigo.devices[action.deviceId]
         self.debugLog(f"Toggling power (zone 1) for {device.name}")
@@ -2496,6 +2704,12 @@ class Plugin(indigo.PluginBase):
     # Volume Up 0.5 dB (Zone 1)
     #
     def zone1volumeUp(self, action):
+        """
+        Placeholder - fixme
+
+        :param action:
+        :return:
+        """
         # Increment volume (zone 1) by 0.5 dB for a device.
         device = indigo.devices[action.deviceId]
         self.debugLog(f"Volume Up 0.5 dB (zone 1) for {device.name}")
@@ -2520,6 +2734,12 @@ class Plugin(indigo.PluginBase):
     # Volume Down 0.5 dB (Zone 1)
     #
     def zone1volumeDown(self, action):
+        """
+        Placeholder - fixme
+
+        :param action:
+        :return:
+        """
         # Decrement volume (zone 1) by 0.5 dB for a device.
         device = indigo.devices[action.deviceId]
         self.debugLog(f"Volume Down 0.5 dB (zone 1) for {device.name}")
@@ -2544,6 +2764,12 @@ class Plugin(indigo.PluginBase):
     # Set Volume in dB (Zone 1)
     #
     def zone1setVolume(self, action):
+        """
+        Placeholder - fixme
+
+        :param action:
+        :return:
+        """
         # Set the volume (zone 1) for the device..
         device = indigo.devices[action.deviceId]
 
@@ -2557,23 +2783,23 @@ class Plugin(indigo.PluginBase):
             )
             return False
 
-        newValue = float(action.props.get('volume', "-90"))
-        if newValue == -90.0:  # No value was provided.
+        new_value = float(action.props.get('volume', "-90"))
+        if new_value == -90.0:  # No value was provided.
             self.errorLog(f"No Zone 1 Volume was specified in the action for \"{device.name}\"")
             return False
 
-        self.debugLog(f"Set volume to {newValue} dB (zone 1) for {device.name}")
+        self.debugLog(f"Set volume to {new_value} dB (zone 1) for {device.name}")
 
         # Make sure it's not a virtual volume device.
         if device.deviceTypeId != "virtualVolume":
-            newValue = 161 + int(newValue / 0.5)
-            if newValue < 10:
-                newValue = f"00{newValue}"
-            elif newValue < 100:
-                newValue = f"0{newValue}"
+            new_value = 161 + int(new_value / 0.5)
+            if new_value < 10:
+                new_value = f"00{new_value}"
+            elif new_value < 100:
+                new_value = f"0{new_value}"
             else:
-                newValue = f"{newValue}"
-            command = newValue + "VL"  # Set Volume.
+                new_value = f"{new_value}"
+            command = new_value + "VL"  # Set Volume.
             self.sendCommand(device, command)
             self.sleep(0.1)
 
@@ -2581,6 +2807,12 @@ class Plugin(indigo.PluginBase):
     # Mute On (Zone 1)
     #
     def zone1muteOn(self, action):
+        """
+        Placeholder - fixme
+
+        :param action:
+        :return:
+        """
         # Turn on mute (zone 1) for a device.
         device = indigo.devices[action.deviceId]
         self.debugLog(f"Turning on mute (zone 1) for {device.name}")
@@ -2604,6 +2836,12 @@ class Plugin(indigo.PluginBase):
     # Mute Off (Zone 1)
     #
     def zone1muteOff(self, action):
+        """
+        Placeholder - fixme
+
+        :param action:
+        :return:
+        """
         # Turn off (zone 1) for a device.
         device = indigo.devices[action.deviceId]
         self.debugLog(f"Turning off mute (zone 1) for {device.name}")
@@ -2628,6 +2866,12 @@ class Plugin(indigo.PluginBase):
     # Mute Toggle (Zone 1)
     #
     def zone1muteToggle(self, action):
+        """
+        Placeholder - fixme
+
+        :param action:
+        :return:
+        """
         # Toggle mute (zone 1) for a device.
         device = indigo.devices[action.deviceId]
         self.debugLog(f"Toggling mute (zone 1) for {device.name}")
@@ -2652,6 +2896,12 @@ class Plugin(indigo.PluginBase):
     # Select Next Source (Zone 1)
     #
     def zone1sourceUp(self, action):
+        """
+        Placeholder - fixme
+
+        :param action:
+        :return:
+        """
         # Go to the next available input source.
         device = indigo.devices[action.deviceId]
         self.debugLog(f"Select Next Source (zone 1) for {device.name}")
@@ -2676,6 +2926,12 @@ class Plugin(indigo.PluginBase):
     # Select Previous Source (Zone 1)
     #
     def zone1sourceDown(self, action):
+        """
+        Placeholder - fixme
+
+        :param action:
+        :return:
+        """
         # Go to the previous available input source.
         device = indigo.devices[action.deviceId]
         self.debugLog(f"Select Previous Source (zone 1) for {device.name}")
@@ -2700,6 +2956,12 @@ class Plugin(indigo.PluginBase):
     # Set Input Source (Zone 1)
     #
     def zone1setSource(self, action):
+        """
+        Placeholder - fixme
+
+        :param action:
+        :return:
+        """
         # Set the input source to something specific.
         device = indigo.devices[action.deviceId]
 
@@ -2713,17 +2975,17 @@ class Plugin(indigo.PluginBase):
             )
             return False
 
-        newValue = action.props.get('source', False)
-        self.debugLog(f"zone1setSource called: source: {newValue}, device: {device.name}")
+        new_value = action.props.get('source', False)
+        self.debugLog(f"zone1setSource called: source: {new_value}, device: {device.name}")
 
-        if not newValue:
+        if not new_value:
             self.errorLog(f"No source selected for \"{device.name}\"")
             return False
-        self.debugLog(f"(Source name: {SOURCE_NAMES[str(newValue)]}")
+        self.debugLog(f"(Source name: {SOURCE_NAMES[str(new_value)]}")
 
         # Make sure it's not a virtual volume device.
         if device.deviceTypeId != "virtualVolume":
-            command = newValue + "FN"  # Set Source.
+            command = new_value + "FN"  # Set Source.
             self.sendCommand(device, command)
             self.sleep(0.1)
 
@@ -2731,6 +2993,12 @@ class Plugin(indigo.PluginBase):
     # Power On (Zone 2)
     #
     def zone2powerOn(self, action):
+        """
+        Placeholder - fixme
+
+        :param action:
+        :return:
+        """
         # Turn on power (zone 2) for a device.
         device = indigo.devices[action.deviceId]
         self.debugLog(f"zone2powerOn: Turning on power (zone 2) for {device.name}")
@@ -2755,6 +3023,12 @@ class Plugin(indigo.PluginBase):
     # Power Off (Zone 2)
     #
     def zone2powerOff(self, action):
+        """
+        Placeholder - fixme
+
+        :param action:
+        :return:
+        """
         # Turn off power (zone 2) for a device.
         device = indigo.devices[action.deviceId]
         self.debugLog(f"zone2powerOff: Turning off power (zone 2) for {device.name}")
@@ -2779,6 +3053,12 @@ class Plugin(indigo.PluginBase):
     # Power Toggle (Zone 2)
     #
     def zone2powerToggle(self, action):
+        """
+        Placeholder - fixme
+
+        :param action:
+        :return:
+        """
         # Toggle power (zone 2) for a device.
         device = indigo.devices[action.deviceId]
         self.debugLog(f"zone2powerToggle: Toggling power (zone 2) for {device.name}")
@@ -2803,6 +3083,12 @@ class Plugin(indigo.PluginBase):
     # Volume Up 1 dB (Zone 2)
     #
     def zone2volumeUp(self, action):
+        """
+        Placeholder - fixme
+
+        :param action:
+        :return:
+        """
         # Increment volume (zone 2) by 1 dB for a device.
         device = indigo.devices[action.deviceId]
         self.debugLog(f"Volume Up 1 dB (zone 2) for {device.name}")
@@ -2835,6 +3121,12 @@ class Plugin(indigo.PluginBase):
     # Volume Down 1 dB (Zone 2)
     #
     def zone2volumeDown(self, action):
+        """
+        Placeholder - fixme
+
+        :param action:
+        :return:
+        """
         # Decrement volume (zone 2) by 1 dB for a device.
         device = indigo.devices[action.deviceId]
         self.debugLog(f"Volume Down 1 dB (zone 2) for {device.name}")
@@ -2867,6 +3159,12 @@ class Plugin(indigo.PluginBase):
     # Set Volume in dB (Zone 2)
     #
     def zone2setVolume(self, action):
+        """
+        Placeholder - fixme
+
+        :param action:
+        :return:
+        """
         # Set the volume (zone 2) for the device..
         device = indigo.devices[action.deviceId]
 
@@ -2880,24 +3178,23 @@ class Plugin(indigo.PluginBase):
             )
             return False
 
-        newValue = int(action.props.get('volume', "-90"))
-        if newValue == -90:
+        new_value = int(action.props.get('volume', "-90"))
+        if new_value == -90:
             self.errorLog(f"No Zone 2 Volume was specified in action for \"{device.name}\"")
             return False
 
-        self.debugLog(f"Set volume to {newValue} dB (zone 2) for {device.name}")
+        self.debugLog(f"Set volume to {new_value} dB (zone 2) for {device.name}")
 
         # Make sure it's not a virtual volume device.
         if device.deviceTypeId != "virtualVolume":
-            # If the current speaker system setup is not "A + Zone 2",
-            #   zone mute and volume commands will be ignored.
+            # If the current speaker system setup is not "A + Zone 2", zone mute and volume commands will be ignored.
             if device.states['speakerSystem'] == "A + Zone 2":
-                newValue = 81 + int(newValue)
-                if newValue < 10:
-                    newValue = f"0{newValue}"
+                new_value = 81 + int(new_value)
+                if new_value < 10:
+                    new_value = f"0{new_value}"
                 else:
-                    newValue = str(newValue)
-                command = newValue + "ZV"  # Set Volume.
+                    new_value = str(new_value)
+                command = new_value + "ZV"  # Set Volume.
                 self.sendCommand(device, command)
                 self.sleep(0.1)
             else:
@@ -2911,6 +3208,12 @@ class Plugin(indigo.PluginBase):
     # Mute On (Zone 2)
     #
     def zone2muteOn(self, action):
+        """
+        Placeholder - fixme
+
+        :param action:
+        :return:
+        """
         # Turn on mute (zone 2) for a device.
         device = indigo.devices[action.deviceId]
         self.debugLog(f"Turning on mute (zone 2) for {device.name}")
@@ -2944,6 +3247,12 @@ class Plugin(indigo.PluginBase):
     # Mute Off (Zone 2)
     #
     def zone2muteOff(self, action):
+        """
+        Placeholder - fixme
+
+        :param action:
+        :return:
+        """
         # Turn off (zone 2) for a device.
         device = indigo.devices[action.deviceId]
         self.debugLog(f"Turning off mute (zone 2) for {device.name}")
@@ -2960,8 +3269,7 @@ class Plugin(indigo.PluginBase):
 
         # Make sure it's not a virtual volume device.
         if device.deviceTypeId != "virtualVolume":
-            # If the current speaker system setup is not "A + Zone 2",
-            #   zone mute and volume commands will be ignored.
+            # If the current speaker system setup is not "A + Zone 2", zone mute and volume commands will be ignored.
             if device.states['speakerSystem'] == "A + Zone 2":
                 command = "Z2MF"  # Mute Off
                 self.sendCommand(device, command)
@@ -2977,6 +3285,12 @@ class Plugin(indigo.PluginBase):
     # Mute Toggle (Zone 2)
     #
     def zone2muteToggle(self, action):
+        """
+        Placeholder - fixme
+
+        :param action:
+        :return:
+        """
         # Toggle mute (zone 1) for a device.
         device = indigo.devices[action.deviceId]
         self.debugLog(f"Toggling mute (zone 2) for {device.name}")
@@ -3009,6 +3323,12 @@ class Plugin(indigo.PluginBase):
     # Set Input Source (Zone 2)
     #
     def zone2setSource(self, action):
+        """
+        Placeholder - fixme
+
+        :param action:
+        :return:
+        """
         # Set the input source to something specific.
         device = indigo.devices[action.deviceId]
         self.debugLog("zone2setSource called.")
@@ -3023,12 +3343,12 @@ class Plugin(indigo.PluginBase):
             )
             return False
 
-        newValue = action.props['source']
-        self.debugLog(f"Set input source to {SOURCE_NAMES[str(newValue)]} (zone 2) for {device.name}")
+        new_value = action.props['source']
+        self.debugLog(f"Set input source to {SOURCE_NAMES[str(new_value)]} (zone 2) for {device.name}")
 
         # Make sure it's not a virtual volume device.
         if device.deviceTypeId != "virtualVolume":
-            command = newValue + "ZS"  # Set Source.
+            command = new_value + "ZS"  # Set Source.
             self.sendCommand(device, command)
             self.sleep(0.1)
 
@@ -3036,6 +3356,12 @@ class Plugin(indigo.PluginBase):
     # Select Tuner Preset
     #
     def tunerPresetSelect(self, action):
+        """
+        Placeholder - fixme
+
+        :param action:
+        :return:
+        """
         # Set the tuner preset to the specified preset.
         device = indigo.devices[action.deviceId]
 
@@ -3049,23 +3375,23 @@ class Plugin(indigo.PluginBase):
             )
             return False
 
-        newValue = action.props.get('tunerPreset', False)
-        if not newValue:
+        new_value = action.props.get('tunerPreset', False)
+        if not new_value:
             self.errorLog(f"No Tuner preset specified in action for \"{device.name}\"")
             return False
 
         # Define the tuner preset device property name based on the menu selection.
-        propName = f"tunerPreset{newValue.replace('0', '')}label"
-        self.debugLog(f"tunerPresetSelect: Set tuner preset to {device.pluginProps[propName]} for {device.name}")
+        prop_name = f"tunerPreset{new_value.replace('0', '')}label"
+        self.debugLog(f"tunerPresetSelect: Set tuner preset to {device.pluginProps[prop_name]} for {device.name}")
 
         # Make sure it's not a virtual volume device.
         if device.deviceTypeId != "virtualVolume":
             if (device.states['zone1source'] == 2) or (device.states['zone2source'] == 2):
-                command = newValue + "PR"  # Select Tuner Preset.
+                command = new_value + "PR"  # Select Tuner Preset.
                 self.sendCommand(device, command)
                 self.sleep(0.1)
             else:
-                # Neither of zones 1 or 2 are using the Tuner.  Cannot set the preset.
+                # Neither of zones 1 or 2 are using the Tuner. Cannot set the preset.
                 self.errorLog(
                     f"Cannot set tuner preset. The {device.name} zone 1 or 2 input source must be set to the tuner in "
                     f"order to set the tuner preset."
@@ -3075,6 +3401,12 @@ class Plugin(indigo.PluginBase):
     # Set Tuner Frequency
     #
     def tunerFrequencySet(self, action):
+        """
+        Placeholder - fixme
+
+        :param action:
+        :return:
+        """
         # Set the tuner band and frequency to the specified values.
         device = indigo.devices[action.deviceId]
 
@@ -3110,12 +3442,12 @@ class Plugin(indigo.PluginBase):
                     f"in order to set the tuner frequency directly."
                 )
             else:
-                bandCommand = ""
+                band_command = ""
                 # Zone 1 power is on and input source is source 2. Send the commands.
                 self.debugLog(f"tunerFrequencySet: Set tuner frequency to {frequency} {band} for {device.name}")
                 # Define band change command and correct frequency character sequence.
                 if band == "FM":
-                    bandCommand = "00TN"  # Command to set band to AM.
+                    band_command = "00TN"  # Command to set band to AM.
                     frequency = frequency.replace(".", "")  # Remove the decimal.
                     if len(frequency) < 3:
                         frequency = f"{frequency}00"  # Add 2 trailing zeros.
@@ -3125,18 +3457,18 @@ class Plugin(indigo.PluginBase):
                     if frequency.startswith("1"):
                         frequency = f"{frequency}0"
                 elif band == "AM":
-                    bandCommand = "01TN"  # Command to set band to FM.
+                    band_command = "01TN"  # Command to set band to FM.
                     if len(frequency) < 4:
                         frequency = f"0{frequency}"  # Add a leading zero.
 
                 # Start sending the command.
-                self.sendCommand(device, bandCommand)  # Set the frequency band.
+                self.sendCommand(device, band_command)  # Set the frequency band.
                 self.sleep(0.1)  # Wait for the band to change.
                 self.sendCommand(device, "TAC")  # Begin direct frequency entry.
                 self.sleep(0.1)
-                for theChar in frequency:
+                for the_char in frequency:
                     # Send each frequency number character individually.
-                    self.sendCommand(device, theChar + "TP")
+                    self.sendCommand(device, the_char + "TP")
                     self.sleep(0.1)
                 # Clear the device's preset state since entering a frequency directly.
                 self.updateDeviceState(device, 'tunerPreset', "")
@@ -3145,6 +3477,12 @@ class Plugin(indigo.PluginBase):
     # Next Stereo Listening Mode
     #
     def listeningModeStereoNext(self, action):
+        """
+        Placeholder - fixme
+
+        :param action:
+        :return:
+        """
         # Cycle through the next Stereo Listening Mode.
         device = indigo.devices[action.deviceId]
         self.debugLog(f"listeningModeStereoNext: Select next Stereo Listening Mode on {device.name}")
@@ -3172,6 +3510,12 @@ class Plugin(indigo.PluginBase):
     # Next Auto Surround/Stream Direct Listening Mode
     #
     def listeningModeAutoSurroundNext(self, action):
+        """
+        Placeholder - fixme
+
+        :param action:
+        :return:
+        """
         # Cycle through the next Auto Surround Listening Mode.
         device = indigo.devices[action.deviceId]
         self.debugLog(f"listeningModeAutoSurroundNext: Select next Auto Surround Listening Mode on {device.name}")
@@ -3199,6 +3543,12 @@ class Plugin(indigo.PluginBase):
     # Next Advanced Surround Listening Mode
     #
     def listeningModeAdvancedSurroundNext(self, action):
+        """
+        Placeholder - fixme
+
+        :param action:
+        :return:
+        """
         # Cycle through the next Advanced Surround Listening Mode.
         device = indigo.devices[action.deviceId]
         self.debugLog(
@@ -3227,6 +3577,12 @@ class Plugin(indigo.PluginBase):
     # Select Listening Mode
     #
     def listeningModeSelect(self, action):
+        """
+        Placeholder - fixme
+
+        :param action:
+        :return:
+        """
         # Set the Listening Mode setting to a specific setting.
         device = indigo.devices[action.deviceId]
 
@@ -3263,6 +3619,12 @@ class Plugin(indigo.PluginBase):
     # Next MCACC Memory
     #
     def mcaccNext(self, action):
+        """
+        Placeholder - fixme
+
+        :param action:
+        :return:
+        """
         # Select the next MCACC setting memory.
         device = indigo.devices[action.deviceId]
         self.debugLog(f"mcaccNext called for {device.name}")
@@ -3279,11 +3641,11 @@ class Plugin(indigo.PluginBase):
 
         # Make sure it's not a virtual volume device.
         if device.deviceTypeId != "virtualVolume":
-            mcaccMemory = device.states['mcaccMemory']
-            mcaccMemory += 1
-            if mcaccMemory > 6:
-                mcaccMemory = 1
-            command = f"{mcaccMemory}MC"
+            mcacc_memory = device.states['mcaccMemory']
+            mcacc_memory += 1
+            if mcacc_memory > 6:
+                mcacc_memory = 1
+            command = f"{mcacc_memory}MC"
             self.sendCommand(device, command)
             self.sleep(0.1)
 
@@ -3291,6 +3653,12 @@ class Plugin(indigo.PluginBase):
     # Previous MCACC Memory
     #
     def mcaccPrevious(self, action):
+        """
+        Placeholder - fixme
+
+        :param action:
+        :return:
+        """
         # Select the previous MCACC setting memory.
         device = indigo.devices[action.deviceId]
         self.debugLog(f"mcaccPrevious called for {device.name}")
@@ -3307,11 +3675,11 @@ class Plugin(indigo.PluginBase):
 
         # Make sure it's not a virtual volume device.
         if device.deviceTypeId != "virtualVolume":
-            mcaccMemory = device.states['mcaccMemory']
-            mcaccMemory -= 1
-            if mcaccMemory < 1:
-                mcaccMemory = 6
-            command = f"{mcaccMemory}MC"
+            mcacc_memory = device.states['mcaccMemory']
+            mcacc_memory -= 1
+            if mcacc_memory < 1:
+                mcacc_memory = 6
+            command = f"{mcacc_memory}MC"
             self.sendCommand(device, command)
             self.sleep(0.1)
 
@@ -3319,6 +3687,12 @@ class Plugin(indigo.PluginBase):
     # Select MCACC Memory
     #
     def mcaccSelect(self, action):
+        """
+        Placeholder - fixme
+
+        :param action:
+        :return:
+        """
         # Set the MCACC Memory setting to something specific.
         device = indigo.devices[action.deviceId]
 
@@ -3348,6 +3722,12 @@ class Plugin(indigo.PluginBase):
     # Send Remote Control Button Press
     #
     def remoteButtonPress(self, action):
+        """
+        Placeholder - fixme
+
+        :param action:
+        :return:
+        """
         # Send a remote control button press to the receiver.
         device = indigo.devices[action.deviceId]
         error = False  # Used to track if there was an error or not.
@@ -3379,45 +3759,45 @@ class Plugin(indigo.PluginBase):
             # where the receiver would completely mute the tuner even across power cycles. The tuner could only be
             # unmuted by pressing a tuner control button on the IR remote or on the receiver front panel.  For this
             # reason, the "TFI" and "TFD" tuner frequency increment/decrement commands have been omitted.
-            source2commandMap = {'CRI': "TPI", 'CLE': "TPD", 'CEN': "03TN", 'CRT': "04TN", 'STS': "06TN"}
+            source2command_map = {'CRI': "TPI", 'CLE': "TPD", 'CEN': "03TN", 'CRT': "04TN", 'STS': "06TN"}
             # 17 - iPod/USB The below button maps work on the first button press, but don't for subsequent presses.
             # source17commandMap = {'HM':"HM", 'CUP':"CUP", 'CDN':"CDN", 'CRI':"CRI", 'CLE':"CLE", 'CEN':"CEN",
             # 'CRT':"CRT", 'STS':"09IP", '00IP':"00IP", '01IP':"01IP", '02IP':"02IP", '03IP':"03IP", '04IP':"04IP",
             # '07IP':"07IP", '08IP':"08IP", '19SI':"19IP"}
-            source17commandMap = {'CUP': "13IP", 'CDN': "14IP", 'CRI': "15IP", 'CLE': "16IP", 'CEN': "17IP",
-                                  'CRT': "18IP", 'STS': "09IP", '00IP': "00IP", '01IP': "01IP", '02IP': "02IP",
-                                  '03IP': "03IP", '04IP': "04IP", '07IP': "07IP", '08IP': "08IP", '19SI': "19IP"}
+            source17command_map = {'CUP': "13IP", 'CDN': "14IP", 'CRI': "15IP", 'CLE': "16IP", 'CEN': "17IP",
+                                   'CRT': "18IP", 'STS': "09IP", '00IP': "00IP", '01IP': "01IP", '02IP': "02IP",
+                                   '03IP': "03IP", '04IP': "04IP", '07IP': "07IP", '08IP': "08IP", '19SI': "19IP"}
             # 26 - HMG (Home Media Gallery/Internet Radio) The below button maps work on the first button press,
             # but don't for subsequent presses. source26commandMap = {'HM':"HM", 'CUP':"CUP", 'CDN':"CDN",
             # 'CRI':"CRI", 'CLE':"CLE", 'CEN':"CEN", 'CRT':"CRT", 'STS':"18NW", '00IP':"10NW", '01IP':"11NW",
             # '02IP':"20NW", '03IP':"12NW", '04IP':"12NW", '07IP':"34NW", '08IP':"35NW", '19SI':"36NW",
             # '00SI':"00NW", '01SI':"01NW", '02SI':"02NW", '03SI':"03NW", '04SI':"04NW", '05SI':"04NW",
             # '06SI':"05NW", '07SI':"07NW", '08SI':"08NW", '09SI':"09NW"}
-            source26commandMap = {'CUP': "26NW", 'CDN': "27NW", 'CRI': "28NW", 'CLE': "29NW", 'CEN': "30NW",
-                                  'CRT': "31NW", 'STS': "18NW", '00IP': "10NW", '01IP': "11NW", '02IP': "20NW",
-                                  '03IP': "12NW", '04IP': "12NW", '07IP': "34NW", '08IP': "35NW", '19SI': "36NW",
-                                  '00SI': "00NW", '01SI': "01NW", '02SI': "02NW", '03SI': "03NW", '04SI': "04NW",
-                                  '05SI': "04NW", '06SI': "05NW", '07SI': "07NW", '08SI': "08NW", '09SI': "09NW"}
+            source26command_map = {'CUP': "26NW", 'CDN': "27NW", 'CRI': "28NW", 'CLE': "29NW", 'CEN': "30NW",
+                                   'CRT': "31NW", 'STS': "18NW", '00IP': "10NW", '01IP': "11NW", '02IP': "20NW",
+                                   '03IP': "12NW", '04IP': "12NW", '07IP': "34NW", '08IP': "35NW", '19SI': "36NW",
+                                   '00SI': "00NW", '01SI': "01NW", '02SI': "02NW", '03SI': "03NW", '04SI': "04NW",
+                                   '05SI': "04NW", '06SI': "05NW", '07SI': "07NW", '08SI': "08NW", '09SI': "09NW"}
             # 27 - Sirius The below button maps work on the first button press, but don't for subsequent presses.
             # source27commandMap = {'HM':"HM", 'CUP':"CUP", 'CDN':"CDN", 'CRI':"CRI", 'CLE':"CLE", 'CEN':"CEN",
             # 'CRT':"CRT", 'STS':"14SI", '19SI':"19SI", '00SI':"00SI", '01SI':"01SI", '02SI':"02SI", '03SI':"03SI",
             # '04SI':"04SI", '05SI':"04SI", '06SI':"05SI", '07SI':"07SI", '08SI':"08SI", '09SI':"09SI"}
-            source27commandMap = {'CUP': "10SI", 'CDN': "11SI", 'CRI': "12SI", 'CLE': "13SI", 'CEN': "21SI",
-                                  'CRT': "22SI", 'STS': "14SI", '19SI': "19SI", '00SI': "00SI", '01SI': "01SI",
-                                  '02SI': "02SI", '03SI': "03SI", '04SI': "04SI", '05SI': "04SI", '06SI': "05SI",
-                                  '07SI': "07SI", '08SI': "08SI", '09SI': "09SI"}
+            source27command_map = {'CUP': "10SI", 'CDN': "11SI", 'CRI': "12SI", 'CLE': "13SI", 'CEN': "21SI",
+                                   'CRT': "22SI", 'STS': "14SI", '19SI': "19SI", '00SI': "00SI", '01SI': "01SI",
+                                   '02SI': "02SI", '03SI': "03SI", '04SI': "04SI", '05SI': "04SI", '06SI': "05SI",
+                                   '07SI': "07SI", '08SI': "08SI", '09SI': "09SI"}
             # 33 - Adapter Port The below button maps work on the first button press, but don't for subsequent
             # presses. source33commandMap = {'HM':"HM", 'CUP':"CUP", 'CDN':"CDN", 'CRI':"CRI", 'CLE':"CLE",
             # 'CEN':"CEN", 'CRT':"CRT", '00IP':"10BT", '01IP':"11BT", '02IP':"12BT", '03IP':"13BT", '04IP':"14BT"}
-            source33commandMap = {'CRI': "23BT", 'CLE': "24BT", 'CEN': "25BT", 'CRT': "26BT", '00IP': "10BT",
-                                  '01IP': "11BT", '02IP': "12BT", '03IP': "13BT", '04IP': "14BT"}
+            source33command_map = {'CRI': "23BT", 'CLE': "24BT", 'CEN': "25BT", 'CRT': "26BT", '00IP': "10BT",
+                                   '01IP': "11BT", '02IP': "12BT", '03IP': "13BT", '04IP': "14BT"}
             # List of default cursor button commands to use if the above sources aren't the current input source.
-            defaultCursorCommands = ['HM', 'CUP', 'CDN', 'CRI', 'CLE', 'CEN', 'CRT', 'STS']
+            default_cursor_commands = ['HM', 'CUP', 'CDN', 'CRI', 'CLE', 'CEN', 'CRT', 'STS']
 
             # Translate the command based on the current zone 1 input source.
             if source == 2:
                 # See if the requested command is compatible with this input source.
-                command = source2commandMap.get(command, "")
+                command = source2command_map.get(command, "")
                 if len(command) == 0:
                     self.errorLog(
                         f"{device.name}: remote control button"
@@ -3426,7 +3806,7 @@ class Plugin(indigo.PluginBase):
                     )
                     error = True
             elif source == 17:
-                command = source17commandMap.get(command, "")
+                command = source17command_map.get(command, "")
                 if len(command) == 0:
                     self.errorLog(
                         f"{device.name}: remote control button"
@@ -3435,7 +3815,7 @@ class Plugin(indigo.PluginBase):
                     )
                     error = True
             elif source == 26:
-                command = source26commandMap.get(command, "")
+                command = source26command_map.get(command, "")
                 if len(command) == 0:
                     self.errorLog(
                         f"{device.name}: remote control button"
@@ -3444,7 +3824,7 @@ class Plugin(indigo.PluginBase):
                     )
                     error = True
             elif source == 27:
-                command = source27commandMap.get(command, "")
+                command = source27command_map.get(command, "")
                 if len(command) == 0:
                     self.errorLog(
                         f"{device.name}: remote control button"
@@ -3453,7 +3833,7 @@ class Plugin(indigo.PluginBase):
                     )
                     error = True
             elif source == 33:
-                command = source33commandMap.get(command, "")
+                command = source33command_map.get(command, "")
                 if len(command) == 0:
                     self.errorLog(
                         f"{device.name}: remote control button"
@@ -3464,7 +3844,7 @@ class Plugin(indigo.PluginBase):
             else:
                 # Current zone 1 input source is something other than the special ones above. Make sure the command
                 # being sent is one of the standard commands.
-                if command not in defaultCursorCommands:
+                if command not in default_cursor_commands:
                     self.errorLog(
                         f"{device.name}: remote control button"
                         f"{REMOTE_BUTTON_NAMES.get(action.props['remoteButton'], '')} is not supported by the"
@@ -3483,33 +3863,33 @@ class Plugin(indigo.PluginBase):
             # FOR ALL VSX-1022-K SUPPORTED SOURCES.
             #
             # 02 - Tuner
-            source2commandMap = {'CUP': "TFI", 'CDN': "TFD", 'CRI': "TPI", 'CLE': "TPD", 'CEN': "03TN", 'CRT': "04TN",
-                                 'STS': "06TN"}
+            source2command_map = {'CUP': "TFI", 'CDN': "TFD", 'CRI': "TPI", 'CLE': "TPD", 'CEN': "03TN", 'CRT': "04TN",
+                                  'STS': "06TN"}
             # 17 - iPod/USB
-            source17commandMap = {'CUP': "13IP", 'CDN': "14IP", 'CRI': "15IP", 'CLE': "16IP", 'CEN': "17IP",
-                                  'CRT': "18IP", 'STS': "09IP", '00IP': "00IP", '01IP': "01IP", '02IP': "02IP",
-                                  '03IP': "03IP", '04IP': "04IP", '07IP': "07IP", '08IP': "08IP", '19SI': "19IP"}
+            source17command_map = {'CUP': "13IP", 'CDN': "14IP", 'CRI': "15IP", 'CLE': "16IP", 'CEN': "17IP",
+                                   'CRT': "18IP", 'STS': "09IP", '00IP': "00IP", '01IP': "01IP", '02IP': "02IP",
+                                   '03IP': "03IP", '04IP': "04IP", '07IP': "07IP", '08IP': "08IP", '19SI': "19IP"}
             # 26 - HMG (Home Media Gallery/Internet Radio)
-            source26commandMap = {'CUP': "26NW", 'CDN': "27NW", 'CRI': "28NW", 'CLE': "29NW", 'CEN': "30NW",
-                                  'CRT': "31NW", 'STS': "18NW", '00IP': "10NW", '01IP': "11NW", '02IP': "20NW",
-                                  '03IP': "12NW", '04IP': "12NW", '07IP': "34NW", '08IP': "35NW", '19SI': "36NW",
-                                  '00SI': "00NW", '01SI': "01NW", '02SI': "02NW", '03SI': "03NW", '04SI': "04NW",
-                                  '05SI': "04NW", '06SI': "05NW", '07SI': "07NW", '08SI': "08NW", '09SI': "09NW"}
+            source26command_map = {'CUP': "26NW", 'CDN': "27NW", 'CRI': "28NW", 'CLE': "29NW", 'CEN': "30NW",
+                                   'CRT': "31NW", 'STS': "18NW", '00IP': "10NW", '01IP': "11NW", '02IP': "20NW",
+                                   '03IP': "12NW", '04IP': "12NW", '07IP': "34NW", '08IP': "35NW", '19SI': "36NW",
+                                   '00SI': "00NW", '01SI': "01NW", '02SI': "02NW", '03SI': "03NW", '04SI': "04NW",
+                                   '05SI': "04NW", '06SI': "05NW", '07SI': "07NW", '08SI': "08NW", '09SI': "09NW"}
             # 27 - Sirius
-            source27commandMap = {'CUP': "10SI", 'CDN': "11SI", 'CRI': "12SI", 'CLE': "13SI", 'CEN': "21SI",
-                                  'CRT': "22SI", 'STS': "14SI", '19SI': "19SI", '00SI': "00SI", '01SI': "01SI",
-                                  '02SI': "02SI", '03SI': "03SI", '04SI': "04SI", '05SI': "04SI", '06SI': "05SI",
-                                  '07SI': "07SI", '08SI': "08SI", '09SI': "09SI"}
+            source27command_map = {'CUP': "10SI", 'CDN': "11SI", 'CRI': "12SI", 'CLE': "13SI", 'CEN': "21SI",
+                                   'CRT': "22SI", 'STS': "14SI", '19SI': "19SI", '00SI': "00SI", '01SI': "01SI",
+                                   '02SI': "02SI", '03SI': "03SI", '04SI': "04SI", '05SI': "04SI", '06SI': "05SI",
+                                   '07SI': "07SI", '08SI': "08SI", '09SI': "09SI"}
             # 33 - Adapter Port
-            source33commandMap = {'CRI': "23BT", 'CLE': "24BT", 'CEN': "25BT", 'CRT': "26BT", '00IP': "10BT",
-                                  '01IP': "11BT", '02IP': "12BT", '03IP': "13BT", '04IP': "14BT"}
+            source33command_map = {'CRI': "23BT", 'CLE': "24BT", 'CEN': "25BT", 'CRT': "26BT", '00IP': "10BT",
+                                   '01IP': "11BT", '02IP': "12BT", '03IP': "13BT", '04IP': "14BT"}
             # List of default cursor button commands to use if the above sources aren't the current input source.
-            defaultCursorCommands = ['HM', 'CUP', 'CDN', 'CRI', 'CLE', 'CEN', 'CRT', 'STS']
+            default_cursor_commands = ['HM', 'CUP', 'CDN', 'CRI', 'CLE', 'CEN', 'CRT', 'STS']
 
             # Translate the command based on the current zone 1 input source.
             if source == 2:
                 # See if the requested command is compatible with this input source.
-                command = source2commandMap.get(command, "")
+                command = source2command_map.get(command, "")
                 if len(command) == 0:
                     self.errorLog(
                         f"{device.name}: remote control button"
@@ -3518,7 +3898,7 @@ class Plugin(indigo.PluginBase):
                     )
                     error = True
             elif source == 17:
-                command = source17commandMap.get(command, "")
+                command = source17command_map.get(command, "")
                 if len(command) == 0:
                     self.errorLog(
                         f"{device.name}: remote control button"
@@ -3527,7 +3907,7 @@ class Plugin(indigo.PluginBase):
                     )
                     error = True
             elif source == 26:
-                command = source26commandMap.get(command, "")
+                command = source26command_map.get(command, "")
                 if len(command) == 0:
                     self.errorLog(
                         f"{device.name}: remote control button"
@@ -3536,7 +3916,7 @@ class Plugin(indigo.PluginBase):
                     )
                     error = True
             elif source == 27:
-                command = source27commandMap.get(command, "")
+                command = source27command_map.get(command, "")
                 if len(command) == 0:
                     self.errorLog(
                         f"{device.name}: remote control button"
@@ -3545,7 +3925,7 @@ class Plugin(indigo.PluginBase):
                     )
                     error = True
             elif source == 33:
-                command = source33commandMap.get(command, "")
+                command = source33command_map.get(command, "")
                 if len(command) == 0:
                     self.errorLog(
                         f"{device.name}: remote control button"
@@ -3556,7 +3936,7 @@ class Plugin(indigo.PluginBase):
             else:
                 # Current zone 1 input source is something other than the special ones above. Make sure the command
                 # being sent is one of the standard commands.
-                if command not in defaultCursorCommands:
+                if command not in default_cursor_commands:
                     self.errorLog(
                         f"{device.name}: remote control button"
                         f"{REMOTE_BUTTON_NAMES.get(action.props['remoteButton'], '')} is not supported by the"
@@ -3575,33 +3955,33 @@ class Plugin(indigo.PluginBase):
             # FOR ALL VSX-1122-K SUPPORTED SOURCES.
             #
             # 02 - Tuner
-            source2commandMap = {'CUP': "TFI", 'CDN': "TFD", 'CRI': "TPI", 'CLE': "TPD", 'CEN': "03TN", 'CRT': "04TN",
-                                 'STS': "06TN"}
+            source2command_map = {'CUP': "TFI", 'CDN': "TFD", 'CRI': "TPI", 'CLE': "TPD", 'CEN': "03TN", 'CRT': "04TN",
+                                  'STS': "06TN"}
             # 17 - iPod/USB
-            source17commandMap = {'CUP': "13IP", 'CDN': "14IP", 'CRI': "15IP", 'CLE': "16IP", 'CEN': "17IP",
-                                  'CRT': "18IP", 'STS': "09IP", '00IP': "00IP", '01IP': "01IP", '02IP': "02IP",
-                                  '03IP': "03IP", '04IP': "04IP", '07IP': "07IP", '08IP': "08IP", '19SI': "19IP"}
+            source17command_map = {'CUP': "13IP", 'CDN': "14IP", 'CRI': "15IP", 'CLE': "16IP", 'CEN': "17IP",
+                                   'CRT': "18IP", 'STS': "09IP", '00IP': "00IP", '01IP': "01IP", '02IP': "02IP",
+                                   '03IP': "03IP", '04IP': "04IP", '07IP': "07IP", '08IP': "08IP", '19SI': "19IP"}
             # 26 - HMG (Home Media Gallery/Internet Radio)
-            source26commandMap = {'CUP': "26NW", 'CDN': "27NW", 'CRI': "28NW", 'CLE': "29NW", 'CEN': "30NW",
-                                  'CRT': "31NW", 'STS': "18NW", '00IP': "10NW", '01IP': "11NW", '02IP': "20NW",
-                                  '03IP': "12NW", '04IP': "12NW", '07IP': "34NW", '08IP': "35NW", '19SI': "36NW",
-                                  '00SI': "00NW", '01SI': "01NW", '02SI': "02NW", '03SI': "03NW", '04SI': "04NW",
-                                  '05SI': "04NW", '06SI': "05NW", '07SI': "07NW", '08SI': "08NW", '09SI': "09NW"}
+            source26command_map = {'CUP': "26NW", 'CDN': "27NW", 'CRI': "28NW", 'CLE': "29NW", 'CEN': "30NW",
+                                   'CRT': "31NW", 'STS': "18NW", '00IP': "10NW", '01IP': "11NW", '02IP': "20NW",
+                                   '03IP': "12NW", '04IP': "12NW", '07IP': "34NW", '08IP': "35NW", '19SI': "36NW",
+                                   '00SI': "00NW", '01SI': "01NW", '02SI': "02NW", '03SI': "03NW", '04SI': "04NW",
+                                   '05SI': "04NW", '06SI': "05NW", '07SI': "07NW", '08SI': "08NW", '09SI': "09NW"}
             # 27 - Sirius
-            source27commandMap = {'CUP': "10SI", 'CDN': "11SI", 'CRI': "12SI", 'CLE': "13SI", 'CEN': "21SI",
-                                  'CRT': "22SI", 'STS': "14SI", '19SI': "19SI", '00SI': "00SI", '01SI': "01SI",
-                                  '02SI': "02SI", '03SI': "03SI", '04SI': "04SI", '05SI': "04SI", '06SI': "05SI",
-                                  '07SI': "07SI", '08SI': "08SI", '09SI': "09SI"}
+            source27command_map = {'CUP': "10SI", 'CDN': "11SI", 'CRI': "12SI", 'CLE': "13SI", 'CEN': "21SI",
+                                   'CRT': "22SI", 'STS': "14SI", '19SI': "19SI", '00SI': "00SI", '01SI': "01SI",
+                                   '02SI': "02SI", '03SI': "03SI", '04SI': "04SI", '05SI': "04SI", '06SI': "05SI",
+                                   '07SI': "07SI", '08SI': "08SI", '09SI': "09SI"}
             # 33 - Adapter Port
-            source33commandMap = {'CRI': "23BT", 'CLE': "24BT", 'CEN': "25BT", 'CRT': "26BT", '00IP': "10BT",
-                                  '01IP': "11BT", '02IP': "12BT", '03IP': "13BT", '04IP': "14BT"}
+            source33command_map = {'CRI': "23BT", 'CLE': "24BT", 'CEN': "25BT", 'CRT': "26BT", '00IP': "10BT",
+                                   '01IP': "11BT", '02IP': "12BT", '03IP': "13BT", '04IP': "14BT"}
             # List of default cursor button commands to use if the above sources aren't the current input source.
-            defaultCursorCommands = ['HM', 'CUP', 'CDN', 'CRI', 'CLE', 'CEN', 'CRT', 'STS']
+            default_cursor_commands = ['HM', 'CUP', 'CDN', 'CRI', 'CLE', 'CEN', 'CRT', 'STS']
 
             # Translate the command based on the current zone 1 input source.
             if source == 2:
                 # See if the requested command is compatible with this input source.
-                command = source2commandMap.get(command, "")
+                command = source2command_map.get(command, "")
                 if len(command) == 0:
                     self.errorLog(
                         f"{device.name}: remote control button"
@@ -3610,7 +3990,7 @@ class Plugin(indigo.PluginBase):
                     )
                     error = True
             elif source == 17:
-                command = source17commandMap.get(command, "")
+                command = source17command_map.get(command, "")
                 if len(command) == 0:
                     self.errorLog(
                         f"{device.name}: remote control button"
@@ -3619,7 +3999,7 @@ class Plugin(indigo.PluginBase):
                     )
                     error = True
             elif source == 26:
-                command = source26commandMap.get(command, "")
+                command = source26command_map.get(command, "")
                 if len(command) == 0:
                     self.errorLog(
                         f"{device.name}: remote control button"
@@ -3628,7 +4008,7 @@ class Plugin(indigo.PluginBase):
                     )
                     error = True
             elif source == 27:
-                command = source27commandMap.get(command, "")
+                command = source27command_map.get(command, "")
                 if len(command) == 0:
                     self.errorLog(
                         f"{device.name}: remote control button"
@@ -3637,7 +4017,7 @@ class Plugin(indigo.PluginBase):
                     )
                     error = True
             elif source == 33:
-                command = source33commandMap.get(command, "")
+                command = source33command_map.get(command, "")
                 if len(command) == 0:
                     self.errorLog(
                         f"{device.name}: remote control button"
@@ -3648,7 +4028,7 @@ class Plugin(indigo.PluginBase):
             else:
                 # Current zone 1 input source is something other than the special ones above. Make sure the command
                 # being sent is one of the standard commands.
-                if command not in defaultCursorCommands:
+                if command not in default_cursor_commands:
                     self.errorLog(
                         f"{device.name}: remote control button"
                         f"{REMOTE_BUTTON_NAMES.get(action.props['remoteButton'], '')} is not supported by the"
@@ -3667,33 +4047,33 @@ class Plugin(indigo.PluginBase):
             # FOR ALL VSX-1123-K SUPPORTED SOURCES.
             #
             # 02 - Tuner
-            source2commandMap = {'CUP': "TFI", 'CDN': "TFD", 'CRI': "TPI", 'CLE': "TPD", 'CEN': "03TN", 'CRT': "04TN",
-                                 'STS': "06TN"}
+            source2command_map = {'CUP': "TFI", 'CDN': "TFD", 'CRI': "TPI", 'CLE': "TPD", 'CEN': "03TN", 'CRT': "04TN",
+                                  'STS': "06TN"}
             # 17 - iPod/USB
-            source17commandMap = {'CUP': "13IP", 'CDN': "14IP", 'CRI': "15IP", 'CLE': "16IP", 'CEN': "17IP",
-                                  'CRT': "18IP", 'STS': "09IP", '00IP': "00IP", '01IP': "01IP", '02IP': "02IP",
-                                  '03IP': "03IP", '04IP': "04IP", '07IP': "07IP", '08IP': "08IP", '19SI': "19IP"}
+            source17command_map = {'CUP': "13IP", 'CDN': "14IP", 'CRI': "15IP", 'CLE': "16IP", 'CEN': "17IP",
+                                   'CRT': "18IP", 'STS': "09IP", '00IP': "00IP", '01IP': "01IP", '02IP': "02IP",
+                                   '03IP': "03IP", '04IP': "04IP", '07IP': "07IP", '08IP': "08IP", '19SI': "19IP"}
             # 26 - HMG (Home Media Gallery/Internet Radio)
-            source26commandMap = {'CUP': "26NW", 'CDN': "27NW", 'CRI': "28NW", 'CLE': "29NW", 'CEN': "30NW",
-                                  'CRT': "31NW", 'STS': "18NW", '00IP': "10NW", '01IP': "11NW", '02IP': "20NW",
-                                  '03IP': "12NW", '04IP': "12NW", '07IP': "34NW", '08IP': "35NW", '19SI': "36NW",
-                                  '00SI': "00NW", '01SI': "01NW", '02SI': "02NW", '03SI': "03NW", '04SI': "04NW",
-                                  '05SI': "04NW", '06SI': "05NW", '07SI': "07NW", '08SI': "08NW", '09SI': "09NW"}
+            source26command_map = {'CUP': "26NW", 'CDN': "27NW", 'CRI': "28NW", 'CLE': "29NW", 'CEN': "30NW",
+                                   'CRT': "31NW", 'STS': "18NW", '00IP': "10NW", '01IP': "11NW", '02IP': "20NW",
+                                   '03IP': "12NW", '04IP': "12NW", '07IP': "34NW", '08IP': "35NW", '19SI': "36NW",
+                                   '00SI': "00NW", '01SI': "01NW", '02SI': "02NW", '03SI': "03NW", '04SI': "04NW",
+                                   '05SI': "04NW", '06SI': "05NW", '07SI': "07NW", '08SI': "08NW", '09SI': "09NW"}
             # 27 - Sirius
-            source27commandMap = {'CUP': "10SI", 'CDN': "11SI", 'CRI': "12SI", 'CLE': "13SI", 'CEN': "21SI",
-                                  'CRT': "22SI", 'STS': "14SI", '19SI': "19SI", '00SI': "00SI", '01SI': "01SI",
-                                  '02SI': "02SI", '03SI': "03SI", '04SI': "04SI", '05SI': "04SI", '06SI': "05SI",
-                                  '07SI': "07SI", '08SI': "08SI", '09SI': "09SI"}
+            source27command_map = {'CUP': "10SI", 'CDN': "11SI", 'CRI': "12SI", 'CLE': "13SI", 'CEN': "21SI",
+                                   'CRT': "22SI", 'STS': "14SI", '19SI': "19SI", '00SI': "00SI", '01SI': "01SI",
+                                   '02SI': "02SI", '03SI': "03SI", '04SI': "04SI", '05SI': "04SI", '06SI': "05SI",
+                                   '07SI': "07SI", '08SI': "08SI", '09SI': "09SI"}
             # 33 - Adapter Port
-            source33commandMap = {'CRI': "23BT", 'CLE': "24BT", 'CEN': "25BT", 'CRT': "26BT", '00IP': "10BT",
-                                  '01IP': "11BT", '02IP': "12BT", '03IP': "13BT", '04IP': "14BT"}
+            source33command_map = {'CRI': "23BT", 'CLE': "24BT", 'CEN': "25BT", 'CRT': "26BT", '00IP': "10BT",
+                                   '01IP': "11BT", '02IP': "12BT", '03IP': "13BT", '04IP': "14BT"}
             # List of default cursor button commands to use if the above sources aren't the current input source.
-            defaultCursorCommands = ['HM', 'CUP', 'CDN', 'CRI', 'CLE', 'CEN', 'CRT', 'STS']
+            default_cursor_commands = ['HM', 'CUP', 'CDN', 'CRI', 'CLE', 'CEN', 'CRT', 'STS']
 
             # Translate the command based on the current zone 1 input source.
             if source == 2:
                 # See if the requested command is compatible with this input source.
-                command = source2commandMap.get(command, "")
+                command = source2command_map.get(command, "")
                 if len(command) == 0:
                     self.errorLog(
                         f"{device.name}: remote control button"
@@ -3702,7 +4082,7 @@ class Plugin(indigo.PluginBase):
                     )
                     error = True
             elif source == 17:
-                command = source17commandMap.get(command, "")
+                command = source17command_map.get(command, "")
                 if len(command) == 0:
                     self.errorLog(
                         f"{device.name}: remote control button"
@@ -3711,7 +4091,7 @@ class Plugin(indigo.PluginBase):
                     )
                     error = True
             elif source == 26:
-                command = source26commandMap.get(command, "")
+                command = source26command_map.get(command, "")
                 if len(command) == 0:
                     self.errorLog(
                         f"{device.name}: remote control button"
@@ -3720,7 +4100,7 @@ class Plugin(indigo.PluginBase):
                     )
                     error = True
             elif source == 27:
-                command = source27commandMap.get(command, "")
+                command = source27command_map.get(command, "")
                 if len(command) == 0:
                     self.errorLog(
                         f"{device.name}: remote control button"
@@ -3729,7 +4109,7 @@ class Plugin(indigo.PluginBase):
                     )
                     error = True
             elif source == 33:
-                command = source33commandMap.get(command, "")
+                command = source33command_map.get(command, "")
                 if len(command) == 0:
                     self.errorLog(
                         f"{device.name}: remote control button"
@@ -3739,7 +4119,7 @@ class Plugin(indigo.PluginBase):
             else:
                 # Current zone 1 input source is something other than the special ones above. Make sure the command
                 # being sent is one of the standard commands.
-                if command not in defaultCursorCommands:
+                if command not in default_cursor_commands:
                     self.errorLog(
                         f"{device.name}: remote control button "
                         f"{REMOTE_BUTTON_NAMES.get(action.props['remoteButton'], '')} is not supported by the "
@@ -3753,28 +4133,28 @@ class Plugin(indigo.PluginBase):
             # FOR ALL SC-75 SUPPORTED SOURCES.
             #
             # 02 - Tuner
-            source2commandMap = {'CUP': "TFI", 'CDN': "TFD", 'CRI': "TPI", 'CLE': "TPD", 'CEN': "03TN", 'CRT': "04TN",
-                                 'STS': "06TN"}
+            source2command_map = {'CUP': "TFI", 'CDN': "TFD", 'CRI': "TPI", 'CLE': "TPD", 'CEN': "03TN", 'CRT': "04TN",
+                                  'STS': "06TN"}
             # 17 - iPod/USB
-            source17commandMap = {'CUP': "13IP", 'CDN': "14IP", 'CRI': "15IP", 'CLE': "16IP", 'CEN': "17IP",
-                                  'CRT': "18IP", 'STS': "09IP", '00IP': "00IP", '01IP': "01IP", '02IP': "02IP",
-                                  '03IP': "03IP", '04IP': "04IP", '07IP': "07IP", '08IP': "08IP", '19SI': "19IP"}
+            source17command_map = {'CUP': "13IP", 'CDN': "14IP", 'CRI': "15IP", 'CLE': "16IP", 'CEN': "17IP",
+                                   'CRT': "18IP", 'STS': "09IP", '00IP': "00IP", '01IP': "01IP", '02IP': "02IP",
+                                   '03IP': "03IP", '04IP': "04IP", '07IP': "07IP", '08IP': "08IP", '19SI': "19IP"}
             # 26 - HMG (Home Media Gallery/Internet Radio)
-            source26commandMap = {'CUP': "26NW", 'CDN': "27NW", 'CRI': "28NW", 'CLE': "29NW", 'CEN': "30NW",
-                                  'CRT': "31NW", 'STS': "18NW", '00IP': "10NW", '01IP': "11NW", '02IP': "20NW",
-                                  '03IP': "12NW", '04IP': "12NW", '07IP': "34NW", '08IP': "35NW", '19SI': "36NW",
-                                  '00SI': "00NW", '01SI': "01NW", '02SI': "02NW", '03SI': "03NW", '04SI': "04NW",
-                                  '05SI': "04NW", '06SI': "05NW", '07SI': "07NW", '08SI': "08NW", '09SI': "09NW"}
+            source26command_map = {'CUP': "26NW", 'CDN': "27NW", 'CRI': "28NW", 'CLE': "29NW", 'CEN': "30NW",
+                                   'CRT': "31NW", 'STS': "18NW", '00IP': "10NW", '01IP': "11NW", '02IP': "20NW",
+                                   '03IP': "12NW", '04IP': "12NW", '07IP': "34NW", '08IP': "35NW", '19SI': "36NW",
+                                   '00SI': "00NW", '01SI': "01NW", '02SI': "02NW", '03SI': "03NW", '04SI': "04NW",
+                                   '05SI': "04NW", '06SI': "05NW", '07SI': "07NW", '08SI': "08NW", '09SI': "09NW"}
             # 33 - Adapter Port
-            source33commandMap = {'CRI': "23BT", 'CLE': "24BT", 'CEN': "25BT", 'CRT': "26BT", '00IP': "10BT",
-                                  '01IP': "11BT", '02IP': "12BT", '03IP': "13BT", '04IP': "14BT"}
+            source33command_map = {'CRI': "23BT", 'CLE': "24BT", 'CEN': "25BT", 'CRT': "26BT", '00IP': "10BT",
+                                   '01IP': "11BT", '02IP': "12BT", '03IP': "13BT", '04IP': "14BT"}
             # List of default cursor button commands to use if the above sources aren't the current input source.
-            defaultCursorCommands = ['HM', 'CUP', 'CDN', 'CRI', 'CLE', 'CEN', 'CRT', 'STS']
+            default_cursor_commands = ['HM', 'CUP', 'CDN', 'CRI', 'CLE', 'CEN', 'CRT', 'STS']
 
             # Translate the command based on the current zone 1 input source.
             if source == 2:
                 # See if the requested command is compatible with this input source.
-                command = source2commandMap.get(command, "")
+                command = source2command_map.get(command, "")
                 if len(command) == 0:
                     self.errorLog(
                         f"{device.name}: remote control button "
@@ -3783,7 +4163,7 @@ class Plugin(indigo.PluginBase):
                     )
                     error = True
             elif source == 17:
-                command = source17commandMap.get(command, "")
+                command = source17command_map.get(command, "")
                 if len(command) == 0:
                     self.errorLog(
                         f"{device.name}: remote control button "
@@ -3792,7 +4172,7 @@ class Plugin(indigo.PluginBase):
                     )
                     error = True
             elif source == 26:
-                command = source26commandMap.get(command, "")
+                command = source26command_map.get(command, "")
                 if len(command) == 0:
                     self.errorLog(
                         f"{device.name}: remote control button "
@@ -3802,7 +4182,7 @@ class Plugin(indigo.PluginBase):
                     error = True
             # TODO: there doesn't appear to be a source '27commandMap' above.
             elif source == 27:
-                command = source27commandMap.get(command, "")
+                command = source27command_map.get(command, "")
                 if len(command) == 0:
                     self.errorLog(
                         f"{device.name}: remote control button "
@@ -3811,7 +4191,7 @@ class Plugin(indigo.PluginBase):
                     )
                     error = True
             elif source == 33:
-                command = source33commandMap.get(command, "")
+                command = source33command_map.get(command, "")
                 if len(command) == 0:
                     self.errorLog(
                         f"{device.name}: remote control button "
@@ -3822,7 +4202,7 @@ class Plugin(indigo.PluginBase):
             else:
                 # Current zone 1 input source is something other than the special ones above. Make sure the command
                 # being sent is one of the standard commands.
-                if command not in defaultCursorCommands:
+                if command not in default_cursor_commands:
                     self.errorLog(
                         f" {device.name}: remote control button "
                         f"{REMOTE_BUTTON_NAMES.get(action.props['remoteButton'], '')} is not supported by the "
@@ -3839,6 +4219,12 @@ class Plugin(indigo.PluginBase):
     # Set Display Brightness
     #
     def setDisplayBrightness(self, action):
+        """
+        Placeholder - fixme
+
+        :param action:
+        :return:
+        """
         # Set the front display brightness.
         device = indigo.devices[action.deviceId]
 
@@ -3868,6 +4254,12 @@ class Plugin(indigo.PluginBase):
     # Set Sleep Timer
     #
     def setSleepTimer(self, action):
+        """
+        Placeholder - fixme
+
+        :param action:
+        :return:
+        """
         # Set the sleep timer minutes (or off).
         device = indigo.devices[action.deviceId]
 
@@ -3896,6 +4288,12 @@ class Plugin(indigo.PluginBase):
     # Send Raw Command
     #
     def sendRawCommand(self, action):
+        """
+        Placeholder - fixme
+
+        :param action:
+        :return:
+        """
         # Send a command directly to the receiver.
         device = indigo.devices[action.deviceId]
 
@@ -3925,6 +4323,12 @@ class Plugin(indigo.PluginBase):
     # Refresh All States
     #
     def refreshAllStates(self, action):
+        """
+        Placeholder - fixme
+
+        :param action:
+        :return:
+        """
         # Refresh all states for a device.
         device = indigo.devices[action.deviceId]
         self.debugLog(f"Refresh all states for {device.name}")
@@ -3948,288 +4352,323 @@ class Plugin(indigo.PluginBase):
     #   (Class-Supported)
     ########################################
     def actionControlDimmerRelay(self, action, device):
+        """
+        Placeholder - fixme
+
+        :param action:
+        :param device:
+        :return:
+        """
         try:
             self.debugLog(
                 f"actionControlDimmerRelay called for device {device.name}. action: {action}\n\ndevice: {device}"
             )
-        except Exception as e:
+        except Exception as err:
             self.debugLog(
                 f"actionControlDimmerRelay called for device {device.name}. (Unable to display action or device data "
-                f"due to error: {e})"
+                f"due to error: {err})"
             )
-        receiverDeviceId = device.pluginProps.get('receiverDeviceId', "")
-        controlDestination = device.pluginProps.get('controlDestination', "")
+        receiver_device_id = device.pluginProps.get('receiverDeviceId', "")
+        control_destination = device.pluginProps.get('controlDestination', "")
         # Get the current brightness and on-state of the device.
-        currentBrightness = device.states['brightnessLevel']
-        currentOnState = device.states['onOffState']
+        current_brightness = device.states['brightnessLevel']
+        current_on_state = device.states['onOffState']
         # Verify the validity of the data.
-        if len(receiverDeviceId) < 1:
+        if len(receiver_device_id) < 1:
             self.errorLog(
                 f"{device.name} is not set to control any receiver device. Double-click the {device.name} device in "
                 f"Indigo to select a receiver to control."
             )
-            self.updateDeviceState(device, 'onOffState', currentOnState)
+            self.updateDeviceState(device, 'onOffState', current_on_state)
             self.updateDeviceState(device, 'brightnessLevel', 0)
             return
-        if int(receiverDeviceId) not in self.deviceList:
+        if int(receiver_device_id) not in self.device_list:
             self.errorLog(
                 f"{device.name} is configured to control a receiver device that no longer exists. Double-click the "
                 f"{device.name} device in Indigo to select a receiver to control."
             )
-            self.updateDeviceState(device, 'onOffState', currentOnState)
+            self.updateDeviceState(device, 'onOffState', current_on_state)
             self.updateDeviceState(device, 'brightnessLevel', 0)
             return
         # Get the receiver device object.
-        receiverDeviceId = int(receiverDeviceId)
-        receiver = indigo.devices[receiverDeviceId]
+        receiver_device_id = int(receiver_device_id)
+        receiver = indigo.devices[receiver_device_id]
 
         # ====== TURN ON ======
         if action.deviceAction == indigo.kDeviceAction.TurnOn:
             try:
                 self.debugLog(f"device on:\n{action}")
-            except Exception as e:
-                self.debugLog(f"device on: (Unable to display action data due to error: {e})")
+            except Exception as err:
+                self.debugLog(f"device on: (Unable to display action data due to error: {err})")
             # Select the proper action based on the controlDestination value.
             # VOLUME / MUTE
-            if controlDestination == "zone1volume" or controlDestination == "zone2volume":
+            if control_destination in ["zone1volume", "zone2volume"]:
+            # DaveL17 delete extra lines if valid - fixme
+            # if control_destination == "zone1volume" or control_destination == "zone2volume":
                 try:
                     # Turn off the select zone's mute.
-                    if controlDestination == "zone1volume":
+                    if control_destination == "zone1volume":
                         # Execute the action.
                         self.sendCommand(receiver, "MF")
-                    if controlDestination == "zone2volume":
+                    if control_destination == "zone2volume":
                         # Execute the action.
                         self.sendCommand(receiver, "Z2MF")
-                except Exception as e:
+                except Exception as err:
                     self.errorLog(
-                        f"{device.name}: Error executing Mute Off action for receiver device {receiver.name}. {e}"
+                        f"{device.name}: Error executing Mute Off action for receiver device {receiver.name}. {err}"
                     )
 
         # ====== TURN OFF ======
         elif action.deviceAction == indigo.kDeviceAction.TurnOff:
             try:
                 self.debugLog(f"device off:\n{action}")
-            except Exception as e:
-                self.debugLog(f"device off: (Unable to display action due to error: {e})")
+            except Exception as err:
+                self.debugLog(f"device off: (Unable to display action due to error: {err})")
             # Select the proper action based on the controlDestination value.
             # VOLUME / MUTE
-            if controlDestination == "zone1volume" or controlDestination == "zone2volume":
+            if control_destination in ["zone1volume", "zone2volume"]:
+            # DaveL17 delete extra lines if valid
+            # if control_destination == "zone1volume" or control_destination == "zone2volume":
                 try:
                     # Turn on the select zone's mute.
-                    if controlDestination == "zone1volume":
+                    if control_destination == "zone1volume":
                         self.sendCommand(receiver, "MO")
-                    if controlDestination == "zone2volume":
+                    if control_destination == "zone2volume":
                         self.sendCommand(receiver, "Z2MO")
-                except Exception as e:
+                except Exception as err:
                     self.errorLog(
-                        f"{device.name}: Error executing Mute On action for receiver device {receiver.name}. {e}"
+                        f"{device.name}: Error executing Mute On action for receiver device {receiver.name}. {err}"
                     )
 
         # ====== TOGGLE ======
         elif action.deviceAction == indigo.kDeviceAction.Toggle:
             try:
                 self.debugLog(f"device toggle:\n{action}")
-            except Exception as e:
-                self.debugLog(f"device toggle: (Unable to display action due to error: {e})")
+            except Exception as err:
+                self.debugLog(f"device toggle: (Unable to display action due to error: {err})")
+
             # Select the proper action based on the controlDestination value.
             # VOLUME / MUTE
-            if controlDestination == "zone1volume" or controlDestination == "zone2volume":
+            # DaveL17 delete extra lines if valid - fixme
+            # if control_destination == "zone1volume" or control_destination == "zone2volume":
+            if control_destination in ["zone1volume", "zone2volume"]:
                 # Turn off or on the select zone's mute, depending on current state.
                 try:
                     # Turn on mute if toggling device to "Off". Turn off mute if toggling the device to "On".
                     if device.states['onOffState']:
-                        if controlDestination == "zone1volume":
+                        if control_destination == "zone1volume":
                             self.sendCommand(receiver, "MO")  # Zone 1 Mute On
-                        if controlDestination == "zone2volume":
+                        if control_destination == "zone2volume":
                             self.sendCommand(receiver, "Z2MO")  # Zone 2 Mute On
                     # device.updateStateOnServer('onOffState', False)
                     else:
-                        if controlDestination == "zone1volume":
+                        if control_destination == "zone1volume":
                             self.sendCommand(receiver, "MF")  # Zone 1 Mute Off
-                        if controlDestination == "zone2volume":
+                        if control_destination == "zone2volume":
                             self.sendCommand(receiver, "Z2MF")  # Zone 2 Mute Off
-                except Exception as e:
+                except Exception as err:
                     self.errorLog(
-                        f"{device.name}: Error executing Mute On action for receiver device {receiver.name}. {e}"
+                        f"{device.name}: Error executing Mute On action for receiver device {receiver.name}. {err}"
                     )
 
         # ====== SET BRIGHTNESS ======
         elif action.deviceAction == indigo.kDeviceAction.SetBrightness:
             try:
                 self.debugLog(f"device set brightness:\n{action}")
-            except Exception as e:
-                self.debugLog(f"device set brightness: (Unable to display action due to error: {e})")
+            except Exception as err:
+                self.debugLog(f"device set brightness: (Unable to display action due to error: {err})")
             # Select the proper action based on the controlDestination value.
+
             # VOLUME / MUTE
-            if controlDestination == "zone1volume" or controlDestination == "zone2volume":
+            # DaveL17 delete extra lines if valid - fixme
+            # if control_destination == "zone1volume" or control_destination == "zone2volume":
+            if control_destination in ["zone1volume", "zone2volume"]:
                 try:
-                    brightnessLevel = action.actionValue
+                    brightness_level = action.actionValue
                     # Convert the brightness level to a valid volume command.
-                    if controlDestination == "zone1volume":
+                    if control_destination == "zone1volume":
                         # This formula converts from the 100 unit scale to the 161 unit scale used by the receiver's
                         # zone 1 volume commands.
-                        theVolume = int(round(161 * 0.01 * brightnessLevel, 0))
-                        if theVolume < 10:
-                            theVolume = f"00{theVolume}"
-                        elif theVolume < 100:
-                            theVolume = f"0{theVolume}"
+                        the_volume = int(round(161 * 0.01 * brightness_level, 0))
+                        if the_volume < 10:
+                            the_volume = f"00{the_volume}"
+                        elif the_volume < 100:
+                            the_volume = f"0{the_volume}"
                         else:
-                            theVolume = f"{theVolume}"
+                            the_volume = f"{the_volume}"
                         # Turn mute off if it's on.
                         if receiver.states['zone1mute']:
                             self.sendCommand(receiver, "MF")
                         # Now send the volume command.
-                        command = theVolume + "VL"  # Set Volume.
+                        command = the_volume + "VL"  # Set Volume.
                         self.sendCommand(receiver, command)
                         self.debugLog(
-                            f"actionControlDimmerRelay: brightnessLevel: {brightnessLevel}, theVolume: {theVolume}"
+                            f"actionControlDimmerRelay: brightnessLevel: {brightness_level}, theVolume: {the_volume}"
                         )
-                    elif controlDestination == "zone2volume":
+                    elif control_destination == "zone2volume":
                         # This formula converts from the 100 unit scale to the 81 unit scale used by the receiver's
                         # zone 2 volume commands.
-                        theVolume = int(round(81 * 0.01 * brightnessLevel, 0))
-                        if theVolume < 10:
-                            theVolume = f"0{theVolume}"
+                        the_volume = int(round(81 * 0.01 * brightness_level, 0))
+                        if the_volume < 10:
+                            the_volume = f"0{the_volume}"
                         else:
-                            theVolume = f"{theVolume}"
+                            the_volume = f"{the_volume}"
                         # Turn mute off if it's on.
                         if receiver.states['zone2mute']:
                             self.sendCommand(receiver, "Z2MF")
                         # Now send the volume command.
-                        command = theVolume + "ZV"  # Set Volume.
+                        command = the_volume + "ZV"  # Set Volume.
                         self.sendCommand(receiver, command)
                         self.debugLog(
-                            f"actionControlDimmerRelay: brightnessLevel: {brightnessLevel}, theVolume: {theVolume}"
+                            f"actionControlDimmerRelay: brightnessLevel: {brightness_level}, theVolume: {the_volume}"
                         )
-                except Exception as e:
+                except Exception as err:
                     self.errorLog(
-                        f"{device.name}: Error executing Set Volume action for receiver device {receiver.name}. {e}"
+                        f"{device.name}: Error executing Set Volume action for receiver device {receiver.name}. {err}"
                     )
 
         # ====== BRIGHTEN BY ======
         elif action.deviceAction == indigo.kDeviceAction.BrightenBy:
             try:
                 self.debugLog(f"device brighten by:\n{action}")
-            except Exception as e:
-                self.debugLog(f"device brighten by: (Unable to display action due to error: {e})")
+            except Exception as err:
+                self.debugLog(f"device brighten by: (Unable to display action due to error: {err})")
             # Select the proper action based on the controlDestination value.
+
             # VOLUME / MUTE
-            if controlDestination == "zone1volume" or controlDestination == "zone2volume":
+            # DaveL17 delete extra lines if valid - fixme
+            # if control_destination == "zone1volume" or control_destination == "zone2volume":
+            if control_destination in ["zone1volume", "zone2volume"]:
                 try:
                     # Convert the brightness level to a valid volume command.
-                    if controlDestination == "zone1volume":
+                    if control_destination == "zone1volume":
                         # Set the currentBrightness to the current receiver volume. We're doing this because if the
                         # receiver is muted, this virtual device will have a brightness of 0 and brightening by
                         # anything will set brightness to 0 plus the brightening amount.
-                        currentBrightness = int(100 - round(float(receiver.states['zone1volume']) / -80.5 * 100, 0))
-                        brightnessLevel = currentBrightness + int(action.actionValue)
+                        current_brightness = int(100 - round(float(receiver.states['zone1volume']) / -80.5 * 100, 0))
+                        brightness_level = current_brightness + int(action.actionValue)
+
                         # Sanity check...
-                        if brightnessLevel > 100:
-                            brightnessLevel = 100
-                        self.debugLog(f"   set brightness of {device.name} to {brightnessLevel}")
+                        # DaveL17 - delete extra lines if valid fixme
+                        # if brightness_level > 100:
+                        #     brightness_level = 100
+                        brightness_level = min(brightness_level, 100)
+
+                        self.debugLog(f"   set brightness of {device.name} to {brightness_level}")
                         # This formula converts from the 100 unit scale to the 161 unit scale used by the receiver's
                         # zone 1 volume commands.
-                        theVolume = int(round(161 * 0.01 * brightnessLevel, 0))
-                        if theVolume < 10:
-                            theVolume = f"00{theVolume}"
-                        elif theVolume < 100:
-                            theVolume = f"0{theVolume}"
+                        the_volume = int(round(161 * 0.01 * brightness_level, 0))
+                        if the_volume < 10:
+                            the_volume = f"00{the_volume}"
+                        elif the_volume < 100:
+                            the_volume = f"0{the_volume}"
                         else:
-                            theVolume = f"{theVolume}"
+                            the_volume = f"{the_volume}"
                         # Turn mute off if it's on.
                         if receiver.states['zone1mute']:
                             self.sendCommand(receiver, "MF")
                         # Now send the volume command.
-                        command = theVolume + "VL"  # Set Volume.
+                        command = the_volume + "VL"  # Set Volume.
                         self.sendCommand(receiver, command)
                         self.debugLog(
-                            f"actionControlDimmerRelay: brightnessLevel: {brightnessLevel}, theVolume: {theVolume}")
-                    elif controlDestination == "zone2volume":
+                            f"actionControlDimmerRelay: brightnessLevel: {brightness_level}, theVolume: {the_volume}")
+                    elif control_destination == "zone2volume":
                         # Set the currentBrightness to the current receiver volume. We're doing this because if the
                         # receiver is muted, this virtual device will have a brightness of 0 and brightening by
                         # anything will set brightness to 0 plus the brightening amount.
-                        currentBrightness = int(100 - round(float(receiver.states['zone2volume']) / -81 * 100, 0))
-                        brightnessLevel = currentBrightness + int(action.actionValue)
+                        current_brightness = int(100 - round(float(receiver.states['zone2volume']) / -81 * 100, 0))
+                        brightness_level = current_brightness + int(action.actionValue)
+
                         # Sanity check...
-                        if brightnessLevel > 100:
-                            brightnessLevel = 100
-                        self.debugLog(f"   set brightness of {device.name} to {brightnessLevel}")
+                        # DaveL17 - delete extra lines if valid fixme
+                        # if brightness_level > 100:
+                        #     brightness_level = 100
+                        brightness_level = min(brightness_level, 100)
+
+                        self.debugLog(f"   set brightness of {device.name} to {brightness_level}")
                         # This formula converts from the 100 unit scale to the 81 unit scale used by the receiver's
                         # zone 2 volume commands.
-                        theVolume = int(round(81 * 0.01 * brightnessLevel, 0))
-                        if theVolume < 10:
-                            theVolume = f"0{theVolume}"
+                        the_volume = int(round(81 * 0.01 * brightness_level, 0))
+                        if the_volume < 10:
+                            the_volume = f"0{the_volume}"
                         else:
-                            theVolume = f"{theVolume}"
+                            the_volume = f"{the_volume}"
                         # Turn mute off if it's on.
                         if receiver.states['zone2mute']:
                             self.sendCommand(receiver, "Z2MF")
                         # Now send the volume command.
-                        command = theVolume + "ZV"  # Set Volume.
+                        command = the_volume + "ZV"  # Set Volume.
                         self.sendCommand(receiver, command)
                         self.debugLog(
-                            f"actionControlDimmerRelay: brightnessLevel: {brightnessLevel}, theVolume: {theVolume}"
+                            f"actionControlDimmerRelay: brightnessLevel: {brightness_level}, theVolume: {the_volume}"
                         )
-                except Exception as e:
+                except Exception as err:
                     self.errorLog(
-                        f"{device.name}: Error executing Set Volume action for receiver device {receiver.name}. {e}"
+                        f"{device.name}: Error executing Set Volume action for receiver device {receiver.name}. {err}"
                     )
 
         # ====== DIM BY ======
         elif action.deviceAction == indigo.kDeviceAction.DimBy:
             try:
                 self.debugLog(f"device dim by:\n{action}")
-            except Exception as e:
-                self.debugLog(f"device dim by: (Unable to display action due to error: {e})")
-            brightnessLevel = currentBrightness - int(action.actionValue)
+            except Exception as err:
+                self.debugLog(f"device dim by: (Unable to display action due to error: {err})")
+            brightness_level = current_brightness - int(action.actionValue)
+
             # Sanity check...
-            if brightnessLevel < 0:
-                brightnessLevel = 0
-            self.debugLog(f"   set brightness of {device.name} to {brightnessLevel}")
+            # DaveL17 - delete extra lines if valid fixme
+            # if brightness_level > 100:
+            #     brightness_level = 100
+            brightness_level = min(brightness_level, 100)
+
+            self.debugLog(f"   set brightness of {device.name} to {brightness_level}")
             # Select the proper action based on the controlDestination value.
+
             # VOLUME / MUTE
-            if controlDestination == "zone1volume" or controlDestination == "zone2volume":
+            # DaveL17 Delete extra lines if valid - fixme
+            # if control_destination == "zone1volume" or control_destination == "zone2volume":
+            if control_destination in ["zone1volume", "zone2volume"]:
                 try:
                     # Convert the brightness level to a valid volume command.
-                    if controlDestination == "zone1volume":
+                    if control_destination == "zone1volume":
                         # This formula converts from the 100 unit scale to the 161 unit scale used by the receiver's
                         # zone 1 volume commands.
-                        theVolume = int(round(161 * 0.01 * brightnessLevel, 0))
-                        if theVolume < 10:
-                            theVolume = f"00{theVolume}"
-                        elif theVolume < 100:
-                            theVolume = f"0{theVolume}"
+                        the_volume = int(round(161 * 0.01 * brightness_level, 0))
+                        if the_volume < 10:
+                            the_volume = f"00{the_volume}"
+                        elif the_volume < 100:
+                            the_volume = f"0{the_volume}"
                         else:
-                            theVolume = f"{theVolume}"
+                            the_volume = f"{the_volume}"
                         # Turn mute off if it's on.
                         if receiver.states['zone1mute']:
                             self.sendCommand(receiver, "MF")
                         # Now send the volume command.
-                        command = theVolume + "VL"  # Set Volume.
+                        command = the_volume + "VL"  # Set Volume.
                         self.sendCommand(receiver, command)
                         self.debugLog(
-                            f"actionControlDimmerRelay: brightnessLevel: {brightnessLevel}, theVolume: {theVolume}"
+                            f"actionControlDimmerRelay: brightnessLevel: {brightness_level}, theVolume: {the_volume}"
                         )
-                    elif controlDestination == "zone2volume":
+                    elif control_destination == "zone2volume":
                         # This formula converts from the 100 unit scale to the 81 unit scale used by the receiver's
                         # zone 2 volume commands.
-                        theVolume = int(round(81 * 0.01 * brightnessLevel, 0))
-                        if theVolume < 10:
-                            theVolume = f"0{theVolume}"
+                        the_volume = int(round(81 * 0.01 * brightness_level, 0))
+                        if the_volume < 10:
+                            the_volume = f"0{the_volume}"
                         else:
-                            theVolume = f"{theVolume}"
+                            the_volume = f"{the_volume}"
                         # Turn mute off if it's on.
                         if receiver.states['zone2mute']:
                             self.sendCommand(receiver, "Z2MF")
                         # Now send the volume command.
-                        command = theVolume + "ZV"  # Set Volume.
+                        command = the_volume + "ZV"  # Set Volume.
                         self.sendCommand(receiver, command)
                         self.debugLog(
-                            f"actionControlDimmerRelay: brightnessLevel: {brightnessLevel}, theVolume: {theVolume}"
+                            f"actionControlDimmerRelay: brightnessLevel: {brightness_level}, theVolume: {the_volume}"
                         )
-                except Exception as e:
+                except Exception as err:
                     self.errorLog(
-                        f"{device.name}: Error executing Set Volume action for receiver device {receiver.name}. {e}"
+                        f"{device.name}: Error executing Set Volume action for receiver device {receiver.name}. {err}"
                     )
 
     ########################################
@@ -4239,783 +4678,808 @@ class Plugin(indigo.PluginBase):
 
     # Actions Dialog
     ########################################
-    def validateActionConfigUi(self, valuesDict, typeId, deviceId):
-        self.debugLog("validateActionConfigUi called.")
-        self.debugLog(f"typeId: {typeId}, deviceId: {deviceId}")
-        try:
-            self.debugLog(f"valuesDict: {valuesDict}")
-        except Exception as e:
-            self.debugLog(f"(Unable to display valuesDict due to error: {e})")
+    def validateActionConfigUi(self, values_dict, type_id, device_id):
+        """
+        Placeholder - fixme
 
-        device = indigo.devices[deviceId]
-        errorMsgDict = indigo.Dict()
-        descString = ""
+        :param values_dict:
+        :param type_id:
+        :param device_id:
+        :return:
+        """
+        self.debugLog("validateActionConfigUi called.")
+        self.debugLog(f"type_id: {type_id}, device_id: {device_id}")
+        try:
+            self.debugLog(f"values_dict: {values_dict}")
+        except Exception as err:
+            self.debugLog(f"(Unable to display values_dict due to error: {err})")
+
+        device = indigo.devices[device_id]
+        error_msg_dict = indigo.Dict()
+        desc_string = ""
 
         #
         # Set Volume dB (Zone 1)
         #
-        if typeId == "zone1setVolume":
+        if type_id == "zone1setVolume":
             # Catch attempts to send a command to a Virtual Volume Controller device, which is not possible (but
             # because it's not currently possible to prevent the user from selecting it as a destination device in the
             # Indigo UI, we must check for it).
             if device.deviceTypeId == "virtualVolume":
-                errorMsgDict['volume'] = (
+                error_msg_dict['volume'] = (
                     f"Device \"{device.name}\" is a Virtual Volume Controller, not a Pioneer receiver. Modify the "
                     f"Indigo action to send the command to a Pioneer receiver instead of this device."
                 )
-                errorMsgDict['showAlertText'] = errorMsgDict['volume']
-                return False, valuesDict, errorMsgDict
+                error_msg_dict['showAlertText'] = error_msg_dict['volume']
+                return False, values_dict, error_msg_dict
 
             try:
-                theNumber = float(valuesDict.get('volume', "-90"))
+                the_number = float(values_dict.get('volume', "-90"))
             except ValueError:
-                errorMsgDict['volume'] = "The volume must be a number between -80.5 and 12 dB."
-                errorMsgDict['showAlertText'] = errorMsgDict['volume']
-                return False, valuesDict, errorMsgDict
+                error_msg_dict['volume'] = "The volume must be a number between -80.5 and 12 dB."
+                error_msg_dict['showAlertText'] = error_msg_dict['volume']
+                return False, values_dict, error_msg_dict
 
-            if (theNumber < -80.5) or (theNumber > 12.0):
-                errorMsgDict['volume'] = "The volume must be a number between -80.5 and 12 dB."
-                errorMsgDict['showAlertText'] = errorMsgDict['volume']
-                return False, valuesDict, errorMsgDict
+            if (the_number < -80.5) or (the_number > 12.0):
+                error_msg_dict['volume'] = "The volume must be a number between -80.5 and 12 dB."
+                error_msg_dict['showAlertText'] = error_msg_dict['volume']
+                return False, values_dict, error_msg_dict
 
-            if theNumber % 0.5 != 0:
-                errorMsgDict['volume'] = "The volume must be evenly divisible by 0.5 dB."
-                errorMsgDict['showAlertText'] = errorMsgDict['volume']
-                return False, valuesDict, errorMsgDict
+            if the_number % 0.5 != 0:
+                error_msg_dict['volume'] = "The volume must be evenly divisible by 0.5 dB."
+                error_msg_dict['showAlertText'] = error_msg_dict['volume']
+                return False, values_dict, error_msg_dict
 
-            descString += f"set volume (zone 1) to {theNumber}"
+            desc_string += f"set volume (zone 1) to {the_number}"
 
         #
         # Set Source (Zone 1)
         #
-        if typeId == "zone1setSource":
+        if type_id == "zone1setSource":
             # Catch attempts to send a command to a Virtual Volume Controller device, which is not possible (but
             # because it's not currently possible to prevent the user from selecting it as a destination device in the
             # Indigo UI, we must check for it).
             if device.deviceTypeId == "virtualVolume":
-                errorMsgDict['source'] = (
+                error_msg_dict['source'] = (
                     f"Device \"{device.name}\" is a Virtual Volume Controller, not a Pioneer receiver. Modify the "
                     f"Indigo action to send the command to a Pioneer receiver instead of this device."
                 )
-                errorMsgDict['showAlertText'] = errorMsgDict['source']
-                return False, valuesDict, errorMsgDict
+                error_msg_dict['showAlertText'] = error_msg_dict['source']
+                return False, values_dict, error_msg_dict
 
-            theSource = valuesDict['source']
-            propName = f"source{theSource}label"
-            theName = device.pluginProps.get(propName, "")
-            if len(theName) < 1:
-                errorMsgDict['source'] = "Please select an Input Source."
-                errorMsgDict['showAlertText'] = errorMsgDict['source']
-                return False, valuesDict, errorMsgDict
+            the_source = values_dict['source']
+            prop_name = f"source{the_source}label"
+            the_name = device.pluginProps.get(prop_name, "")
+            if len(the_name) < 1:
+                error_msg_dict['source'] = "Please select an Input Source."
+                error_msg_dict['showAlertText'] = error_msg_dict['source']
+                return False, values_dict, error_msg_dict
 
             if device.deviceTypeId == "vsx1021k":
-                if theSource in VSX1021k_SOURCE_MASK:
-                    errorMsgDict[
+                if the_source in VSX1021k_SOURCE_MASK:
+                    error_msg_dict[
                         'source'] = "The selected source is not available on this receiver. Choose a different source."
-                    errorMsgDict['showAlertText'] = errorMsgDict['source']
-                    return False, valuesDict, errorMsgDict
+                    error_msg_dict['showAlertText'] = error_msg_dict['source']
+                    return False, values_dict, error_msg_dict
             elif device.deviceTypeId == "vsx1022k":
-                if theSource in VSX1022K_SOURCE_MASK:
-                    errorMsgDict[
+                if the_source in VSX1022K_SOURCE_MASK:
+                    error_msg_dict[
                         'source'] = "The selected source is not available on this receiver. Choose a different source."
-                    errorMsgDict['showAlertText'] = errorMsgDict['source']
-                    return False, valuesDict, errorMsgDict
+                    error_msg_dict['showAlertText'] = error_msg_dict['source']
+                    return False, values_dict, error_msg_dict
             elif device.deviceTypeId == "vsx1122k":
-                if theSource in VSX1122K_SOURCE_MASK:
-                    errorMsgDict[
+                if the_source in VSX1122K_SOURCE_MASK:
+                    error_msg_dict[
                         'source'] = "The selected source is not available on this receiver. Choose a different source."
-                    errorMsgDict['showAlertText'] = errorMsgDict['source']
-                    return False, valuesDict, errorMsgDict
+                    error_msg_dict['showAlertText'] = error_msg_dict['source']
+                    return False, values_dict, error_msg_dict
             elif device.deviceTypeId == "vsx1123k":
-                if theSource in VSX1123K_SOURCE_MASK:
-                    errorMsgDict[
+                if the_source in VSX1123K_SOURCE_MASK:
+                    error_msg_dict[
                         'source'] = "The selected source is not available on this receiver. Choose a different source."
-                    errorMsgDict['showAlertText'] = errorMsgDict['source']
-                    return False, valuesDict, errorMsgDict
+                    error_msg_dict['showAlertText'] = error_msg_dict['source']
+                    return False, values_dict, error_msg_dict
             elif device.deviceTypeId == "sc75":
-                if theSource in SC75_SOURCE_MASK:
-                    errorMsgDict[
+                if the_source in SC75_SOURCE_MASK:
+                    error_msg_dict[
                         'source'] = "The selected source is not available on this receiver. Choose a different source."
-                    errorMsgDict['showAlertText'] = errorMsgDict['source']
-                    return False, valuesDict, errorMsgDict
+                    error_msg_dict['showAlertText'] = error_msg_dict['source']
+                    return False, values_dict, error_msg_dict
 
-            descString += f"set input source (zone 1) to {theName}"
+            desc_string += f"set input source (zone 1) to {the_name}"
 
         #
         # Set Volume dB (Zone 2)
         #
-        if typeId == "zone2setVolume":
+        if type_id == "zone2setVolume":
             # Catch attempts to send a command to a Virtual Volume Controller device, which is not possible (but
             # because it's not currently possible to prevent the user from selecting it as a destination device in the
             # Indigo UI, we must check for it).
             if device.deviceTypeId == "virtualVolume":
-                errorMsgDict['volume'] = (
+                error_msg_dict['volume'] = (
                     f"Device \"{device.name}\" is a Virtual Volume Controller, not a Pioneer receiver. Modify the "
                     f"Indigo action to send the command to a Pioneer receiver instead of this device."
                 )
-                errorMsgDict['showAlertText'] = errorMsgDict['volume']
-                return False, valuesDict, errorMsgDict
+                error_msg_dict['showAlertText'] = error_msg_dict['volume']
+                return False, values_dict, error_msg_dict
 
             try:
-                theNumber = int(valuesDict.get('volume', "-90"))
+                the_number = int(values_dict.get('volume', "-90"))
             except ValueError:
-                errorMsgDict['volume'] = "The volume must be a whole number between -81 and 0 dB."
-                errorMsgDict['showAlertText'] = errorMsgDict['volume']
-                return False, valuesDict, errorMsgDict
+                error_msg_dict['volume'] = "The volume must be a whole number between -81 and 0 dB."
+                error_msg_dict['showAlertText'] = error_msg_dict['volume']
+                return False, values_dict, error_msg_dict
 
-            if (theNumber < -81) or (theNumber > 0):
-                errorMsgDict['volume'] = "The volume must be a whole number between -81 and 0 dB."
-                errorMsgDict['showAlertText'] = errorMsgDict['volume']
-                return False, valuesDict, errorMsgDict
+            if (the_number < -81) or (the_number > 0):
+                error_msg_dict['volume'] = "The volume must be a whole number between -81 and 0 dB."
+                error_msg_dict['showAlertText'] = error_msg_dict['volume']
+                return False, values_dict, error_msg_dict
 
-            descString += f"set volume (zone 2) to {theNumber}"
+            desc_string += f"set volume (zone 2) to {the_number}"
 
         #
         # Set Source (Zone 2)
         #
-        if typeId == "zone2setSource":
+        if type_id == "zone2setSource":
             # Catch attempts to send a command to a Virtual Volume Controller device, which is not possible (but
             # because it's not currently possible to prevent the user from selecting it as a destination device in the
             # Indigo UI, we must check for it).
             if device.deviceTypeId == "virtualVolume":
-                errorMsgDict['source'] = (
+                error_msg_dict['source'] = (
                     f"Device \"{device.name}\" is a Virtual Volume Controller, not a Pioneer receiver. Modify the "
                     f"Indigo action to send the command to a Pioneer receiver instead of this device."
                 )
-                errorMsgDict['showAlertText'] = errorMsgDict['source']
-                return False, valuesDict, errorMsgDict
+                error_msg_dict['showAlertText'] = error_msg_dict['source']
+                return False, values_dict, error_msg_dict
 
-            theSource = valuesDict['source']
-            propName = f"source{theSource}label"
-            theName = device.pluginProps.get(propName, "")
-            if len(theName) < 1:
-                errorMsgDict['source'] = "Please select an Input Source."
-                errorMsgDict['showAlertText'] = errorMsgDict['source']
-                return False, valuesDict, errorMsgDict
+            the_source = values_dict['source']
+            prop_name = f"source{the_source}label"
+            the_name = device.pluginProps.get(prop_name, "")
+            if len(the_name) < 1:
+                error_msg_dict['source'] = "Please select an Input Source."
+                error_msg_dict['showAlertText'] = error_msg_dict['source']
+                return False, values_dict, error_msg_dict
 
             if device.deviceTypeId == "vsx1021k":
-                if theSource in VSX1021K_ZONE2_SOURCE_MASK:
-                    errorMsgDict[
+                if the_source in VSX1021K_ZONE2_SOURCE_MASK:
+                    error_msg_dict[
                         'source'] = (
                         "The selected source is not available for this zone on this receiver. Choose a different "
                         "source."
                     )
-                    errorMsgDict['showAlertText'] = errorMsgDict['source']
-                    return False, valuesDict, errorMsgDict
+                    error_msg_dict['showAlertText'] = error_msg_dict['source']
+                    return False, values_dict, error_msg_dict
             elif device.deviceTypeId == "vsx1022k":
-                if theSource in VSX1022K_ZONE2_SOURCE_MASK:
-                    errorMsgDict[
+                if the_source in VSX1022K_ZONE2_SOURCE_MASK:
+                    error_msg_dict[
                         'source'] = (
                         "The selected source is not available for this zone on this receiver. Choose a different "
                         "source."
                     )
-                    errorMsgDict['showAlertText'] = errorMsgDict['source']
-                    return False, valuesDict, errorMsgDict
+                    error_msg_dict['showAlertText'] = error_msg_dict['source']
+                    return False, values_dict, error_msg_dict
             elif device.deviceTypeId == "vsx1122k":
-                if theSource in VSX1122K_ZONE2_SOURCE_MASK:
-                    errorMsgDict[
+                if the_source in VSX1122K_ZONE2_SOURCE_MASK:
+                    error_msg_dict[
                         'source'] = (
                         "The selected source is not available for this zone on this receiver. Choose a different "
                         "source."
                     )
-                    errorMsgDict['showAlertText'] = errorMsgDict['source']
-                    return False, valuesDict, errorMsgDict
+                    error_msg_dict['showAlertText'] = error_msg_dict['source']
+                    return False, values_dict, error_msg_dict
             elif device.deviceTypeId == "vsx1123k":
-                if theSource in VSX1123k_ZONE2_SOURCE_MASK:
-                    errorMsgDict['source'] = (
+                if the_source in VSX1123k_ZONE2_SOURCE_MASK:
+                    error_msg_dict['source'] = (
                         "The selected source is not available for this zone on this receiver. Choose a different "
                         "source."
                     )
-                    errorMsgDict['showAlertText'] = errorMsgDict['source']
-                    return False, valuesDict, errorMsgDict
+                    error_msg_dict['showAlertText'] = error_msg_dict['source']
+                    return False, values_dict, error_msg_dict
             elif device.deviceTypeId == "sc75":
-                if theSource in SC75_ZONE2_SOURCE_MASK:
-                    errorMsgDict['source'] = (
+                if the_source in SC75_ZONE2_SOURCE_MASK:
+                    error_msg_dict['source'] = (
                         "The selected source is not available for this zone on this receiver. Choose a different "
                         "source."
                     )
-                    errorMsgDict['showAlertText'] = errorMsgDict['source']
-                    return False, valuesDict, errorMsgDict
+                    error_msg_dict['showAlertText'] = error_msg_dict['source']
+                    return False, values_dict, error_msg_dict
 
-            descString += f"set input source (zone 2) to {theName}"
+            desc_string += f"set input source (zone 2) to {the_name}"
 
         #
         # Select Tuner Preset
         #
-        if typeId == "tunerPresetSelect":
+        if type_id == "tunerPresetSelect":
             # Catch attempts to send a command to a Virtual Volume Controller device, which is not possible (but
             # because it's not currently possible to prevent the user from selecting it as a destination device in the
             # Indigo UI, we must check for it).
             if device.deviceTypeId == "virtualVolume":
-                errorMsgDict['tunerPreset'] = (
+                error_msg_dict['tunerPreset'] = (
                     f"Device \"{device.name}\" is a Virtual Volume Controller, not a Pioneer receiver. Modify the "
                     f"Indigo action to send the command to a Pioneer receiver instead of this device."
                 )
-                errorMsgDict['showAlertText'] = errorMsgDict['tunerPreset']
-                return False, valuesDict, errorMsgDict
+                error_msg_dict['showAlertText'] = error_msg_dict['tunerPreset']
+                return False, values_dict, error_msg_dict
 
-            thePreset = valuesDict['tunerPreset']
-            propName = f"tunerPreset{thePreset.replace('0', '')}label"
-            theName = device.pluginProps.get(propName, "")
-            if len(theName) < 1:
-                errorMsgDict['tunerPreset'] = "Please select a Tuner Preset."
-                errorMsgDict['showAlertText'] = errorMsgDict['tunerPreset']
-                return False, valuesDict, errorMsgDict
+            the_preset = values_dict['tunerPreset']
+            prop_name = f"tunerPreset{the_preset.replace('0', '')}label"
+            the_name = device.pluginProps.get(prop_name, "")
+            if len(the_name) < 1:
+                error_msg_dict['tunerPreset'] = "Please select a Tuner Preset."
+                error_msg_dict['showAlertText'] = error_msg_dict['tunerPreset']
+                return False, values_dict, error_msg_dict
 
-            descString += f"select tuner preset {thePreset.replace('0', '')}: {theName}"
+            desc_string += f"select tuner preset {the_preset.replace('0', '')}: {the_name}"
 
         #
         # Set Tuner Frequency
         #
-        if typeId == "tunerFrequencySet":
+        if type_id == "tunerFrequencySet":
             # Catch attempts to send a command to a Virtual Volume Controller device, which is not possible (but
             # because it's not currently possible to prevent the user from selecting it as a destination device in the
             # Indigo UI, we must check for it).
             if device.deviceTypeId == "virtualVolume":
-                errorMsgDict['band'] = (
+                error_msg_dict['band'] = (
                     f"Device \"{device.name}\" is a Virtual Volume Controller, not a Pioneer receiver. Modify the "
                     f"Indigo action to send the command to a Pioneer receiver instead of this device."
                 )
-                errorMsgDict['frequency'] = (
+                error_msg_dict['frequency'] = (
                     f"Device \"{device.name}\" is a Virtual Volume Controller, not a Pioneer receiver. Modify the "
                     f"Indigo action to send the command to a Pioneer receiver instead of this device."
                 )
-                errorMsgDict['showAlertText'] = errorMsgDict['band']
-                return False, valuesDict, errorMsgDict
+                error_msg_dict['showAlertText'] = error_msg_dict['band']
+                return False, values_dict, error_msg_dict
 
             # Make sure a tuner band was selected.
-            band = valuesDict.get('band', "")
+            band = values_dict.get('band', "")
             if len(band) < 2:
-                errorMsgDict['band'] = "Please select a Tuner Band."
+                error_msg_dict['band'] = "Please select a Tuner Band."
 
             # Make sure a frequency value was entered.
-            frequency = valuesDict.get('frequency', "")
+            frequency = values_dict.get('frequency', "")
             if len(frequency) == 0:
-                errorMsgDict['frequency'] = "A Tuner Frequency value is required."
+                error_msg_dict['frequency'] = "A Tuner Frequency value is required."
             else:
                 # A tuner frequency was entered, now make sure it's realistic.
                 try:
-                    frequency = float(valuesDict['frequency'])
+                    frequency = float(values_dict['frequency'])
                     # Make sure the frequency is a sane value based on band.
                     if band == "AM":
                         if (frequency < 530) or (frequency > 1700):
-                            errorMsgDict[
+                            error_msg_dict[
                                 'frequency'] = (
                                 "AM frequencies must be a whole number between 530 and 1700 in increments of 10 kHz."
                             )
                         if frequency % 10 != 0:
-                            errorMsgDict['frequency'] = (
+                            error_msg_dict['frequency'] = (
                                 "AM frequencies must be a whole number between 530 and 1700 in increments of 10 kHz."
                             )
                         # Convert the frequency to an integer.
                         frequency = int(frequency)
                     elif band == "FM":
                         if (frequency < 87.5) or (frequency > 108):
-                            errorMsgDict[
+                            error_msg_dict[
                                 'frequency'] = "FM frequencies must be between 87.5 and 108 in increments of 0.1 MHz."
                         if int(frequency * 10) != frequency * 10:  # Make sure the precision is at most 0.1.
-                            errorMsgDict[
+                            error_msg_dict[
                                 'frequency'] = "FM frequencies must be between 87.5 and 108 in increments of 0.1 MHz."
                 except ValueError:
-                    errorMsgDict['frequency'] = "The Tuner Frequency field can only contain numbers."
+                    error_msg_dict['frequency'] = "The Tuner Frequency field can only contain numbers."
 
             # If there were errors, return them now.
-            if len(errorMsgDict) > 0:
-                errorMsgDict['showAlertText'] = f"{errorMsgDict['band']}\r\r{errorMsgDict['frequency']}"
-                return False, valuesDict, errorMsgDict
+            if len(error_msg_dict) > 0:
+                error_msg_dict['showAlertText'] = f"{error_msg_dict['band']}\r\r{error_msg_dict['frequency']}"
+                return False, values_dict, error_msg_dict
 
-            descString += f"set tuner frequency to {frequency} {band}"
+            desc_string += f"set tuner frequency to {frequency} {band}"
 
         #
         # Select Listening Mode
         #
-        if typeId == "listeningModeSelect":
+        if type_id == "listeningModeSelect":
             # Catch attempts to send a command to a Virtual Volume Controller device, which is not possible (but
             # because it's not currently possible to prevent the user from selecting it as a destination device in the
             # Indigo UI, we must check for it).
             if device.deviceTypeId == "virtualVolume":
-                errorMsgDict['listeningMode'] = (
+                error_msg_dict['listeningMode'] = (
                     f"Device \"{device.name}\" is a Virtual Volume Controller, not a Pioneer receiver. Modify the "
                     f"Indigo action to send the command to a Pioneer receiver instead of this device."
                 )
-                errorMsgDict['showAlertText'] = errorMsgDict['listeningMode']
-                return False, valuesDict, errorMsgDict
+                error_msg_dict['showAlertText'] = error_msg_dict['listeningMode']
+                return False, values_dict, error_msg_dict
 
-            listeningMode = valuesDict.get('listeningMode', "")
-            if len(listeningMode) < 1:
-                errorMsgDict['listeningMode'] = "Please select a Listening Mode."
-                errorMsgDict['showAlertText'] = errorMsgDict['listeningMode']
-                return False, valuesDict, errorMsgDict
+            listening_mode = values_dict.get('listeningMode', "")
+            if len(listening_mode) < 1:
+                error_msg_dict['listeningMode'] = "Please select a Listening Mode."
+                error_msg_dict['showAlertText'] = error_msg_dict['listeningMode']
+                return False, values_dict, error_msg_dict
             else:
-                descString += f"set listening mode to \"{LISTENING_MODES[listeningMode]}\""
+                desc_string += f"set listening mode to \"{LISTENING_MODES[listening_mode]}\""
 
         #
         # Set Display Brightness
         #
-        if typeId == "setDisplayBrightness":
+        if type_id == "setDisplayBrightness":
             # Catch attempts to send a command to a Virtual Volume Controller device, which is not possible (but
             # because it's not currently possible to prevent the user from selecting it as a destination device in the
             # Indigo UI, we must check for it).
             if device.deviceTypeId == "virtualVolume":
-                errorMsgDict['displayBrightness'] = (
+                error_msg_dict['displayBrightness'] = (
                     f"Device \"{device.name}\" is a Virtual Volume Controller, not a Pioneer receiver. Modify the "
                     f"Indigo action to send the command to a Pioneer receiver instead of this device."
                 )
-                errorMsgDict['showAlertText'] = errorMsgDict['displayBrightness']
-                return False, valuesDict, errorMsgDict
+                error_msg_dict['showAlertText'] = error_msg_dict['displayBrightness']
+                return False, values_dict, error_msg_dict
 
-            displayBrightness = valuesDict.get('displayBrightness', "")
-            if len(displayBrightness) < 1:
-                errorMsgDict['displayBrightness'] = "Please select a value for Display Brightness."
-                errorMsgDict['showAlertText'] = errorMsgDict['displayBrightness']
-                return False, valuesDict, errorMsgDict
+            display_brightness = values_dict.get('displayBrightness', "")
+            if len(display_brightness) < 1:
+                error_msg_dict['displayBrightness'] = "Please select a value for Display Brightness."
+                error_msg_dict['showAlertText'] = error_msg_dict['displayBrightness']
+                return False, values_dict, error_msg_dict
             else:
-                descString += "set display brightness to "
+                desc_string += "set display brightness to "
                 # Translate the displayBrightness value into something readable for the description.
-                if displayBrightness == "3SAA":
-                    descString = "turn off display"
-                elif displayBrightness == "2SAA":
-                    descString += "dim"
-                elif displayBrightness == "1SAA":
-                    descString += "medium"
-                elif displayBrightness == "0SAA":
-                    descString += "bright"
+                if display_brightness == "3SAA":
+                    desc_string = "turn off display"
+                elif display_brightness == "2SAA":
+                    desc_string += "dim"
+                elif display_brightness == "1SAA":
+                    desc_string += "medium"
+                elif display_brightness == "0SAA":
+                    desc_string += "bright"
 
         #
         # Set Sleep Timer
         #
-        if typeId == "setSleepTimer":
+        if type_id == "setSleepTimer":
             # Catch attempts to send a command to a Virtual Volume Controller device, which is not possible (but
             # because it's not currently possible to prevent the user from selecting it as a destination device in the
             # Indigo UI, we must check for it).
             if device.deviceTypeId == "virtualVolume":
-                errorMsgDict['sleepTime'] = (
+                error_msg_dict['sleepTime'] = (
                     f"Device \"{device.name}\" is a Virtual Volume Controller, not a Pioneer receiver. Modify the "
                     f"Indigo action to send the command to a Pioneer receiver instead of this device."
                 )
-                errorMsgDict['showAlertText'] = errorMsgDict['sleepTime']
-                return False, valuesDict, errorMsgDict
+                error_msg_dict['showAlertText'] = error_msg_dict['sleepTime']
+                return False, values_dict, error_msg_dict
 
-            sleepTime = valuesDict.get('sleepTime', "")
-            if len(sleepTime) < 1:
-                errorMsgDict['sleepTime'] = "Please select a value for Sleep Time Minutes."
-                errorMsgDict['showAlertText'] = errorMsgDict['sleepTime']
-                return False, valuesDict, errorMsgDict
+            sleep_time = values_dict.get('sleepTime', "")
+            if len(sleep_time) < 1:
+                error_msg_dict['sleepTime'] = "Please select a value for Sleep Time Minutes."
+                error_msg_dict['showAlertText'] = error_msg_dict['sleepTime']
+                return False, values_dict, error_msg_dict
             else:
-                descString += "set sleep timer to "
+                desc_string += "set sleep timer to "
                 # Translate the sleepTime value into something readable for the description.
-                sleepTime = int(sleepTime[1:3])
-                if sleepTime == 0:
-                    descString += "off"
+                sleep_time = int(sleep_time[1:3])
+                if sleep_time == 0:
+                    desc_string += "off"
                 else:
-                    descString += f"{sleepTime} min"
+                    desc_string += f"{sleep_time} min"
 
         #
         # Select MCACC Memory
         #
-        if typeId == "mcaccSelect":
+        if type_id == "mcaccSelect":
             # Catch attempts to send a command to a Virtual Volume Controller device, which is not possible (but
             # because it's not currently possible to prevent the user from selecting it as a destination device in the
             # Indigo UI, we must check for it).
             if device.deviceTypeId == "virtualVolume":
-                errorMsgDict['mcaccMemory'] = (
+                error_msg_dict['mcaccMemory'] = (
                     f"Device \"{device.name}\" is a Virtual Volume Controller, not a Pioneer receiver. Modify the "
                     f"Indigo action to send the command to a Pioneer receiver instead of this device."
                 )
-                errorMsgDict['showAlertText'] = errorMsgDict['mcaccMemory']
-                return False, valuesDict, errorMsgDict
+                error_msg_dict['showAlertText'] = error_msg_dict['mcaccMemory']
+                return False, values_dict, error_msg_dict
 
             # Make sure a MCACC memory was selected.
-            mcaccMemory = valuesDict.get('mcaccMemory', "")
-            if len(mcaccMemory) < 1:
-                errorMsgDict['mcaccMemory'] = "Please select a MCACC Memory item."
-                errorMsgDict['showAlertText'] = errorMsgDict['mcaccMemory']
-                return False, valuesDict, errorMsgDict
+            mcacc_memory = values_dict.get('mcaccMemory', "")
+            if len(mcacc_memory) < 1:
+                error_msg_dict['mcaccMemory'] = "Please select a MCACC Memory item."
+                error_msg_dict['showAlertText'] = error_msg_dict['mcaccMemory']
+                return False, values_dict, error_msg_dict
             else:
-                devProps = device.pluginProps
-                propName = f"mcaccMemory{mcaccMemory[0:1]}label"
-                mcaccMemoryName = devProps[propName]
-                descString += f"set mcacc memory to {mcaccMemory[0:1]}: {mcaccMemoryName}"
+                dev_props = device.pluginProps
+                prop_name = f"mcaccMemory{mcacc_memory[0:1]}label"
+                mcacc_memory_name = dev_props[prop_name]
+                desc_string += f"set mcacc memory to {mcacc_memory[0:1]}: {mcacc_memory_name}"
 
         #
         # Send Remote Button Press
         #
-        if typeId == "remoteButtonPress":
+        if type_id == "remoteButtonPress":
             # Catch attempts to send a command to a Virtual Volume Controller device, which is not possible (but
             # because it's not currently possible to prevent the user from selecting it as a destination device in the
             # Indigo UI, we must check for it).
             if device.deviceTypeId == "virtualVolume":
-                errorMsgDict['remoteButton'] = (
+                error_msg_dict['remoteButton'] = (
                         f"Device \"{device.name}\" is a Virtual Volume Controller, not a Pioneer receiver. Modify the "
                         f"Indigo action to send the command to a Pioneer receiver instead of this device."
                 )
-                errorMsgDict['showAlertText'] = errorMsgDict['remoteButton']
-                return False, valuesDict, errorMsgDict
+                error_msg_dict['showAlertText'] = error_msg_dict['remoteButton']
+                return False, values_dict, error_msg_dict
 
-            command = valuesDict.get('remoteButton', "")
+            command = values_dict.get('remoteButton', "")
             # Make sure they selected a button to send.
             if len(command) == 0:
-                errorMsgDict['remoteButton'] = "Please select a Button press to send to the receiver."
-                errorMsgDict['showAlertText'] = errorMsgDict['remoteButton']
-                return False, valuesDict, errorMsgDict
+                error_msg_dict['remoteButton'] = "Please select a Button press to send to the receiver."
+                error_msg_dict['showAlertText'] = error_msg_dict['remoteButton']
+                return False, values_dict, error_msg_dict
 
-            descString += f"press remote control button \"{REMOTE_BUTTON_NAMES.get(command, '')}\""
+            desc_string += f"press remote control button \"{REMOTE_BUTTON_NAMES.get(command, '')}\""
 
         #
         # Send a Raw Command
         #
-        if typeId == "sendRawCommand":
+        if type_id == "sendRawCommand":
             # Catch attempts to send a command to a Virtual Volume Controller device, which is not possible (but
             # because it's not currently possible to prevent the user from selecting it as a destination device in the
             # Indigo UI, we must check for it).
             if device.deviceTypeId == "virtualVolume":
-                errorMsgDict['command'] = (
+                error_msg_dict['command'] = (
                     f"Device \"{device.name}\" is a Virtual Volume Controller, not a Pioneer receiver. Modify the "
                     f"Indigo action to send the command to a Pioneer receiver instead of this device."
                 )
-                errorMsgDict['showAlertText'] = errorMsgDict['command']
-                return False, valuesDict, errorMsgDict
+                error_msg_dict['showAlertText'] = error_msg_dict['command']
+                return False, values_dict, error_msg_dict
 
-            command = valuesDict['command']
+            command = values_dict['command']
             # Attempt to encode the command as ASCII.  If this fails.
             try:
                 command = command.encode("ascii")
             except UnicodeEncodeError:
-                errorMsgDict[
+                error_msg_dict[
                     'command'] = (
                     "Commands can only contain standard ASCII characters. Extended characters are not supported."
                 )
-                errorMsgDict['showAlertText'] = errorMsgDict['command']
-                return False, valuesDict, errorMsgDict
+                error_msg_dict['showAlertText'] = error_msg_dict['command']
+                return False, values_dict, error_msg_dict
             # Make sure the command isn't blank.
             if len(command) == 0:
-                errorMsgDict['command'] = (
+                error_msg_dict['command'] = (
                     "Nothing was entered for the Command. Please enter a text command to send to the receiver."
                 )
-                errorMsgDict['showAlertText'] = errorMsgDict['command']
-                return False, valuesDict, errorMsgDict
+                error_msg_dict['showAlertText'] = error_msg_dict['command']
+                return False, values_dict, error_msg_dict
 
-            descString += f"send raw command \"{command}\""
+            desc_string += f"send raw command \"{command}\""
 
-        valuesDict['description'] = descString
-        return True, valuesDict
+        values_dict['description'] = desc_string
+        return True, values_dict
 
     # Device Configuration Dialog
     ########################################
-    def validateDeviceConfigUi(self, valuesDict, typeId=0, deviceId=0):
+    def validateDeviceConfigUi(self, values_dict, type_id=0, device_id=0):
+        """
+        Placeholder - fixme
+
+        :param values_dict:
+        :param type_id:
+        :param device_id:
+        :return:
+        """
         try:
             self.debugLog(
-                f"validateDeviceConfig called. valuesDict: {valuesDict} typeId: {typeId}, deviceId: {deviceId}."
+                f"validateDeviceConfig called. values_dict: {values_dict} type_id: {type_id}, device_id: {device_id}."
             )
-        except Exception as e:
+        except Exception as err:
             self.debugLog(
-                f"validateDeviceConfig called. typeId: {typeId} deviceId: {deviceId} (Unable to display valuesDict due "
-                f"to error: {e})"
+                f"validateDeviceConfig called. type_id: {type_id} device_id: {device_id} (Unable to display "
+                f"values_dict due to error: {err})"
             )
 
         error = False  # To flag if any errors were found.
-        errorMsgDict = indigo.Dict()
+        error_msg_dict = indigo.Dict()
 
         #
         # VSX-1021-K Device
         #
-        if typeId == "vsx1021k":
-            address = valuesDict.get('address', "")
+        if type_id == "vsx1021k":
+            address = values_dict.get('address', "")
 
             # Make sure a value was entered for the address.
             if len(address) < 1:
-                errorMsgDict['address'] = "Please enter an IP address for the receiver."
-                errorMsgDict['showAlertText'] = errorMsgDict['address']
-                return False, valuesDict, errorMsgDict
+                error_msg_dict['address'] = "Please enter an IP address for the receiver."
+                error_msg_dict['showAlertText'] = error_msg_dict['address']
+                return False, values_dict, error_msg_dict
 
             # Make sure the address entered is in the correct IP address format.
-            addressParts = address.split(".")
+            address_parts = address.split(".")
             # (This is easier than using Regular Expressions.  :-) )
-            for part in addressParts:
+            for part in address_parts:
                 try:
                     part = int(part)
                     if part < 0 or part > 255:
-                        errorMsgDict['address'] = "Please enter a valid IP address for the receiver."
-                        errorMsgDict['showAlertText'] = errorMsgDict['address']
-                        return False, valuesDict, errorMsgDict
+                        error_msg_dict['address'] = "Please enter a valid IP address for the receiver."
+                        error_msg_dict['showAlertText'] = error_msg_dict['address']
+                        return False, values_dict, error_msg_dict
                 except ValueError:
-                    errorMsgDict['address'] = "Please enter a valid IP address for the receiver."
-                    errorMsgDict['showAlertText'] = errorMsgDict['address']
-                    return False, valuesDict, errorMsgDict
+                    error_msg_dict['address'] = "Please enter a valid IP address for the receiver."
+                    error_msg_dict['showAlertText'] = error_msg_dict['address']
+                    return False, values_dict, error_msg_dict
 
-            # For newly created devices, the deviceId won't be in the device list.
-            if deviceId > 0:
-                device = indigo.devices[deviceId]
-                devProps = device.pluginProps
+            # For newly created devices, the device_id won't be in the device list.
+            if device_id > 0:
+                device = indigo.devices[device_id]
+                dev_props = device.pluginProps
 
                 # See if any other devices are using the same address by going through all devices for this plugin.
-                for d in self.deviceList:
-                    a = indigo.devices[d].pluginProps['address']
+                for dev in self.device_list:
+                    the_address = indigo.devices[dev].pluginProps['address']
                     # If the address found is the same as this device's address (and the matching address is not for
                     # this device), generate an error.
-                    if (a == address) and (d != deviceId):
+                    if (the_address == address) and (dev != device_id):
                         error = True
-                        errorMsgDict['address'] = (
-                            f"This address is already being used by the device \"{indigo.devices[d].name}\". Only one "
-                            f"device at a time can connect to a receiver."
+                        error_msg_dict['address'] = (
+                            f"This address is already being used by the device \"{indigo.devices[dev].name}\". Only "
+                            f"one device at a time can connect to a receiver."
                         )
-                        errorMsgDict['showAlertText'] = errorMsgDict['address']
+                        error_msg_dict['showAlertText'] = error_msg_dict['address']
 
                 # Make sure the MCACC Memory Label properties are created, even if they aren't specified.
-                for mcmccMemory in range(1, 7):
-                    propName = f"mcmccMemory{mcmccMemory}label"
-                    if valuesDict.get(propName, "") == "":
-                        devProps.update({propName: ""})
-                        self.updateDeviceProps(device, devProps)
+                for mcmcc_memory in range(1, 7):
+                    prop_name = f"mcmccMemory{mcmcc_memory}label"
+                    if values_dict.get(prop_name, "") == "":
+                        dev_props.update({prop_name: ""})
+                        self.updateDeviceProps(device, dev_props)
 
         #
         # VSX-1022-K Device
         #
-        if typeId == "vsx1022k":
-            address = valuesDict.get('address', "")
+        if type_id == "vsx1022k":
+            address = values_dict.get('address', "")
 
             # Make sure a value was entered for the address.
             if len(address) < 1:
-                errorMsgDict['address'] = "Please enter an IP address for the receiver."
-                errorMsgDict['showAlertText'] = errorMsgDict['address']
-                return False, valuesDict, errorMsgDict
+                error_msg_dict['address'] = "Please enter an IP address for the receiver."
+                error_msg_dict['showAlertText'] = error_msg_dict['address']
+                return False, values_dict, error_msg_dict
 
             # Make sure the address entered is in the correct IP address format.
-            addressParts = address.split(".")
+            address_parts = address.split(".")
             # (This is easier than using Regular Expressions.  :-) )
-            for part in addressParts:
+            for part in address_parts:
                 try:
                     part = int(part)
                     if part < 0 or part > 255:
-                        errorMsgDict['address'] = "Please enter a valid IP address for the receiver."
-                        errorMsgDict['showAlertText'] = errorMsgDict['address']
-                        return False, valuesDict, errorMsgDict
+                        error_msg_dict['address'] = "Please enter a valid IP address for the receiver."
+                        error_msg_dict['showAlertText'] = error_msg_dict['address']
+                        return False, values_dict, error_msg_dict
                 except ValueError:
-                    errorMsgDict['address'] = "Please enter a valid IP address for the receiver."
-                    errorMsgDict['showAlertText'] = errorMsgDict['address']
-                    return False, valuesDict, errorMsgDict
+                    error_msg_dict['address'] = "Please enter a valid IP address for the receiver."
+                    error_msg_dict['showAlertText'] = error_msg_dict['address']
+                    return False, values_dict, error_msg_dict
 
-            # For newly created devices, the deviceId won't be in the device list.
-            if deviceId > 0:
-                device = indigo.devices[deviceId]
-                devProps = device.pluginProps
+            # For newly created devices, the device_id won't be in the device list.
+            if device_id > 0:
+                device = indigo.devices[device_id]
+                dev_props = device.pluginProps
 
                 # See if any other devices are using the same address by going through all devices for this plugin.
-                for d in self.deviceList:
-                    a = indigo.devices[d].pluginProps['address']
+                for dev in self.device_list:
+                    the_address = indigo.devices[dev].pluginProps['address']
                     # If the address found is the same as this device's address (and the matching address is not for
                     # this device), generate an error.
-                    if (a == address) and (d != deviceId):
+                    if (the_address == address) and (dev != device_id):
                         error = True
-                        errorMsgDict['address'] = (
-                                f"This address is already being used by the device \"{indigo.devices[d].name}\". Only "
-                                f"one device at a time can connect to a receiver."
+                        error_msg_dict['address'] = (
+                                f"This address is already being used by the device \"{indigo.devices[dev].name}\". "
+                                f"Only one device at a time can connect to a receiver."
                         )
-                        errorMsgDict['showAlertText'] = errorMsgDict['address']
+                        error_msg_dict['showAlertText'] = error_msg_dict['address']
 
                 # Make sure the MCACC Memory Label properties are created, even if they aren't specified.
-                for mcmccMemory in range(1, 7):
-                    propName = f"mcmccMemory{mcmccMemory}label"
-                    if valuesDict.get(propName, "") == "":
-                        devProps.update({propName: ""})
-                        self.updateDeviceProps(device, devProps)
+                for mcmcc_memory in range(1, 7):
+                    prop_name = f"mcmccMemory{mcmcc_memory}label"
+                    if values_dict.get(prop_name, "") == "":
+                        dev_props.update({prop_name: ""})
+                        self.updateDeviceProps(device, dev_props)
 
         #
         # VSX-1122-K Device
         #
-        if typeId == "vsx1122k":
-            address = valuesDict.get('address', "")
+        if type_id == "vsx1122k":
+            address = values_dict.get('address', "")
 
             # Make sure a value was entered for the address.
             if len(address) < 1:
-                errorMsgDict['address'] = "Please enter an IP address for the receiver."
-                errorMsgDict['showAlertText'] = errorMsgDict['address']
-                return False, valuesDict, errorMsgDict
+                error_msg_dict['address'] = "Please enter an IP address for the receiver."
+                error_msg_dict['showAlertText'] = error_msg_dict['address']
+                return False, values_dict, error_msg_dict
 
             # Make sure the address entered is in the correct IP address format.
-            addressParts = address.split(".")
+            address_parts = address.split(".")
             # (This is easier than using Regular Expressions.  :-) )
-            for part in addressParts:
+            for part in address_parts:
                 try:
                     part = int(part)
                     if part < 0 or part > 255:
-                        errorMsgDict['address'] = "Please enter a valid IP address for the receiver."
-                        errorMsgDict['showAlertText'] = errorMsgDict['address']
-                        return False, valuesDict, errorMsgDict
+                        error_msg_dict['address'] = "Please enter a valid IP address for the receiver."
+                        error_msg_dict['showAlertText'] = error_msg_dict['address']
+                        return False, values_dict, error_msg_dict
                 except ValueError:
-                    errorMsgDict['address'] = "Please enter a valid IP address for the receiver."
-                    errorMsgDict['showAlertText'] = errorMsgDict['address']
-                    return False, valuesDict, errorMsgDict
+                    error_msg_dict['address'] = "Please enter a valid IP address for the receiver."
+                    error_msg_dict['showAlertText'] = error_msg_dict['address']
+                    return False, values_dict, error_msg_dict
 
-            # For newly created devices, the deviceId won't be in the device list.
-            if deviceId > 0:
-                device = indigo.devices[deviceId]
-                devProps = device.pluginProps
+            # For newly created devices, the device_id won't be in the device list.
+            if device_id > 0:
+                device = indigo.devices[device_id]
+                dev_props = device.pluginProps
 
                 # See if any other devices are using the same address by going through all devices for this plugin.
-                for d in self.deviceList:
-                    a = indigo.devices[d].pluginProps['address']
+                for dev in self.device_list:
+                    the_address = indigo.devices[dev].pluginProps['address']
                     # If the address found is the same as this device's address (and the matching address is not for
                     # this device), generate an error.
-                    if (a == address) and (d != deviceId):
+                    if (the_address == address) and (dev != device_id):
                         error = True
-                        errorMsgDict['address'] = (
-                            f"This address is already being used by the device \"{indigo.devices[d].name}\". Only one "
-                            f"device at a time can connect to a receiver."
+                        error_msg_dict['address'] = (
+                            f"This address is already being used by the device \"{indigo.devices[dev].name}\". Only "
+                            f"one device at a time can connect to a receiver."
                         )
-                        errorMsgDict['showAlertText'] = errorMsgDict['address']
+                        error_msg_dict['showAlertText'] = error_msg_dict['address']
 
                 # Make sure the MCACC Memory Label properties are created, even if they aren't specified.
-                for mcmccMemory in range(1, 7):
-                    propName = f"mcmccMemory{mcmccMemory}label"
-                    if valuesDict.get(propName, "") == "":
-                        devProps.update({propName: ""})
-                        self.updateDeviceProps(device, devProps)
+                for mcmcc_memory in range(1, 7):
+                    prop_name = f"mcmccMemory{mcmcc_memory}label"
+                    if values_dict.get(prop_name, "") == "":
+                        dev_props.update({prop_name: ""})
+                        self.updateDeviceProps(device, dev_props)
 
         #
         # VSX-1123-K Device
         #
-        if typeId == "vsx1123k":
-            address = valuesDict.get('address', "")
+        if type_id == "vsx1123k":
+            address = values_dict.get('address', "")
 
             # Make sure a value was entered for the address.
             if len(address) < 1:
-                errorMsgDict['address'] = "Please enter an IP address for the receiver."
-                errorMsgDict['showAlertText'] = errorMsgDict['address']
-                return False, valuesDict, errorMsgDict
+                error_msg_dict['address'] = "Please enter an IP address for the receiver."
+                error_msg_dict['showAlertText'] = error_msg_dict['address']
+                return False, values_dict, error_msg_dict
 
             # Make sure the address entered is in the correct IP address format.
-            addressParts = address.split(".")
+            address_parts = address.split(".")
             # (This is easier than using Regular Expressions.  :-) )
-            for part in addressParts:
+            for part in address_parts:
                 try:
                     part = int(part)
                     if part < 0 or part > 255:
-                        errorMsgDict['address'] = "Please enter a valid IP address for the receiver."
-                        errorMsgDict['showAlertText'] = errorMsgDict['address']
-                        return False, valuesDict, errorMsgDict
+                        error_msg_dict['address'] = "Please enter a valid IP address for the receiver."
+                        error_msg_dict['showAlertText'] = error_msg_dict['address']
+                        return False, values_dict, error_msg_dict
                 except ValueError:
-                    errorMsgDict['address'] = "Please enter a valid IP address for the receiver."
-                    errorMsgDict['showAlertText'] = errorMsgDict['address']
-                    return False, valuesDict, errorMsgDict
+                    error_msg_dict['address'] = "Please enter a valid IP address for the receiver."
+                    error_msg_dict['showAlertText'] = error_msg_dict['address']
+                    return False, values_dict, error_msg_dict
 
-            # For newly created devices, the deviceId won't be in the device list.
-            if deviceId > 0:
-                device = indigo.devices[deviceId]
-                devProps = device.pluginProps
+            # For newly created devices, the device_id won't be in the device list.
+            if device_id > 0:
+                device = indigo.devices[device_id]
+                dev_props = device.pluginProps
 
                 # See if any other devices are using the same address by going through all devices for this plugin.
-                for d in self.deviceList:
-                    a = indigo.devices[d].pluginProps['address']
+                for dev in self.device_list:
+                    the_address = indigo.devices[dev].pluginProps['address']
                     # If the address found is the same as this device's address (and the matching address is not for
                     # this device), generate an error.
-                    if (a == address) and (d != deviceId):
+                    if (the_address == address) and (dev != device_id):
                         error = True
-                        errorMsgDict['address'] = (
-                            f"This address is already being used by the device \"{indigo.devices[d].name}\". Only one "
-                            f"device at a time can connect to a receiver."
+                        error_msg_dict['address'] = (
+                            f"This address is already being used by the device \"{indigo.devices[dev].name}\". Only "
+                            f"one device at a time can connect to a receiver."
                         )
-                        errorMsgDict['showAlertText'] = errorMsgDict['address']
+                        error_msg_dict['showAlertText'] = error_msg_dict['address']
 
                 # Make sure the MCACC Memory Label properties are created, even if they aren't specified.
-                for mcmccMemory in range(1, 7):
-                    propName = f"mcmccMemory{mcmccMemory}label"
-                    if valuesDict.get(propName, "") == "":
-                        devProps.update({propName: ""})
-                        self.updateDeviceProps(device, devProps)
+                for mcmcc_memory in range(1, 7):
+                    prop_name = f"mcmccMemory{mcmcc_memory}label"
+                    if values_dict.get(prop_name, "") == "":
+                        dev_props.update({prop_name: ""})
+                        self.updateDeviceProps(device, dev_props)
 
         #
         # SC-75 Device
         #
-        if typeId == "sc75":
-            address = valuesDict.get('address', "")
+        if type_id == "sc75":
+            address = values_dict.get('address', "")
 
             # Make sure a value was entered for the address.
             if len(address) < 1:
-                errorMsgDict['address'] = "Please enter an IP address for the receiver."
-                errorMsgDict['showAlertText'] = errorMsgDict['address']
-                return False, valuesDict, errorMsgDict
+                error_msg_dict['address'] = "Please enter an IP address for the receiver."
+                error_msg_dict['showAlertText'] = error_msg_dict['address']
+                return False, values_dict, error_msg_dict
 
             # Make sure the address entered is in the correct IP address format.
-            addressParts = address.split(".")
+            address_parts = address.split(".")
             # (This is easier than using Regular Expressions.  :-) )
-            for part in addressParts:
+            for part in address_parts:
                 try:
                     part = int(part)
                     if part < 0 or part > 255:
-                        errorMsgDict['address'] = "Please enter a valid IP address for the receiver."
-                        errorMsgDict['showAlertText'] = errorMsgDict['address']
-                        return False, valuesDict, errorMsgDict
+                        error_msg_dict['address'] = "Please enter a valid IP address for the receiver."
+                        error_msg_dict['showAlertText'] = error_msg_dict['address']
+                        return False, values_dict, error_msg_dict
                 except ValueError:
-                    errorMsgDict['address'] = "Please enter a valid IP address for the receiver."
-                    errorMsgDict['showAlertText'] = errorMsgDict['address']
-                    return False, valuesDict, errorMsgDict
+                    error_msg_dict['address'] = "Please enter a valid IP address for the receiver."
+                    error_msg_dict['showAlertText'] = error_msg_dict['address']
+                    return False, values_dict, error_msg_dict
 
-            # For newly created devices, the deviceId won't be in the device list.
-            if deviceId > 0:
-                device = indigo.devices[deviceId]
-                devProps = device.pluginProps
+            # For newly created devices, the device_id won't be in the device list.
+            if device_id > 0:
+                device = indigo.devices[device_id]
+                dev_props = device.pluginProps
 
                 # See if any other devices are using the same address by going through all devices for this plugin.
-                for d in self.deviceList:
-                    a = indigo.devices[d].pluginProps['address']
+                for dev in self.device_list:
+                    the_address = indigo.devices[dev].pluginProps['address']
                     # If the address found is the same as this device's address (and the matching address is not for
                     # this device), generate an error.
-                    if (a == address) and (d != deviceId):
+                    if (the_address == address) and (dev != device_id):
                         error = True
-                        errorMsgDict['address'] = (
-                            f"This address is already being used by the device \"{indigo.devices[d].name}\". Only one "
-                            f"device at a time can connect to a receiver."
+                        error_msg_dict['address'] = (
+                            f"This address is already being used by the device \"{indigo.devices[dev].name}\". Only "
+                            f"one device at a time can connect to a receiver."
                         )
-                        errorMsgDict['showAlertText'] = errorMsgDict['address']
+                        error_msg_dict['showAlertText'] = error_msg_dict['address']
 
                 # Make sure the MCACC Memory Label properties are created, even if they aren't specified.
-                for mcmccMemory in range(1, 7):
-                    propName = f"mcmccMemory{mcmccMemory}label"
-                    if valuesDict.get(propName, "") == "":
-                        devProps.update({propName: ""})
-                        self.updateDeviceProps(device, devProps)
+                for mcmcc_memory in range(1, 7):
+                    prop_name = f"mcmccMemory{mcmcc_memory}label"
+                    if values_dict.get(prop_name, "") == "":
+                        dev_props.update({prop_name: ""})
+                        self.updateDeviceProps(device, dev_props)
 
         #
         # Virtual Level Control Device
         #
-        elif typeId == "virtualVolume":
-            receiverDeviceId = valuesDict.get('receiverDeviceId', 0)
-            controlDestination = valuesDict.get('controlDestination', "")
-            if len(receiverDeviceId) < 1:
-                errorMsgDict['receiverDeviceId'] = "Please select a Pioneer Receiver device."
-                errorMsgDict['showAlertText'] = errorMsgDict['receiverDeviceId']
+        elif type_id == "virtualVolume":
+            receiver_device_id = values_dict.get('receiverDeviceId', 0)
+            control_destination = values_dict.get('controlDestination', "")
+            if len(receiver_device_id) < 1:
+                error_msg_dict['receiverDeviceId'] = "Please select a Pioneer Receiver device."
+                error_msg_dict['showAlertText'] = error_msg_dict['receiverDeviceId']
                 error = True
-            elif int(receiverDeviceId) in self.volumeDeviceList:
-                errorMsgDict['receiverDeviceId'] = (
+            elif int(receiver_device_id) in self.volume_device_list:
+                error_msg_dict['receiverDeviceId'] = (
                     "The selected device is another Virtual Volume Controller. Only receiver devices can be controlled "
                     "with this Virtual Volume Controller."
                 )
-                errorMsgDict['showAlertText'] = errorMsgDict['receiverDeviceId']
+                error_msg_dict['showAlertText'] = error_msg_dict['receiverDeviceId']
                 error = True
-            elif int(receiverDeviceId) not in self.deviceList:
-                errorMsgDict['receiverDeviceId'] = ("The selected device no longer exists. Please click Cancel then "
-                                                    "click on Edit Device Settings again.")
-                errorMsgDict['showAlertText'] = errorMsgDict['receiverDeviceId']
+            elif int(receiver_device_id) not in self.device_list:
+                error_msg_dict['receiverDeviceId'] = (
+                    "The selected device no longer exists. Please click Cancel then click on Edit Device Settings "
+                    "again."
+                )
+                error_msg_dict['showAlertText'] = error_msg_dict['receiverDeviceId']
                 error = True
-            if len(controlDestination) < 1:
-                errorMsgDict['controlDestination'] = "Please select a Control Destination."
-                errorMsgDict['showAlertText'] = errorMsgDict['controlDestination']
+            if len(control_destination) < 1:
+                error_msg_dict['controlDestination'] = "Please select a Control Destination."
+                error_msg_dict['showAlertText'] = error_msg_dict['controlDestination']
                 error = True
 
         # Return errors if there were any.
         if error:
-            return False, valuesDict, errorMsgDict
+            return False, values_dict, error_msg_dict
 
-        return True, valuesDict
+        return True, values_dict
 
     # Plugin Configuration Dialog
     ########################################
-    def closedPrefsConfigUi(self, valuesDict, userCancelled):
+    def closedPrefsConfigUi(self, values_dict, user_cancelled):
+        """
+        Placeholder - fixme
+
+        :param values_dict:
+        :param user_cancelled:
+        :return:
+        """
         self.debugLog("closedPrefsConfigUi called.")
 
-        if not userCancelled:
-            self.debug = valuesDict.get("showDebugInfo", False)
+        if not user_cancelled:
+            self.debug = values_dict.get("showDebugInfo", False)
             if self.debug:
                 indigo.server.log("Debug logging enabled")
             else:
@@ -5028,11 +5492,20 @@ class Plugin(indigo.PluginBase):
 
     # Get Source List for Use in UI.
     ########################################
-    def uiSourceList(self, filter="", valuesDict=None, typeId="", deviceId=0):  # noqa
-        self.debugLog(f"uiSourceList called. typeId: {typeId}, targetId: {deviceId}")
+    def uiSourceList(self, filter="", values_dict=None, type_id="", device_id=0):  # noqa
+        """
+        Placeholder - fixme
 
-        theList = list()  # Menu item list.
-        device = indigo.devices[deviceId]  # The device whose action is being configured.
+        :param filter:
+        :param values_dict:
+        :param type_id:
+        :param device_id:
+        :return:
+        """
+        self.debugLog(f"uiSourceList called. type_id: {type_id}, device_id: {device_id}")
+
+        the_list = []  # Menu item list.
+        device = indigo.devices[device_id]  # The device whose action is being configured.
 
         # Catch attempts to send a command to a Virtual Volume Controller device, which is not possible (but because
         # it's not currently possible to prevent the user from selecting it as a destination device in the Indigo UI,
@@ -5044,79 +5517,88 @@ class Plugin(indigo.PluginBase):
             return []
 
         # Go through the defined sources to decide which to add to the list.
-        for thisNumber, thisName in SOURCE_NAMES.items():
+        for this_number, this_name in SOURCE_NAMES.items():
             # Create the list based on which zone for which this is being compiled.
-            if typeId == "zone1setSource":
+            if type_id == "zone1setSource":
                 # If this source ID is not masked (i.e. is available) on this model, add it.
                 if device.deviceTypeId == "vsx1021k":
-                    if thisNumber not in VSX1021k_SOURCE_MASK:
-                        propName = f"source{thisNumber}label"
-                        thisName = device.pluginProps[propName]
-                        theList.append((thisNumber, thisName))
+                    if this_number not in VSX1021k_SOURCE_MASK:
+                        prop_name = f"source{this_number}label"
+                        this_name = device.pluginProps[prop_name]
+                        the_list.append((this_number, this_name))
                 elif device.deviceTypeId == "vsx1022k":
-                    if thisNumber not in VSX1022K_SOURCE_MASK and thisNumber not in ['46', '47']:
+                    if this_number not in VSX1022K_SOURCE_MASK and this_number not in ['46', '47']:
                         # Source 46 (AirPlay) and 47 (DMR) are not selectable, but are valid sources, so they're not in
                         # the mask array.
-                        propName = f"source{thisNumber}label"
-                        thisName = device.pluginProps[propName]
-                        theList.append((thisNumber, thisName))
+                        prop_name = f"source{this_number}label"
+                        this_name = device.pluginProps[prop_name]
+                        the_list.append((this_number, this_name))
                 elif device.deviceTypeId == "vsx1122k":
-                    if thisNumber not in VSX1122K_SOURCE_MASK:
-                        propName = f"source{thisNumber}label"
-                        thisName = device.pluginProps[propName]
-                        theList.append((thisNumber, thisName))
+                    if this_number not in VSX1122K_SOURCE_MASK:
+                        prop_name = f"source{this_number}label"
+                        this_name = device.pluginProps[prop_name]
+                        the_list.append((this_number, this_name))
                 elif device.deviceTypeId == "vsx1123k":
-                    if thisNumber not in VSX1123K_SOURCE_MASK:
-                        propName = f"source{thisNumber}label"
-                        thisName = device.pluginProps[propName]
-                        theList.append((thisNumber, thisName))
+                    if this_number not in VSX1123K_SOURCE_MASK:
+                        prop_name = f"source{this_number}label"
+                        this_name = device.pluginProps[prop_name]
+                        the_list.append((this_number, this_name))
                 elif device.deviceTypeId == "sc75":
-                    if thisNumber not in SC75_SOURCE_MASK:
-                        propName = f"source{thisNumber}label"
-                        thisName = device.pluginProps[propName]
-                        theList.append((thisNumber, thisName))
-            elif typeId == "zone2setSource":
+                    if this_number not in SC75_SOURCE_MASK:
+                        prop_name = f"source{this_number}label"
+                        this_name = device.pluginProps[prop_name]
+                        the_list.append((this_number, this_name))
+            elif type_id == "zone2setSource":
                 # If this source ID is not masked (i.e. is available) on this model, add it.
                 if device.deviceTypeId == "vsx1021k":
-                    if thisNumber not in VSX1021K_ZONE2_SOURCE_MASK:
-                        propName = f"source{thisNumber}label"
-                        thisName = device.pluginProps[propName]
-                        theList.append((thisNumber, thisName))
+                    if this_number not in VSX1021K_ZONE2_SOURCE_MASK:
+                        prop_name = f"source{this_number}label"
+                        this_name = device.pluginProps[prop_name]
+                        the_list.append((this_number, this_name))
                 elif device.deviceTypeId == "vsx1022k":
-                    if thisNumber not in VSX1022K_ZONE2_SOURCE_MASK and thisNumber not in ['46', '47']:
+                    if this_number not in VSX1022K_ZONE2_SOURCE_MASK and this_number not in ['46', '47']:
                         # Source 46 (AirPlay) and 47 (DMR) are not selectable, but are valid sources, so they're not in
                         # the mask array.
-                        propName = f"source{thisNumber}label"
-                        thisName = device.pluginProps[propName]
-                        theList.append((thisNumber, thisName))
+                        prop_name = f"source{this_number}label"
+                        this_name = device.pluginProps[prop_name]
+                        the_list.append((this_number, this_name))
                 elif device.deviceTypeId == "vsx1122k":
-                    if thisNumber not in VSX1122K_ZONE2_SOURCE_MASK:
-                        propName = f"source{thisNumber}label"
-                        thisName = device.pluginProps[propName]
-                        theList.append((thisNumber, thisName))
+                    if this_number not in VSX1122K_ZONE2_SOURCE_MASK:
+                        prop_name = f"source{this_number}label"
+                        this_name = device.pluginProps[prop_name]
+                        the_list.append((this_number, this_name))
                 elif device.deviceTypeId == "vsx1123k":
-                    if thisNumber not in VSX1123k_ZONE2_SOURCE_MASK:
-                        propName = f"source{thisNumber}label"
-                        thisName = device.pluginProps[propName]
-                        theList.append((thisNumber, thisName))
+                    if this_number not in VSX1123k_ZONE2_SOURCE_MASK:
+                        prop_name = f"source{this_number}label"
+                        this_name = device.pluginProps[prop_name]
+                        the_list.append((this_number, this_name))
                 elif device.deviceTypeId == "sc75":
-                    if thisNumber not in SC75_ZONE2_SOURCE_MASK:
-                        propName = f"source{thisNumber}label"
-                        thisName = device.pluginProps[propName]
-                        theList.append((thisNumber, thisName))
+                    if this_number not in SC75_ZONE2_SOURCE_MASK:
+                        prop_name = f"source{this_number}label"
+                        this_name = device.pluginProps[prop_name]
+                        the_list.append((this_number, this_name))
 
-        return theList
+        return the_list
 
     # Get Tuner Preset List for Use in UI.
     ########################################
-    def uiTunerPresetList(self, filter="", valuesDict=None, typeId="", deviceId=0):  # noqa
-        self.debugLog(f"uiTunerPresetList called. typeId: {typeId}, targetId: {deviceId}")
+    def uiTunerPresetList(self, filter="", values_dict=None, type_id="", device_id=0):  # noqa
+        """
+        Placeholder - fixme
 
-        theList = list()  # Menu item list.
-        device = indigo.devices[deviceId]  # The device whose action is being configured.
-        propName = ""  # Device property name to be queried.
-        presetName = ""  # Tuner Preset name to be listed.
-        presetNumber = ""  # Tuner Preset number to be returned in the list selection.
+        :param filter:
+        :param values_dict:
+        :param type_id:
+        :param device_id:
+        :return:
+        """
+        self.debugLog(f"uiTunerPresetList called. type_id: {type_id}, device_id: {device_id}")
+
+        the_list = []  # Menu item list.
+        device = indigo.devices[device_id]  # The device whose action is being configured.
+        prop_name = ""  # Device property name to be queried.
+        preset_name = ""  # Tuner Preset name to be listed.
+        preset_number = ""  # Tuner Preset number to be returned in the list selection.
 
         # Catch attempts to send a command to a Virtual Volume Controller device, which is not possible (but because
         # it's not currently possible to prevent the user from selecting it as a destination device in the Indigo UI, we
@@ -5129,27 +5611,36 @@ class Plugin(indigo.PluginBase):
             return []
 
         # Define the tuner preset "classes" (groups).
-        presetClasses = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
+        preset_classes = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
         # Go through the preset classes and numbers 1 through 9 to get the preset names.
-        for theClass in presetClasses:
-            for thePreset in range(1, 9):
-                propName = f"tunerPreset{theClass}{thePreset}label"
-                presetName = f"{theClass}{thePreset}: {device.pluginProps[propName]}"
-                presetNumber = f"{theClass}0{thePreset}"
-                theList.append((presetNumber, presetName))
+        for the_class in preset_classes:
+            for the_preset in range(1, 9):
+                prop_name = f"tunerPreset{the_class}{the_preset}label"
+                preset_name = f"{the_class}{the_preset}: {device.pluginProps[prop_name]}"
+                preset_number = f"{the_class}0{the_preset}"
+                the_list.append((preset_number, preset_name))
 
-        return theList
+        return the_list
 
     # Get MCACC Label List for Use in UI.
     ########################################
-    def uiMcaccLabelList(self, filter="", valuesDict=None, typeId="", deviceId=0):  # noqa
-        self.debugLog(f"uiMcaccLabelList called. typeId: {typeId}, targetId: {deviceId}")
+    def uiMcaccLabelList(self, filter="", values_dict=None, type_id="", device_id=0):  # noqa
+        """
+        Placeholder - fixme
 
-        theList = list()  # Menu item list.
-        device = indigo.devices[deviceId]  # The device whose action is being configured.
-        propName = ""  # Device property name to be queried.
-        mcaccMemoryName = ""  # MCACC Memory label (name) to be listed.
-        mcaccMemory = ""  # MCACC Memory number to be returned in the list selection.
+        :param filter:
+        :param values_dict:
+        :param type_id:
+        :param device_id:
+        :return:
+        """
+        self.debugLog(f"uiMcaccLabelList called. type_id: {type_id}, device_id: {device_id}")
+
+        the_list = []  # Menu item list.
+        device = indigo.devices[device_id]  # The device whose action is being configured.
+        prop_name = ""  # Device property name to be queried.
+        mcacc_memory_name = ""  # MCACC Memory label (name) to be listed.
+        mcacc_memory = ""  # MCACC Memory number to be returned in the list selection.
 
         # Catch attempts to send a command to a Virtual Volume Controller device, which is not possible (but because
         # it's not currently possible to prevent the user from selecting it as a destination device in the Indigo UI,
@@ -5162,24 +5653,33 @@ class Plugin(indigo.PluginBase):
             return []
 
         # Go through the MCACC memory numbers 1 through 6 to get the labels/names.
-        for mcaccMemory in range(1, 7):
-            propName = f"mcaccMemory{mcaccMemory}label"
-            mcaccMemoryName = f"{mcaccMemory}: {device.pluginProps[propName]}"
+        for mcacc_memory in range(1, 7):
+            prop_name = f"mcaccMemory{mcacc_memory}label"
+            mcacc_memory_name = f"{mcacc_memory}: {device.pluginProps[prop_name]}"
             # Convert the mcaccMemory number into a command.
-            mcaccMemory = f"{mcaccMemory}MC"
-            theList.append((mcaccMemory, mcaccMemoryName))
+            mcacc_memory = f"{mcacc_memory}MC"
+            the_list.append((mcacc_memory, mcacc_memory_name))
 
-        return theList
+        return the_list
 
     # Get Remote Control Button Names
     ########################################
-    def uiButtonNames(self, filter="", valuesDict=None, typeId="", deviceId=0):  # noqa
-        self.debugLog(f"uiButtonNames called. typeId: {typeId}, targetId: {deviceId}")
+    def uiButtonNames(self, filter="", values_dict=None, type_id="", device_id=0):  # noqa
+        """
+        Placeholder - fixme
 
-        theList = list()  # Menu item list.
-        device = indigo.devices[deviceId]  # The device whose action is being configured.
+        :param filter:
+        :param values_dict:
+        :param type_id:
+        :param device_id:
+        :return:
+        """
+        self.debugLog(f"uiButtonNames called. type_id: {type_id}, device_id: {device_id}")
+
+        the_list = []  # Menu item list.
+        device = indigo.devices[device_id]  # The device whose action is being configured.
         command = ""  # The button press command.
-        buttonName = ""  # The name of the button to list in the menu.
+        button_name = ""  # The name of the button to list in the menu.
 
         # Catch attempts to send a command to a Virtual Volume Controller device, which is not possible (but because
         # it's not currently possible to prevent the user from selecting it as a destination device in the Indigo UI, we
@@ -5192,20 +5692,29 @@ class Plugin(indigo.PluginBase):
 
         # Go through the remoteButtonNames dictionary items to create the list.
         for command in REMOTE_BUTTON_NAMES_ORDER:
-            buttonName = REMOTE_BUTTON_NAMES.get(command, "")
-            theList.append((command, buttonName))
+            button_name = REMOTE_BUTTON_NAMES.get(command, "")
+            the_list.append((command, button_name))
 
-        return theList
+        return the_list
 
     # Get List of Listening Modes.
     ########################################
-    def uiListeningModeList(self, filter="", valuesDict=None, typeId="", deviceId=0):  # noqa
-        self.debugLog(f"uiListeningModeList called. typeId: {typeId}, targetId: {deviceId}")
+    def uiListeningModeList(self, filter="", values_dict=None, type_id="", device_id=0):  # noqa
+        """
+        Placeholder - fixme
 
-        theList = list()  # Menu item list.
-        theNumber = ""  # The listening mode ID number
-        theName = ""  # The listening mode name.
-        device = indigo.devices[deviceId]  # The device whose action is being configured.
+        :param filter:
+        :param values_dict:
+        :param type_id:
+        :param device_id:
+        :return:
+        """
+        self.debugLog(f"uiListeningModeList called. type_id: {type_id}, device_id: {device_id}")
+
+        the_list = []  # Menu item list.
+        the_number = ""  # The listening mode ID number
+        the_name = ""  # The listening mode name.
+        device = indigo.devices[device_id]  # The device whose action is being configured.
 
         # Catch attempts to send a command to a Virtual Volume Controller device, which is not possible (but because
         # it's not currently possible to prevent the user from selecting it as a destination device in the Indigo UI,
@@ -5219,54 +5728,61 @@ class Plugin(indigo.PluginBase):
 
         # Create a list of listeningModes keys sorted by listeningModes values.
         items = LISTENING_MODES.items()
-        reverseItems = [[v[1], v[0]] for v in items]
-        reverseItems.sort()
-        sortedlist = [reverseItems[i][1] for i in range(0, len(reverseItems))]
+        reverse_items = [[v[1], v[0]] for v in items]
+        reverse_items.sort()
+        sortedlist = [reverse_items[i][1] for i in range(0, len(reverse_items))]
 
-        for theNumber in sortedlist:
-            theName = LISTENING_MODES[theNumber]
+        for the_number in sortedlist:
+            the_name = LISTENING_MODES[the_number]
             # Show only items related to the device type passed in the "filter" variable.
             if filter == "vsx1021k":
-                if theNumber not in VSX1021K_LISTENING_MODE_MASK:
+                if the_number not in VSX1021K_LISTENING_MODE_MASK:
                     # Don't list modes with "(cyclic)" in the name.
-                    if "(cyclic)" not in theName:
-                        theList.append((theNumber, theName))
+                    if "(cyclic)" not in the_name:
+                        the_list.append((the_number, the_name))
             elif filter == "vsx1022k":
-                if theNumber not in VSX1022K_LISTENING_MODE_MASK:
+                if the_number not in VSX1022K_LISTENING_MODE_MASK:
                     # Don't list modes with "(cyclic)" in the name.
-                    if "(cyclic)" not in theName:
-                        theList.append((theNumber, theName))
+                    if "(cyclic)" not in the_name:
+                        the_list.append((the_number, the_name))
             elif filter == "vsx1122k":
-                if theNumber not in VSX1122K_LISTENING_MODE_MASK:
+                if the_number not in VSX1122K_LISTENING_MODE_MASK:
                     # Don't list modes with "(cyclic)" in the name.
-                    if "(cyclic)" not in theName:
-                        theList.append((theNumber, theName))
+                    if "(cyclic)" not in the_name:
+                        the_list.append((the_number, the_name))
             elif filter == "vsx1123k":
-                if theNumber not in VSX1123K_LISTENING_MODE_MASK:
+                if the_number not in VSX1123K_LISTENING_MODE_MASK:
                     # Don't list modes with "(cyclic)" in the name.
-                    if "(cyclic)" not in theName:
-                        theList.append((theNumber, theName))
+                    if "(cyclic)" not in the_name:
+                        the_list.append((the_number, the_name))
             elif filter == "sc75":
-                if theNumber not in SC75_LISTENING_MODE_MASK:
+                if the_number not in SC75_LISTENING_MODE_MASK:
                     # Don't list modes with "(cyclic)" in the name.
-                    if "(cyclic)" not in theName:
-                        theList.append((theNumber, theName))
+                    if "(cyclic)" not in the_name:
+                        the_list.append((the_number, the_name))
 
-        return theList
+        return the_list
 
     # Get List of Pioneer Receiver Devices.
     ########################################
     # (This method is deprecated as of 0.9.6, but kept for possible future reference.
-    def uiReceiverDevices(self, filter="", valuesDict=None, typeId="", targetId=0):  # noqa
-        self.debugLog(f"uiReceiverDevices called. typeId: {typeId}, targetId: {targetId}")
+    def uiReceiverDevices(self, filter="", values_dict=None, type_id="", target_id=0):  # noqa
+        """
+        Placeholder - fixme
 
-        theList = list()  # Menu item list.
-        deviceId = ""  # The device ID of the Pioneer Receiver listed.
-        deviceName = ""  # The name of the Pioneer Receiver device listed.
+        :param filter:
+        :param values_dict:
+        :param type_id:
+        :param target_id:
+        :return:
+        """
+        self.debugLog(f"uiReceiverDevices called. type_id: {type_id}, targetId: {target_id}")
+
+        the_list = []  # Menu item list.
 
         # Go through the deviceList and list the devices.
-        for deviceId in self.deviceList:
-            deviceName = indigo.devices[deviceId].name
-            theList.append((deviceId, deviceName))
+        for device_id in self.device_list:
+            device_name = indigo.devices[device_id].name  # The name of the Pioneer Receiver device listed.
+            the_list.append((device_id, device_name))
 
-        return theList
+        return the_list

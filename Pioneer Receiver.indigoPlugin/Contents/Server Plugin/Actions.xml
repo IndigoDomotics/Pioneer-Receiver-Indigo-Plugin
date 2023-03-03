@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <Actions>
-	<SupportURL>http://www.nathansheldon.com/files/Pioneer-Receiver-Plugin.php</SupportURL>
+	<SupportURL>https://forums.indigodomo.com/viewtopic.php?f=31&amp;t=8737</SupportURL>
 	<Action id="zone1powerOn" deviceFilter="self" uiPath="Power">
 		<Name>Power On (Zone 1)</Name>
 		<CallbackMethod>zone1powerOn</CallbackMethod>
@@ -34,13 +34,10 @@
 				<Label>BE VERY CAREFUL!</Label>
 			</Field>
 			<Field id="label1" type="label" alignWithControl="true" fontColor="darkgray" fontSize="small">
-				<Label>Volume is expressed in terms of the full audio signal level, so a volume of 0 dB would be full volume (very loud). A moderate volume level would be around -30 dB and a quiet volume would be -50 dB.  Pioneer receivers are capabile of a volume range between -80.5 dB (no sound) and 12 dB (EXTREMELY loud). When entering a volume amount, the number must be in increments of 0.5 dB (e.g. Correct: -23.5 or -23, Incorrect: -23.9 or -23.2).
-				
-				
-				</Label>
+				<Label>Volume is expressed in terms of the full audio signal level, so a volume of 0 dB would be full volume (very loud). A moderate volume level would be around -30 dB and a quiet volume would be -50 dB.  Pioneer receivers are capable of a volume range between -80.5 dB (no sound) and 12 dB (EXTREMELY loud). When entering a volume amount, the number must be in increments of 0.5 dB (e.g. Correct: -23.5 or -23, Incorrect: -23.9 or -23.2).</Label>
 			</Field>
 			<Field id="description" type="textfield" hidden="true">
-				<Label></Label>
+				<Label/>
 			</Field>
 		</ConfigUI>
 	</Action>
@@ -71,14 +68,14 @@
 		<ConfigUI>
 			<Field id="source" type="menu">
 				<Label>Input Source:</Label>
-				<List class="self" method="uiSourceList"></List>
+				<List class="self" method="uiSourceList"/>
 			</Field>
 			<Field id="label0" type="label" alignWithControl="true" fontColor="darkgray" fontSize="small">
 				<Label>Select the input for zone 1 from the source list above.
 				</Label>
 			</Field>
 			<Field id="description" type="textfield" hidden="true">
-				<Label></Label>
+				<Label/>
 			</Field>
 		</ConfigUI>
 	</Action>
@@ -116,12 +113,12 @@
 				<Label>BE VERY CAREFUL!</Label>
 			</Field>
 			<Field id="label1" type="label" alignWithControl="true" fontColor="darkgray" fontSize="small">
-				<Label>Volume is expressed in terms of the full audio signal level, so a volume of 0 dB would be full volume (very loud). A moderate volume level would be around -30 dB and a quiet volume would be -50 dB.  Zones 2 and above in Pioneer receivers are capabile of a range between -81 dB (no sound) and 0 dB (VERY loud). When entering a volume amount, the number must be in increments of 1 dB (e.g. Correct: -23, Incorrect: -23.5 or -23.2).
-				
+				<Label>Volume is expressed in terms of the full audio signal level, so a volume of 0 dB would be full volume (very loud). A moderate volume level would be around -30 dB and a quiet volume would be -50 dB.  Zones 2 and above in Pioneer receivers are capable of a range between -81 dB (no sound) and 0 dB (VERY loud). When entering a volume amount, the number must be in increments of 1 dB (e.g. Correct: -23, Incorrect: -23.5 or -23.2).
+
 				</Label>
 			</Field>
 			<Field id="description" type="textfield" hidden="true">
-				<Label></Label>
+				<Label/>
 			</Field>
 		</ConfigUI>
 	</Action>
@@ -144,14 +141,14 @@
 		<ConfigUI>
 			<Field id="source" type="menu">
 				<Label>Input Source:</Label>
-				<List class="self" method="uiSourceList"></List>
+				<List class="self" method="uiSourceList"/>
 			</Field>
 			<Field id="label0" type="label" alignWithControl="true" fontColor="darkgray" fontSize="small">
 				<Label>Select the input for zone 2 from the source list above.
 				</Label>
 			</Field>
 			<Field id="description" type="textfield" hidden="true">
-				<Label></Label>
+				<Label/>
 			</Field>
 		</ConfigUI>
 	</Action>
@@ -162,14 +159,14 @@
 		<ConfigUI>
 			<Field id="tunerPreset" type="menu">
 				<Label>Tuner Preset:</Label>
-				<List class="self" method="uiTunerPresetList"></List>
+				<List class="self" method="uiTunerPresetList"/>
 			</Field>
 			<Field id="label0" type="label" alignWithControl="true" fontColor="darkgray" fontSize="small">
 				<Label>Select the Tuner Preset to change to.
 				</Label>
 			</Field>
 			<Field id="description" type="textfield" hidden="true">
-				<Label></Label>
+				<Label/>
 			</Field>
 		</ConfigUI>
 	</Action>
@@ -194,7 +191,7 @@
 				</Label>
 			</Field>
 			<Field id="description" type="textfield" hidden="true">
-				<Label></Label>
+				<Label/>
 			</Field>
 		</ConfigUI>
 	</Action>
@@ -218,14 +215,14 @@
 			<Field id="listeningMode" type="menu">
 				<Label>Listening Mode:</Label>
 				<Description>Select a listening mode to change to.</Description>
-				<List class="self" method="uiListeningModeList" filter="vsx1021k"></List>
+				<List class="self" method="uiListeningModeList" filter="vsx1021k"/>
 			</Field>
 			<Field id="label0" type="label" alignWithControl="true" fontColor="darkgray" fontSize="small">
 				<Label>NOTE: Not all listening modes will work with all input sources, audio formats, signal sources, or speaker configurations.
 				</Label>
 			</Field>
 			<Field id="description" type="textfield" hidden="true">
-				<Label></Label>
+				<Label/>
 			</Field>
 		</ConfigUI>
 	</Action>
@@ -244,10 +241,10 @@
 			<Field id="mcaccMemory" type="menu">
 				<Label>MCACC Memory:</Label>
 				<Description>Select the MCACC settings memory bank to recall.</Description>
-				<List class="self" method="uiMcaccLabelList"></List>
+				<List class="self" method="uiMcaccLabelList"/>
 			</Field>
 			<Field id="description" type="textfield" hidden="true">
-				<Label></Label>
+				<Label/>
 			</Field>
 		</ConfigUI>
 	</Action>
@@ -259,14 +256,14 @@
 			<Field id="remoteButton" type="menu">
 				<Label>Button:</Label>
 				<Description>Select the button press to send.</Description>
-				<List class="self" method="uiButtonNames"></List>
+				<List class="self" method="uiButtonNames"/>
 			</Field>
 			<Field id="label0" type="label" alignWithControl="true" fontColor="darkgray" fontSize="small">
 				<Label>NOTE: Not all button presses will work with all input sources.
 				</Label>
 			</Field>
 			<Field id="description" type="textfield" hidden="true">
-				<Label></Label>
+				<Label/>
 			</Field>
 		</ConfigUI>
 	</Action>
@@ -285,7 +282,7 @@
 				</List>
 			</Field>
 			<Field id="description" type="textfield" hidden="true">
-				<Label></Label>
+				<Label/>
 			</Field>
 		</ConfigUI>
 	</Action>
@@ -304,7 +301,7 @@
 				</List>
 			</Field>
 			<Field id="description" type="textfield" hidden="true">
-				<Label></Label>
+				<Label/>
 			</Field>
 		</ConfigUI>
 	</Action>
@@ -321,11 +318,11 @@
 			</Field>
 			<Field id="label1" type="label" alignWithControl="true" fontColor="darkgray" fontSize="small">
 				<Label>This is an advanced feature and should only be used if you know exactly what you're doing or if you've been instructed to use this feature by technical support. Sending the wrong command could render some features of your receiver unusable or inaccessible. It's recommended that you turn debugging on in the Pioneer Receiver plugin configuration (Plugins menu). Enter the one-line command to send to the receiver.
-				
+
 				</Label>
 			</Field>
 			<Field id="description" type="textfield" hidden="true">
-				<Label></Label>
+				<Label/>
 			</Field>
 		</ConfigUI>
 	</Action>

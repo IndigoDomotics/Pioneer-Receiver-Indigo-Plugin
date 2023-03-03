@@ -3,12 +3,14 @@
 <plist version="1.0">
 <dict>
 	<key>PluginVersion</key>
-	<string>1.0.8</string>
+	<string>2022.0.11</string>
 	<key>ServerApiVersion</key>
-	<string>1.0</string>
+	<string>3.0</string>
 	<key>IwsApiVersion</key>
 	<string>1.0.0</string>
 	<key>CFBundleDisplayName</key>
+	<string>Pioneer Receiver</string>
+	<key>C2BundleName</key>
 	<string>Pioneer Receiver</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.nathansheldon.indigoplugin.PioneerReceiver</string>
